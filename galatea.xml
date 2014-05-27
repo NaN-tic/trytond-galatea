@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<!-- This file is part galatea module for Tryton.
+The COPYRIGHT file at the top level of this repository contains the full copyright notices and license terms. -->
+<tryton>
+    <data>
+        <record model="res.group" id="group_galatea_admin">
+            <field name="name">Galatea Administration</field>
+        </record>
+        <record model="res.user-res.group" id="user_admin_group_galatea_admin">
+            <field name="user" ref="res.user_admin"/>
+            <field name="group" ref="group_galatea_admin"/>
+        </record>
+
+        <menuitem name="Galatea" id="menu_galatea"/>
+
+        <menuitem name="Configuration" id="menu_galatea_configuration" parent="menu_galatea"/>
+        <record model="ir.ui.menu-res.group" id="menu_group_galatea_admin">
+          <field name="menu" ref="menu_galatea_configuration"/>
+          <field name="group" ref="group_galatea_admin"/>
+        </record>
+
+        <!-- Website -->
+        <record model="ir.ui.view" id="website_view_form">
+            <field name="model">galatea.website</field>
+            <field name="type">form</field>
+            <field name="name">website_form</field> 
+        </record>
+        <record model="ir.ui.view" id="website_view_tree">
+            <field name="model">galatea.website</field>
+            <field name="type">tree</field>
+            <field name="name">website_tree</field> 
+        </record>
+        <record model="ir.action.act_window" id="act_website_form">
+            <field name="name">Web Sites</field>
+            <field name="res_model">galatea.website</field>
+        </record>
+        <record model="ir.action.act_window.view" id="act_website_form_view1">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="website_view_tree"/>
+            <field name="act_window" ref="act_website_form"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_website_form_view2">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="website_view_form"/>
+            <field name="act_window" ref="act_website_form"/>
+        </record>
+        <menuitem id="menu_website_form" action="act_website_form" parent="menu_galatea_configuration"/>
+
+        <!-- Galatea User -->
+        <menuitem name="Users" id="menu_galatea_user" parent="menu_galatea"/>
+        <record model="ir.ui.menu-res.group" id="menu_group_galatea_user">
+          <field name="menu" ref="menu_galatea_user"/>
+          <field name="group" ref="group_galatea_admin"/>
+        </record>
+
+        <record id="galatea_user_form" model="ir.ui.view">
+            <field name="model">galatea.user</field>
+            <field name="type">form</field>
+            <field name="inherit" ref="party.party_view_form"/>
+            <field name="name">galatea_user_form</field> 
+        </record>
+        <record model="ir.ui.view" id="galatea_user_form2">
+            <field name="model">galatea.user</field>
+            <field name="type">form</field>
+            <field name="priority">20</field>
+            <field name="name">galatea_user_form2</field> 
+        </record>
+        <record id="galatea_user_tree" model="ir.ui.view">
+            <field name="model">galatea.user</field>
+            <field name="type">tree</field>
+            <field name="name">galatea_user_tree</field> 
+        </record>
+
+        <record model="ir.action.act_window" id="action_galatea_user_view">
+            <field name="name">Galatea User</field>
+            <field name="res_model">galatea.user</field>
+        </record>
+        <record model="ir.action.act_window.view" id="act_galatea_user_view1">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="galatea_user_tree"/>
+            <field name="act_window" ref="action_galatea_user_view"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_galatea_user_view2">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="galatea_user_form2"/>
+            <field name="act_window" ref="action_galatea_user_view"/>
+        </record>
+
+        <menuitem name="Users" id="menu_galatea_user" 
+            action="action_galatea_user_view" parent="menu_galatea_user_dir"/> 
+    </data>
+</tryton>

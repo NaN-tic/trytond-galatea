@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!-- This file is part galatea module for Tryton.
+The COPYRIGHT file at the top level of this repository contains the full copyright notices and license terms. -->
+<form string="Web Site">
+    <label name="name"/>
+    <field name="name"/>
+    <label name="active"/>
+    <field name="active"/>
+    <label name="company"/>
+    <field name="company"/>
+    <label name="timezone"/>
+    <field name="timezone"/>
+    <notebook colspan="4">
+        <page id="configuration" string="Configuration">
+            <label name="login"/>
+            <field name="login"/>
+            <label name="registration"/>
+            <field name="registration"/>
+        </page>
+        <page id="email" string="Email">
+            <label name="smtp_server"/>
+            <field name="smtp_server"/>
+        </page>
+        <page id="countries" string="Countries">
+            <field name="countries"/>
+        </page>
+    </notebook>
+</form>

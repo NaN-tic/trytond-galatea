@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!-- This file is part galatea module for Tryton.
+The COPYRIGHT file at the top level of this repository contains the full copyright notices and license terms. -->
+<tryton>
+  <data>
+    <menuitem id="menu_galatea_static" parent="menu_galatea" name="Static"/>
+
+    <!-- Static Folder -->
+    <record id="galatea_static_folder_form" model="ir.ui.view">
+        <field name="model">galatea.static.folder</field>
+        <field name="type">form</field>
+        <field name="name">static_folder_form</field> 
+    </record>
+    <record id="galatea_static_folder_tree" model="ir.ui.view">
+        <field name="model">galatea.static.folder</field>
+        <field name="type">tree</field>
+        <field name="name">static_folder_tree</field> 
+    </record>
+
+    <record model="ir.action.act_window" id="action_galatea_static_folder_view">
+        <field name="name">Galatea Static Folders</field>
+        <field name="res_model">galatea.static.folder</field>
+    </record>
+    <record model="ir.action.act_window.view" id="act_galatea_static_folder_view1">
+        <field name="sequence" eval="10"/>
+        <field name="view" ref="galatea_static_folder_tree"/>
+        <field name="act_window" ref="action_galatea_static_folder_view"/>
+    </record>
+    <record model="ir.action.act_window.view" id="act_galatea_static_folder_view2">
+        <field name="sequence" eval="20"/>
+        <field name="view" ref="galatea_static_folder_form"/>
+        <field name="act_window" ref="action_galatea_static_folder_view"/>
+    </record>
+
+    <menuitem name="Static Folders" id="menu_galatea_config_static_folder"
+        parent="menu_galatea_static" action="action_galatea_static_folder_view"/>
+
+    <!-- Static File -->
+    <record id="galatea_static_file_form" model="ir.ui.view">
+        <field name="model">galatea.static.file</field>
+        <field name="type">form</field>
+        <field name="name">static_file_form</field> 
+    </record>
+    <record id="galatea_static_file_tree" model="ir.ui.view">
+        <field name="model">galatea.static.file</field>
+        <field name="type">tree</field>
+        <field name="name">static_file_tree</field> 
+    </record>
+
+    <record model="ir.action.act_window" id="action_galatea_static_file_view">
+        <field name="name">Galatea Static Files</field>
+        <field name="res_model">galatea.static.file</field>
+    </record>
+    <record model="ir.action.act_window.view" id="act_galatea_static_file_view1">
+        <field name="sequence" eval="10"/>
+        <field name="view" ref="galatea_static_file_tree"/>
+        <field name="act_window" ref="action_galatea_static_file_view"/>
+    </record>
+    <record model="ir.action.act_window.view" id="act_galatea_static_file_view2">
+        <field name="sequence" eval="20"/>
+        <field name="view" ref="galatea_static_file_form"/>
+        <field name="act_window" ref="action_galatea_static_file_view"/>
+    </record>
+
+    <menuitem name="Static Files" id="menu_galatea_config_static_file"
+        parent="menu_galatea_static" action="action_galatea_static_file_view"/>
+  </data>
+</tryton>
