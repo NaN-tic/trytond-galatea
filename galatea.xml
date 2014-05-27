@@ -48,8 +48,8 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
 
         <!-- Galatea User -->
         <menuitem name="Users" id="menu_galatea_users" parent="menu_galatea"/>
-        <record model="ir.ui.menu-res.group" id="menu_group_galatea_user">
-          <field name="menu" ref="menu_galatea_user"/>
+        <record model="ir.ui.menu-res.group" id="menu_group_galatea_users">
+          <field name="menu" ref="menu_galatea_users"/>
           <field name="group" ref="group_galatea_admin"/>
         </record>
 
