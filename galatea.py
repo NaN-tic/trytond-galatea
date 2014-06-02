@@ -103,7 +103,7 @@ class GalateaUser(ModelSQL, ModelView):
 
     @staticmethod
     def default_company():
-        return Transaction().context.get('company') or False
+        return Transaction().context.get('company') or None
 
     @classmethod
     def __setup__(cls):
@@ -121,7 +121,7 @@ class GalateaUser(ModelSQL, ModelView):
 
         :param values: A dictionary of field: value pairs
         """
-        if 'password' in values and values['password']:
+        if values.get('password'):
             values['salt'] = ''.join(random.sample(
                 string.ascii_letters + string.digits, 8))
             values['password'] += values['salt']
