@@ -17,10 +17,9 @@ __all__ = ['GalateaStaticFolder', 'GalateaStaticFile']
 class GalateaStaticFolder(ModelSQL, ModelView):
     "Static folder for Galatea"
     __name__ = "galatea.static.folder"
-    _rec_name = 'folder_name'
-    folder_name = fields.Char(
-        'Folder Name', required=True, select=1,
-        on_change_with=['name', 'folder_name'])
+    name = fields.Char('Name', required=True,
+        on_change_with=['name'],
+        help='Folder name contains az09 characters')
     description = fields.Char('Description', select=1)
     files = fields.One2Many('galatea.static.file', 'folder', 'Files')
 
@@ -28,47 +27,47 @@ class GalateaStaticFolder(ModelSQL, ModelView):
     def __setup__(cls):
         super(GalateaStaticFolder, cls).__setup__()
         cls._constraints += [
-            ('check_folder_name', 'invalid_folder_name'),
+            ('check_name', 'invalid_name'),
         ]
         cls._sql_constraints += [
-            ('unique_folder', 'UNIQUE(folder_name)',
+            ('unique_folder', 'UNIQUE(name)',
              'Folder name needs to be unique')
         ]
         cls._error_messages.update({
-            'invalid_folder_name': """Invalid folder name:
+            'invalid_name': """Invalid folder name:
                 (1) '.' in folder name (OR)
                 (2) folder name begins with '/'""",
             'folder_cannot_change': "Folder name cannot be changed"
         })
 
-    def on_change_with_folder_name(self):
+    def on_change_with_name(self):
         """
-        Fills the name field with a slugified name
+        Slugified folder name
         """
         if self.get('name'):
-            if not self.get('folder_name'):
-                self['folder_name'] = slugify(self['name'])
-            return self['folder_name']
+            if not self.get('name'):
+                self['name'] = slugify(self['name'])
+            return self['name']
 
-    def check_folder_name(self):
+    def check_name(self):
         '''
         Check the validity of folder name
         Allowing the use of / or . will be risky as that could
         eventually lead to previlege escalation
         '''
-        if ('.' in self.folder_name) or (self.folder_name.startswith('/')):
+        if ('.' in self.name) or (self.name.startswith('/')):
             return False
         return True
 
     @classmethod
     def write(cls, folders, vals):
         """
-        Check if the folder_name has been modified.
+        Check if the folder name has been modified.
         If yes, raise an error.
 
         :param vals: values of the current record
         """
-        if vals.get('folder_name'):
+        if vals.get('name'):
             # TODO: Support this feature in future versions
             cls.raise_user_error('folder_cannot_change')
         return super(GalateaStaticFolder, cls).write(folders, vals)
@@ -77,9 +76,11 @@ class GalateaStaticFolder(ModelSQL, ModelView):
 class GalateaStaticFile(ModelSQL, ModelView):
     "Static files for Galatea"
     __name__ = "galatea.static.file"
-    name = fields.Char('File Name', select=True, required=True)
-    folder = fields.Many2One(
-        'galatea.static.folder', 'Folder', select=True, required=True)
+    name = fields.Char('File Name', required=True)
+    folder = fields.Many2One('galatea.static.folder', 'Folder',
+        states={
+            'required': Equal(Eval('type'), 'local'),
+        })
     type = fields.Selection([
         ('local', 'Local File'),
         ('remote', 'Remote File'),
@@ -90,8 +91,7 @@ class GalateaStaticFile(ModelSQL, ModelView):
             'required': Equal(Eval('type'), 'remote'),
             'invisible': Not(Equal(Eval('type'), 'remote'))
         })
-    file_binary = fields.Function(
-        fields.Binary('File', filename='name'),
+    file_binary = fields.Function(fields.Binary('File', filename='name'),
         'get_file_binary', 'set_file_binary')
     file_path = fields.Function(fields.Char('File Path'), 'get_file_path')
     url = fields.Function(fields.Char('URL'), 'get_url')
@@ -101,10 +101,6 @@ class GalateaStaticFile(ModelSQL, ModelView):
         super(GalateaStaticFile, cls).__setup__()
         cls._constraints += [
             ('check_file_name', 'invalid_file_name'),
-            ]
-        cls._sql_constraints += [
-            ('name_folder_uniq', 'UNIQUE(name, folder)',
-                'The Name of the Static File must be unique in a folder!'),
             ]
         cls._error_messages.update({
             'invalid_file_name': """Invalid file name:
@@ -203,7 +199,7 @@ class GalateaStaticFile(ModelSQL, ModelView):
         return os.path.abspath(
             os.path.join(
                 self.get_galatea_base_path(),
-                self.folder.folder_name, self.name
+                self.folder.name, self.name
             )) \
             if self.type == 'local' else self.remote_path
 
@@ -212,7 +208,7 @@ class GalateaStaticFile(ModelSQL, ModelView):
         False values
         """
         if self.type == 'local':
-            return 'static/%s/%s' % (self.folder, self.name)
+            return '/galatea-static/%s/%s' % (self.folder.name, self.name)
         elif self.type == 'remote':
             return self.remote_path
 
