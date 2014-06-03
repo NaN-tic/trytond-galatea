@@ -103,7 +103,7 @@ class GalateaUser(ModelSQL, ModelView):
 
     @staticmethod
     def default_company():
-        return Transaction().context.get('company') or None
+        return Transaction().context.get('company')
 
     @classmethod
     def __setup__(cls):
