@@ -31,10 +31,6 @@ class GalateaWebSite(ModelSQL, ModelView):
         )
     smtp_server = fields.Many2One('smtp.server', 'SMTP Server',
         domain=[('state', '=', 'done')], required=True)
-    login = fields.Boolean('Login',
-        help='Allow login users')
-    registration = fields.Boolean('Registration',
-        help='Allow registration users')
 
     @staticmethod
     def default_timezone():
@@ -42,14 +38,6 @@ class GalateaWebSite(ModelSQL, ModelView):
 
     @staticmethod
     def default_active():
-        return True
-
-    @staticmethod
-    def default_login():
-        return True
-
-    @staticmethod
-    def default_registration():
         return True
 
     @classmethod
@@ -96,10 +84,16 @@ class GalateaUser(ModelSQL, ModelView):
     timezone = fields.Selection(
         [(x, x) for x in pytz.common_timezones], 'Timezone', translate=False
         )
+    manager = fields.Boolean('Manager', help='Allow user in manager sections')
+    active = fields.Boolean('Active', help='Allow login users')
 
     @staticmethod
     def default_timezone():
         return "UTC"
+
+    @staticmethod
+    def default_active():
+        return True
 
     @staticmethod
     def default_company():

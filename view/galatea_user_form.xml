@@ -10,6 +10,10 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
         <field name="email"/>
         <label name="password"/>
         <field name="password"/>
+        <label name="active"/>
+        <field name="active"/>
+        <label name="manager"/>
+        <field name="manager"/>
         <label name="company"/>
         <field name="company"/>
         <label name="timezone"/>
