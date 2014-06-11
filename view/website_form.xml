@@ -8,6 +8,8 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
     <field name="active"/>
     <label name="company"/>
     <field name="company"/>
+    <label name="currency"/>
+    <field name="currency"/>
     <label name="timezone"/>
     <field name="timezone"/>
     <notebook colspan="4">

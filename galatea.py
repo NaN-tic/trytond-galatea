@@ -23,9 +23,7 @@ class GalateaWebSite(ModelSQL, ModelView):
     countries = fields.Many2Many(
         'galatea.website-country.country', 'website', 'country',
         'Countries Available')
-    currencies = fields.Many2Many(
-        'galatea.website-currency.currency',
-        'website', 'currency', 'Currencies Available')
+    currency = fields.Many2One('currency.currency', 'Currency', required=True)
     timezone = fields.Selection(
         [(x, x) for x in pytz.common_timezones], 'Timezone', translate=False
         )
