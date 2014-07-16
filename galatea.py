@@ -18,6 +18,8 @@ class GalateaWebSite(ModelSQL, ModelView):
     'Galatea Web Site'
     __name__ = "galatea.website"
     name = fields.Char('Name', required=True, select=True)
+    uri = fields.Char('Uri', required=True,
+        help='Base Uri Site (with "/")')
     company = fields.Many2One('company.company', 'Company', required=True)
     active = fields.Boolean('Active')
     countries = fields.Many2Many(
