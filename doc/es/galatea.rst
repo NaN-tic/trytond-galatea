@@ -117,3 +117,59 @@ También puede usar esta url para disponer de los ficheros que haya adjuntado co
               el uso de espacios y accentos y mejor siempre usar todo en minúscula.
 
 .. |menu_galatea_static| tryref:: galatea.menu_galatea_static/complete_name
+
+
+.. inheritref:: galatea/galatea:section:imagenes_y_videos
+
+Imagenes y vídeos
+-----------------
+
+En las descripciones que le permite añadir etiquetas wiki también podrá añadir etiquetas para
+mostrar contenido gráfico, como es el caso de imágenes y vídeos.
+
+Para la publicación de imágenes internas puede adjuntar como adjunto en el registro.
+Si además desea visualizar las imágenes en la descripción del registro puede `usar las etiquetas de la wiki
+<http://meta.wikimedia.org/wiki/Help:Wikitext_examples#Images.2C_tables.2C_video.2C_and_sounds>`_.
+Recuerde en la ruta de la imagen no solamente sea el nombre del fichero si no la ruta absoluta. Ejemplo:
+
+    /file/nombre-del-fichero.jpg
+
+Para insertar vídeos y en el caso que use Youtube o Vimeo como herramienta de publicación de sus vídeos,
+puede usar las etiquetas para publicar el vídeo:
+
+Youtube:
+
+    {{ "9bJuEy2fHwQ"|youtube }}
+    {{ "9bJuEy2fHwQ"|youtube('small') }}
+    {{ "9bJuEy2fHwQ"|youtube('large') }}
+
+Vimeo:
+
+    {{ "61619702"|vimeo }}
+    {{ "61619702"|vimeo('small') }}
+    {{ "61619702"|vimeo('large') }}
+
+Ambos casos el número o código es el ID del vídeo que le proporciona Youtube o Vimeo.
+
+.. inheritref:: galatea/galatea:section:documentos_y_ficheros
+
+Documentos y ficheros
+---------------------
+
+Igual que las imágenes, puede publicar ficheros como adjuntos. Estos ficheros estarán disponibles
+en la dirección como una imagen:
+
+    /file/nombre-del-fichero.pdf
+
+Si desea añadir una descarga de este fichero deberá crear un vínculo que apunte a esta dirección.
+Para crear vínculos puede `usar las etiquetas de la wiki <http://meta.wikimedia.org/wiki/Help:Wikitext_examples#Links>`_.
+Ejemplo:
+
+    [/file/nombre-del-fichero.pdf Esto es un ejemplo]
+
+Si usa Slideshare como herramienta de publicación de sus presentaciones, puede usar las etiquetas
+para publicar:
+
+    {{ "28069836"|slideshare }}
+    {{ "28069836"|slideshare('small') }}
+    {{ "28069836"|slideshare('large') }}
