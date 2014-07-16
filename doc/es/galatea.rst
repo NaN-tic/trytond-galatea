@@ -139,11 +139,15 @@ puede usar las etiquetas para publicar el vídeo:
 
 Youtube:
 
+.. code:: python
+
     {{ "9bJuEy2fHwQ"|youtube }}
     {{ "9bJuEy2fHwQ"|youtube('small') }}
     {{ "9bJuEy2fHwQ"|youtube('large') }}
 
 Vimeo:
+
+.. code:: python
 
     {{ "61619702"|vimeo }}
     {{ "61619702"|vimeo('small') }}
@@ -169,6 +173,8 @@ Ejemplo:
 
 Si usa Slideshare como herramienta de publicación de sus presentaciones, puede usar las etiquetas
 para publicar:
+
+.. code:: python
 
     {{ "28069836"|slideshare }}
     {{ "28069836"|slideshare('small') }}
