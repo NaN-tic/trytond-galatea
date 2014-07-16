@@ -2,3 +2,458 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
+msgctxt "error:galatea.static.file:"
+msgid ""
+"Invalid file name:\n"
+"                (1) '..' in file name (OR)\n"
+"                (2) file name contains '/'"
+msgstr ""
+"Nom del fitxer incorrecte:\n"
+"                (1) '..' en el nom (o bé)\n"
+"                (2) el fitxe conté '/'"
+
+msgctxt "error:galatea.static.file:"
+msgid "You can't change file name"
+msgstr "No pot canviar el nom del fitxer."
+
+msgctxt "error:galatea.static.folder:"
+msgid "Folder name cannot be changed"
+msgstr "El directori no es pot canviar"
+
+msgctxt "error:galatea.static.folder:"
+msgid "Folder name needs to be unique"
+msgstr "El nom del directori ha de ser únic"
+
+msgctxt "error:galatea.static.folder:"
+msgid ""
+"Invalid folder name:\n"
+"                (1) '.' in folder name (OR)\n"
+"                (2) folder name begins with '/'"
+msgstr ""
+"Nom del directori incorrecte:\n"
+"                (1) '.' el nom del directori (o bé)\n"
+"                (2) el directori acaba amb '/'"
+
+msgctxt "error:galatea.user:"
+msgid "Email must be unique in a company"
+msgstr "El correu electrònic es únic per companyia"
+
+msgctxt "error:galatea.website:"
+msgid "Another site with the same name already exists!"
+msgstr "Disposa d'un altre lloc web amb el mateix nom."
+
+msgctxt "field:galatea.static.file,create_date:"
+msgid "Create Date"
+msgstr "Data creació"
+
+msgctxt "field:galatea.static.file,create_uid:"
+msgid "Create User"
+msgstr "Usuari creació"
+
+msgctxt "field:galatea.static.file,file_binary:"
+msgid "File"
+msgstr "Fitxer"
+
+msgctxt "field:galatea.static.file,file_path:"
+msgid "File Path"
+msgstr "Ruta fitxer"
+
+msgctxt "field:galatea.static.file,folder:"
+msgid "Folder"
+msgstr "Directori"
+
+msgctxt "field:galatea.static.file,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:galatea.static.file,name:"
+msgid "File Name"
+msgstr "Nom fitxer"
+
+msgctxt "field:galatea.static.file,rec_name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:galatea.static.file,remote_path:"
+msgid "Remote File"
+msgstr "Fitxer remot"
+
+msgctxt "field:galatea.static.file,type:"
+msgid "File Type"
+msgstr "Tipus fitxer"
+
+msgctxt "field:galatea.static.file,url:"
+msgid "URL"
+msgstr "URL"
+
+msgctxt "field:galatea.static.file,write_date:"
+msgid "Write Date"
+msgstr "Data modificació"
+
+msgctxt "field:galatea.static.file,write_uid:"
+msgid "Write User"
+msgstr "Usuari modificació"
+
+msgctxt "field:galatea.static.folder,create_date:"
+msgid "Create Date"
+msgstr "Data creació"
+
+msgctxt "field:galatea.static.folder,create_uid:"
+msgid "Create User"
+msgstr "Usuari creació"
+
+msgctxt "field:galatea.static.folder,description:"
+msgid "Description"
+msgstr "Descripció"
+
+msgctxt "field:galatea.static.folder,files:"
+msgid "Files"
+msgstr "Fitxers"
+
+msgctxt "field:galatea.static.folder,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:galatea.static.folder,name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:galatea.static.folder,rec_name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:galatea.static.folder,write_date:"
+msgid "Write Date"
+msgstr "Data modificació"
+
+msgctxt "field:galatea.static.folder,write_uid:"
+msgid "Write User"
+msgstr "Usuari modificació"
+
+msgctxt "field:galatea.user,activation_code:"
+msgid "Unique Activation Code"
+msgstr "Codi d'activació únic"
+
+msgctxt "field:galatea.user,active:"
+msgid "Active"
+msgstr "Actiu"
+
+msgctxt "field:galatea.user,company:"
+msgid "Company"
+msgstr "Empresa"
+
+msgctxt "field:galatea.user,create_date:"
+msgid "Create Date"
+msgstr "Data creació"
+
+msgctxt "field:galatea.user,create_uid:"
+msgid "Create User"
+msgstr "Usuari creació"
+
+msgctxt "field:galatea.user,display_name:"
+msgid "Display Name"
+msgstr "Nom a mostrar"
+
+msgctxt "field:galatea.user,email:"
+msgid "e-Mail"
+msgstr "e-Mail"
+
+msgctxt "field:galatea.user,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:galatea.user,manager:"
+msgid "Manager"
+msgstr "Gestor"
+
+msgctxt "field:galatea.user,party:"
+msgid "Party"
+msgstr "Tercer"
+
+msgctxt "field:galatea.user,password:"
+msgid "Password"
+msgstr "Contrasenya"
+
+msgctxt "field:galatea.user,rec_name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:galatea.user,salt:"
+msgid "Salt"
+msgstr "Salt"
+
+msgctxt "field:galatea.user,timezone:"
+msgid "Timezone"
+msgstr "Zona horària"
+
+msgctxt "field:galatea.user,write_date:"
+msgid "Write Date"
+msgstr "Data modificació"
+
+msgctxt "field:galatea.user,write_uid:"
+msgid "Write User"
+msgstr "Usuari modificació"
+
+msgctxt "field:galatea.website,active:"
+msgid "Active"
+msgstr "Actiu"
+
+msgctxt "field:galatea.website,company:"
+msgid "Company"
+msgstr "Empresa"
+
+msgctxt "field:galatea.website,countries:"
+msgid "Countries Available"
+msgstr "Països disponibles"
+
+msgctxt "field:galatea.website,create_date:"
+msgid "Create Date"
+msgstr "Data creació"
+
+msgctxt "field:galatea.website,create_uid:"
+msgid "Create User"
+msgstr "Usuari creació"
+
+msgctxt "field:galatea.website,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:galatea.website,name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:galatea.website,rec_name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:galatea.website,smtp_server:"
+msgid "SMTP Server"
+msgstr "Servidor SMTP"
+
+msgctxt "field:galatea.website,timezone:"
+msgid "Timezone"
+msgstr "Zona horària"
+
+msgctxt "field:galatea.website,uri:"
+msgid "Uri"
+msgstr "Uri"
+
+msgctxt "field:galatea.website,write_date:"
+msgid "Write Date"
+msgstr "Data modificació"
+
+msgctxt "field:galatea.website,write_uid:"
+msgid "Write User"
+msgstr "Usuari modificació"
+
+msgctxt "field:galatea.website-country.country,country:"
+msgid "Country"
+msgstr "País"
+
+msgctxt "field:galatea.website-country.country,create_date:"
+msgid "Create Date"
+msgstr "Data creació"
+
+msgctxt "field:galatea.website-country.country,create_uid:"
+msgid "Create User"
+msgstr "Usuari creació"
+
+msgctxt "field:galatea.website-country.country,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:galatea.website-country.country,rec_name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:galatea.website-country.country,website:"
+msgid "Website"
+msgstr "Lloc Web"
+
+msgctxt "field:galatea.website-country.country,write_date:"
+msgid "Write Date"
+msgstr "Data modificació"
+
+msgctxt "field:galatea.website-country.country,write_uid:"
+msgid "Write User"
+msgstr "Usuari modificació"
+
+msgctxt "field:galatea.website-currency.currency,create_date:"
+msgid "Create Date"
+msgstr "Data creació"
+
+msgctxt "field:galatea.website-currency.currency,create_uid:"
+msgid "Create User"
+msgstr "Usuari creació"
+
+msgctxt "field:galatea.website-currency.currency,currency:"
+msgid "Currency"
+msgstr "Moneda"
+
+msgctxt "field:galatea.website-currency.currency,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:galatea.website-currency.currency,rec_name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:galatea.website-currency.currency,website:"
+msgid "Website"
+msgstr "Lloc Web"
+
+msgctxt "field:galatea.website-currency.currency,write_date:"
+msgid "Write Date"
+msgstr "Data modificació"
+
+msgctxt "field:galatea.website-currency.currency,write_uid:"
+msgid "Write User"
+msgstr "Usuari modificació"
+
+msgctxt "field:party.party,galatea_users:"
+msgid "Galatea Users"
+msgstr "Galatea Usuaris"
+
+msgctxt "help:galatea.static.folder,name:"
+msgid "Folder name contains az09 characters"
+msgstr "El nom del directori ha de contenir els caràcters az09"
+
+msgctxt "help:galatea.user,active:"
+msgid "Allow login users"
+msgstr "Permet identificar usuaris"
+
+msgctxt "help:galatea.user,manager:"
+msgid "Allow user in manager sections"
+msgstr "Permet usuaris gestionar seccions"
+
+msgctxt "help:galatea.website,uri:"
+msgid "Base Uri Site (with \"/\")"
+msgstr "Base Uri del lloc web (amb \"/\")"
+
+msgctxt "model:galatea.static.file,name:"
+msgid "Static files for Galatea"
+msgstr "Fitxers estàtics per Galatea"
+
+msgctxt "model:galatea.static.folder,name:"
+msgid "Static folder for Galatea"
+msgstr "Directoris estàtics per Galatea"
+
+msgctxt "model:galatea.user,name:"
+msgid "Galatea Users"
+msgstr "Galatea Usuaris"
+
+msgctxt "model:galatea.website,name:"
+msgid "Galatea Web Site"
+msgstr "Galatea Lloc web"
+
+msgctxt "model:galatea.website-country.country,name:"
+msgid "Website Country Relations"
+msgstr "Relació països i llocs web"
+
+msgctxt "model:galatea.website-currency.currency,name:"
+msgid "Currencies to be made available on website"
+msgstr "Monedes disponibles en el lloc web"
+
+msgctxt "model:ir.action,name:act_website_form"
+msgid "Web Sites"
+msgstr "Llocs Web"
+
+msgctxt "model:ir.action,name:action_galatea_static_file_view"
+msgid "Galatea Static Files"
+msgstr "Galatea fitxers estàtics"
+
+msgctxt "model:ir.action,name:action_galatea_static_folder_view"
+msgid "Galatea Static Folders"
+msgstr "Galatea directoris estàtics"
+
+msgctxt "model:ir.action,name:action_galatea_user_view"
+msgid "Galatea User"
+msgstr "Galatea Usuari"
+
+msgctxt "model:ir.ui.menu,name:menu_galatea"
+msgid "Galatea"
+msgstr "Galatea"
+
+msgctxt "model:ir.ui.menu,name:menu_galatea_config_static_file"
+msgid "Static Files"
+msgstr "Fitxers estàtics"
+
+msgctxt "model:ir.ui.menu,name:menu_galatea_config_static_folder"
+msgid "Static Folders"
+msgstr "Directoris estàtics"
+
+msgctxt "model:ir.ui.menu,name:menu_galatea_configuration"
+msgid "Configuration"
+msgstr "Configuració"
+
+msgctxt "model:ir.ui.menu,name:menu_galatea_static"
+msgid "Static"
+msgstr "Estàtic"
+
+msgctxt "model:ir.ui.menu,name:menu_galatea_user"
+msgid "Users"
+msgstr "Usuaris"
+
+msgctxt "model:ir.ui.menu,name:menu_galatea_users"
+msgid "Users"
+msgstr "Usuaris"
+
+msgctxt "model:ir.ui.menu,name:menu_website_form"
+msgid "Web Sites"
+msgstr "Llocs Web"
+
+msgctxt "model:res.group,name:group_galatea_admin"
+msgid "Galatea Administration"
+msgstr "Administració Galatea"
+
+msgctxt "selection:galatea.static.file,type:"
+msgid "Local File"
+msgstr "Fitxer local"
+
+msgctxt "selection:galatea.static.file,type:"
+msgid "Remote File"
+msgstr "Fitxer remot"
+
+msgctxt "view:galatea.static.file:"
+msgid "Paths"
+msgstr "Rutes"
+
+msgctxt "view:galatea.static.file:"
+msgid "Preview"
+msgstr "Previsualització"
+
+msgctxt "view:galatea.static.folder:"
+msgid "Files"
+msgstr "Fitxers"
+
+msgctxt "view:galatea.static.folder:"
+msgid "Static Folder"
+msgstr "Directori estàtic"
+
+msgctxt "view:galatea.user:"
+msgid "Galatea User"
+msgstr "Galatea Usuari"
+
+msgctxt "view:galatea.website:"
+msgid "Configuration"
+msgstr "Configuració"
+
+msgctxt "view:galatea.website:"
+msgid "Countries"
+msgstr "Països"
+
+msgctxt "view:galatea.website:"
+msgid "Email"
+msgstr "Correu electrònic"
+
+msgctxt "view:galatea.website:"
+msgid "Web Site"
+msgstr "Lloc Web"
+
+msgctxt "view:galatea.website:"
+msgid "Web Sites"
+msgstr "Llocs Web"
+
+msgctxt "view:party.party:"
+msgid "Galatea"
+msgstr "Galatea"
