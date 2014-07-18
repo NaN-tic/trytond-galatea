@@ -9,6 +9,12 @@ import pytz
 import random
 import string
 
+try:
+    import hashlib
+except ImportError:
+    hashlib = None
+    import sha
+
 __all__ = ['GalateaWebSite', 'GalateaWebsiteCountry', 'GalateaWebsiteCurrency',
     'GalateaUser']
 __metaclass__ = PoolMeta
@@ -118,7 +124,12 @@ class GalateaUser(ModelSQL, ModelView):
         if values.get('password'):
             values['salt'] = ''.join(random.sample(
                 string.ascii_letters + string.digits, 8))
-            values['password'] += values['salt']
+            password = values['password'] + values['salt']
+            if hashlib:
+                digest = hashlib.sha1(password).hexdigest()
+            else:
+                digest = sha.new(password).hexdigest()
+            values['password'] = digest
 
         return values
 
