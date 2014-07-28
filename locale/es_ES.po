@@ -168,7 +168,7 @@ msgstr "Gestor"
 
 msgctxt "field:galatea.user,party:"
 msgid "Party"
-msgstr "Hijo"
+msgstr "Tercero"
 
 msgctxt "field:galatea.user,password:"
 msgid "Password"
