@@ -16,6 +16,8 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
     <field name="timezone"/>
     <notebook colspan="4">
         <page id="configuration" string="Configuration">
+            <label name="registration"/>
+            <field name="registration"/>
         </page>
         <page id="email" string="Email">
             <label name="smtp_server"/>

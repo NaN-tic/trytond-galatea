@@ -18,4 +18,7 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
     <field name="manager"/>
     <label name="timezone"/>
     <field name="timezone"/>
+    <newline/>
+    <separator name="websites" colspan="4"/>
+    <field name="websites" colspan="4"/>
 </form>

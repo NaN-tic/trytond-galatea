@@ -2,7 +2,7 @@
 #The COPYRIGHT file at the top level of this repository contains 
 #the full copyright notices and license terms.
 from trytond.model import ModelView, ModelSQL, fields
-from trytond.pool import PoolMeta
+from trytond.pool import Pool, PoolMeta
 from trytond.transaction import Transaction
 
 import pytz
@@ -16,7 +16,7 @@ except ImportError:
     import sha
 
 __all__ = ['GalateaWebSite', 'GalateaWebsiteCountry', 'GalateaWebsiteCurrency',
-    'GalateaUser']
+    'GalateaUser', 'GalateaUserWebSite']
 __metaclass__ = PoolMeta
 
 
@@ -28,6 +28,8 @@ class GalateaWebSite(ModelSQL, ModelView):
         help='Base Uri Site (with "/")')
     company = fields.Many2One('company.company', 'Company', required=True)
     active = fields.Boolean('Active')
+    registration = fields.Boolean('Registration',
+        help='Add website in users when users do a new registration')
     countries = fields.Many2Many(
         'galatea.website-country.country', 'website', 'country',
         'Countries Available')
@@ -44,6 +46,10 @@ class GalateaWebSite(ModelSQL, ModelView):
 
     @staticmethod
     def default_active():
+        return True
+
+    @staticmethod
+    def default_registration():
         return True
 
     @classmethod
@@ -92,6 +98,9 @@ class GalateaUser(ModelSQL, ModelView):
         )
     manager = fields.Boolean('Manager', help='Allow user in manager sections')
     active = fields.Boolean('Active', help='Allow login users')
+    websites = fields.Many2Many('galatea.user-galatea.website', 
+        'user', 'website', 'Websites',
+        help='Users will be available this websites to login')
 
     @staticmethod
     def default_timezone():
@@ -104,6 +113,11 @@ class GalateaUser(ModelSQL, ModelView):
     @staticmethod
     def default_company():
         return Transaction().context.get('company')
+
+    @staticmethod
+    def default_websites():
+        Website = Pool().get('galatea.website')
+        return [p.id for p in Website.search([('registration','=',True)])]
 
     @classmethod
     def __setup__(cls):
@@ -143,3 +157,13 @@ class GalateaUser(ModelSQL, ModelView):
     def write(cls, users, values):
         "Update salt before saving"
         return super(GalateaUser, cls).write(users, cls._convert_values(values))
+
+
+class GalateaUserWebSite(ModelSQL):
+    'Galatea User - Website'
+    __name__ = 'galatea.user-galatea.website'
+    _table = 'galatea_user_galatea_website'
+    user = fields.Many2One('galatea.user', 'User', ondelete='CASCADE',
+            select=True, required=True)
+    website = fields.Many2One('galatea.website', 'Website', ondelete='RESTRICT',
+            select=True, required=True)

@@ -12,6 +12,7 @@ def register():
         GalateaWebsiteCountry,
         GalateaWebsiteCurrency,
         GalateaUser,
+        GalateaUserWebSite,
         GalateaStaticFolder,
         GalateaStaticFile,
         Party,
