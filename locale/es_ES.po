@@ -66,6 +66,10 @@ msgctxt "field:galatea.static.file,folder:"
 msgid "Folder"
 msgstr "Directorio"
 
+msgctxt "field:galatea.static.file,id:"
+msgid "ID"
+msgstr "Identificador"
+
 msgctxt "field:galatea.static.file,name:"
 msgid "File Name"
 msgstr "Nombre fichero"
@@ -186,11 +190,47 @@ msgctxt "field:galatea.user,timezone:"
 msgid "Timezone"
 msgstr "Zona horaria"
 
+msgctxt "field:galatea.user,websites:"
+msgid "Websites"
+msgstr "Tiendas"
+
 msgctxt "field:galatea.user,write_date:"
 msgid "Write Date"
 msgstr "Fecha modificación"
 
 msgctxt "field:galatea.user,write_uid:"
+msgid "Write User"
+msgstr "Usuario modificación"
+
+msgctxt "field:galatea.user-galatea.website,create_date:"
+msgid "Create Date"
+msgstr "Fecha creación"
+
+msgctxt "field:galatea.user-galatea.website,create_uid:"
+msgid "Create User"
+msgstr "Usuario creación"
+
+msgctxt "field:galatea.user-galatea.website,id:"
+msgid "ID"
+msgstr "Identificador"
+
+msgctxt "field:galatea.user-galatea.website,rec_name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:galatea.user-galatea.website,user:"
+msgid "User"
+msgstr "Usuario"
+
+msgctxt "field:galatea.user-galatea.website,website:"
+msgid "Website"
+msgstr "Sitio Web"
+
+msgctxt "field:galatea.user-galatea.website,write_date:"
+msgid "Write Date"
+msgstr "Fecha modificación"
+
+msgctxt "field:galatea.user-galatea.website,write_uid:"
 msgid "Write User"
 msgstr "Usuario modificación"
 
@@ -214,6 +254,10 @@ msgctxt "field:galatea.website,create_uid:"
 msgid "Create User"
 msgstr "Usuario creación"
 
+msgctxt "field:galatea.website,currency:"
+msgid "Currency"
+msgstr "Moneda"
+
 msgctxt "field:galatea.website,id:"
 msgid "ID"
 msgstr "ID"
@@ -225,6 +269,10 @@ msgstr "Nombre"
 msgctxt "field:galatea.website,rec_name:"
 msgid "Name"
 msgstr "Nombre"
+
+msgctxt "field:galatea.website,registration:"
+msgid "Registration"
+msgstr "Registro"
 
 msgctxt "field:galatea.website,smtp_server:"
 msgid "SMTP Server"
@@ -326,6 +374,14 @@ msgctxt "help:galatea.user,manager:"
 msgid "Allow user in manager sections"
 msgstr "Permite la gestión de los usuarios en ciertas secciones"
 
+msgctxt "help:galatea.user,websites:"
+msgid "Users will be available this websites to login"
+msgstr "Los usuarios podrán identificarse en estos sitios web"
+
+msgctxt "help:galatea.website,registration:"
+msgid "Add website in users when users do a new registration"
+msgstr "Añade sitios web a los usuarios cuando los usuarios se den de alta"
+
 msgctxt "help:galatea.website,uri:"
 msgid "Base Uri Site (with \"/\")"
 msgstr "URI base del sitio web (con \"/\")"
@@ -341,6 +397,10 @@ msgstr "Directorios estáticos para Galatea"
 msgctxt "model:galatea.user,name:"
 msgid "Galatea Users"
 msgstr "Galatea Usuarios"
+
+msgctxt "model:galatea.user-galatea.website,name:"
+msgid "Galatea User - Website"
+msgstr "Galatea Usuario - Sitio web"
 
 msgctxt "model:galatea.website,name:"
 msgid "Galatea Web Site"
