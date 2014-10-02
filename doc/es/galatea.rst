@@ -7,6 +7,17 @@ Galatea es el nombre que se le ha dado a la plataforma web de su ERP.
 A continuación se listara las funcionalidades de la plataforma web que dispone así
 como la documentación para sus usuarios.
 
+.. inheritref:: galatea/galatea:section:grupos
+
+------
+Grupos
+------
+
+Los grupos por defecto que dispondremos para añadir a los usuarios son:
+
+ * Galatea Administrador: Grupo para la gestión de Galatea.
+ * Galatea: Grupo para las conexiones de Flask App.
+
 .. inheritref:: galatea/galatea:section:usuarios
 
 --------
