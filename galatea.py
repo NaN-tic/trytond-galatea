@@ -52,6 +52,10 @@ class GalateaWebSite(ModelSQL, ModelView):
     def default_registration():
         return True
 
+    @staticmethod
+    def default_company():
+        return Transaction().context.get('company')
+
     @classmethod
     def __setup__(cls):
         super(GalateaWebSite, cls).__setup__()
