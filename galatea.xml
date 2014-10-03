@@ -113,6 +113,14 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
             <field name="perm_create" eval="False"/>
             <field name="perm_delete" eval="False"/>
         </record>
+        <record model="ir.model.access" id="access_galatea_admin_galatea_website">
+            <field name="model" search="[('model', '=', 'galatea.website')]"/>
+            <field name="group" ref="group_galatea_admin"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
         <record model="ir.model.access" id="access_galatea_galatea_website">
             <field name="model" search="[('model', '=', 'galatea.website')]"/>
             <field name="group" ref="group_galatea"/>
