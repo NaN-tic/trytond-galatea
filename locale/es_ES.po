@@ -192,7 +192,7 @@ msgstr "Zona horaria"
 
 msgctxt "field:galatea.user,websites:"
 msgid "Websites"
-msgstr "Tiendas"
+msgstr "Sitio web"
 
 msgctxt "field:galatea.user,write_date:"
 msgid "Write Date"

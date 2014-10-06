@@ -188,7 +188,7 @@ msgstr "Zona horària"
 
 msgctxt "field:galatea.user,websites:"
 msgid "Websites"
-msgstr "Botigues"
+msgstr "Lloc web"
 
 msgctxt "field:galatea.user,write_date:"
 msgid "Write Date"
