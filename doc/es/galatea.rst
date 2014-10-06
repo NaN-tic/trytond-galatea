@@ -51,6 +51,12 @@ Alta de un usuario
 Si damos de alta un usuario un usuario en el sistema, este usuario es dado de alta
 y ya se puede identificar (login).
 
+Si dispone de varios sitios web, en el apartado "Sitio web" del usuario podrá especificar
+en que sitios web permite el usuario hace un login. Por defecto cuando se da de alta un
+usuario está disponible a todos los sitios web que tengan activo la opción "Registro".
+Si a un sitio web no desea que puede hacer login, elimine el sitio web relacionado
+con el usuario.
+
 Si un usuario es dado de alta con la plataforma web, el usuario deberá seguir los pasos:
 
 * Rellenar el formulario de alta. Accede a http://www.sudominio.com/es/registration
