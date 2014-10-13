@@ -26,6 +26,10 @@ class GalateaWebSite(ModelSQL, ModelView):
     name = fields.Char('Name', required=True, select=True)
     uri = fields.Char('Uri', required=True,
         help='Base Uri Site (with "/")')
+    folder = fields.Char('Folder', required=True,
+        help='Flask App directory')
+    static_folder = fields.Char('Static Folder', required=True,
+        help='Flask Static directory')
     company = fields.Many2One('company.company', 'Company', required=True)
     active = fields.Boolean('Active')
     registration = fields.Boolean('Registration',
