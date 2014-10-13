@@ -258,6 +258,10 @@ msgctxt "field:galatea.website,currency:"
 msgid "Currency"
 msgstr "Moneda"
 
+msgctxt "field:galatea.website,folder:"
+msgid "Folder"
+msgstr "Directorio"
+
 msgctxt "field:galatea.website,id:"
 msgid "ID"
 msgstr "ID"
@@ -277,6 +281,10 @@ msgstr "Registro"
 msgctxt "field:galatea.website,smtp_server:"
 msgid "SMTP Server"
 msgstr "Servidor SMTP"
+
+msgctxt "field:galatea.website,static_folder:"
+msgid "Static Folder"
+msgstr "Directorio estático"
 
 msgctxt "field:galatea.website,timezone:"
 msgid "Timezone"
@@ -378,9 +386,17 @@ msgctxt "help:galatea.user,websites:"
 msgid "Users will be available this websites to login"
 msgstr "Los usuarios podrán identificarse en estos sitios web"
 
+msgctxt "help:galatea.website,folder:"
+msgid "Flask App directory"
+msgstr "Flask App directorio"
+
 msgctxt "help:galatea.website,registration:"
 msgid "Add website in users when users do a new registration"
 msgstr "Añade sitios web a los usuarios cuando los usuarios se den de alta"
+
+msgctxt "help:galatea.website,static_folder:"
+msgid "Flask Static directory"
+msgstr "Flask Static directorio"
 
 msgctxt "help:galatea.website,uri:"
 msgid "Base Uri Site (with \"/\")"
@@ -461,6 +477,10 @@ msgstr "Usuarios"
 msgctxt "model:ir.ui.menu,name:menu_website_form"
 msgid "Web Sites"
 msgstr "Sitios Web"
+
+msgctxt "model:res.group,name:group_galatea"
+msgid "Galatea"
+msgstr "Galatea"
 
 msgctxt "model:res.group,name:group_galatea_admin"
 msgid "Galatea Administration"
