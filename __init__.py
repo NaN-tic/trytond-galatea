@@ -13,7 +13,12 @@ def register():
         GalateaWebsiteCurrency,
         GalateaUser,
         GalateaUserWebSite,
+        GalateaSendPasswordStart,
+        GalateaSendPasswordResult,
         GalateaStaticFolder,
         GalateaStaticFile,
         Party,
         module='galatea', type_='model')
+    Pool.register(
+        GalateaSendPassword,
+        module='galatea', type_='wizard')

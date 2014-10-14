@@ -2,8 +2,12 @@
 #The COPYRIGHT file at the top level of this repository contains 
 #the full copyright notices and license terms.
 from trytond.model import ModelView, ModelSQL, fields
+from trytond.wizard import Wizard, StateTransition, StateView, Button
 from trytond.pool import Pool, PoolMeta
 from trytond.transaction import Transaction
+from email import Utils
+from email.header import Header
+from email.mime.text import MIMEText
 
 import pytz
 import random
@@ -16,7 +20,8 @@ except ImportError:
     import sha
 
 __all__ = ['GalateaWebSite', 'GalateaWebsiteCountry', 'GalateaWebsiteCurrency',
-    'GalateaUser', 'GalateaUserWebSite']
+    'GalateaUser', 'GalateaUserWebSite', 'GalateaSendPasswordStart',
+    'GalateaSendPasswordResult', 'GalateaSendPassword']
 __metaclass__ = PoolMeta
 
 
@@ -44,6 +49,17 @@ class GalateaWebSite(ModelSQL, ModelView):
     smtp_server = fields.Many2One('smtp.server', 'SMTP Server',
         domain=[('state', '=', 'done')], required=True)
 
+    @classmethod
+    def __setup__(cls):
+        super(GalateaWebSite, cls).__setup__()
+        cls._sql_constraints = [
+            ('name_uniq', 'UNIQUE(name)',
+             'Another site with the same name already exists!')
+            ]
+        cls._error_messages.update({
+                'smtp_error': 'Wrong connection to SMTP server. Not send email.',
+                })
+
     @staticmethod
     def default_timezone():
         return 'UTC'
@@ -60,13 +76,29 @@ class GalateaWebSite(ModelSQL, ModelView):
     def default_company():
         return Transaction().context.get('company')
 
-    @classmethod
-    def __setup__(cls):
-        super(GalateaWebSite, cls).__setup__()
-        cls._sql_constraints = [
-            ('name_uniq', 'UNIQUE(name)',
-             'Another site with the same name already exists!')
-        ]
+    @staticmethod
+    def send_email(server, recipients, subject, body):
+        Website = Pool().get('galatea.website')
+        SMTP = Pool().get('smtp.server')
+
+        from_ = server.smtp_email
+        if server.smtp_use_email:
+            from_ = server.smtp_email
+
+        msg = MIMEText(body, _charset='utf-8')
+        msg['Subject'] = Header(subject, 'utf-8')
+        msg['From'] = from_
+        msg['To'] = ', '.join(recipients)
+        msg['Reply-to'] = server.smtp_email
+        # msg['Date']     = Utils.formatdate(localtime = 1)
+        msg['Message-ID'] = Utils.make_msgid()
+
+        try:
+            server = SMTP.get_smtp_server(server)
+            server.sendmail(from_, recipients, msg.as_string())
+            server.quit()
+        except:
+            Website.raise_user_error('smtp_error')
 
 
 class GalateaWebsiteCountry(ModelSQL):
@@ -175,3 +207,89 @@ class GalateaUserWebSite(ModelSQL):
             select=True, required=True)
     website = fields.Many2One('galatea.website', 'Website', ondelete='RESTRICT',
             select=True, required=True)
+
+
+class GalateaSendPasswordStart(ModelView):
+    'Galatea User Start'
+    __name__ = 'galatea.send.password.start'
+    password = fields.Char('Password', required=True)
+    website = fields.Many2One('galatea.website', 'Website', required=True,
+        help='Select shop will be export this product.')
+
+    @classmethod
+    def default_website(cls):
+        Website = Pool().get('galatea.website')
+        websites = Website.search([('active', '=', True)])
+        if len(websites) >= 1:
+            return websites[0].id
+
+
+class GalateaSendPasswordResult(ModelView):
+    'Galatea Use Result'
+    __name__ = 'galatea.send.password.result'
+    info = fields.Text('Info', readonly=True)
+
+
+class GalateaSendPassword(Wizard):
+    'Send Password by email'
+    __name__ = "galatea.send.password"
+    start = StateView('galatea.send.password.start',
+        'galatea.galatea_send_password_start', [
+            Button('Cancel', 'end', 'tryton-cancel'),
+            Button('Send', 'send', 'tryton-ok', default=True),
+            ])
+    send = StateTransition()
+    result = StateView('galatea.send.password.result',
+        'galatea.galatea_send_password_result', [
+            Button('Close', 'end', 'tryton-close'),
+            ])
+
+    @classmethod
+    def __setup__(cls):
+        super(GalateaSendPassword, cls).__setup__()
+        cls._error_messages.update({
+                'send_info': 'Send new password to %s',
+                'email_subject': '%s. New password reset',
+                'email_text': 'Hello %s\n' \
+                    'New password reset for your user account %s: %s\n\n' \
+                    '%s\n\n' \
+                    'You could drop this email.\n' \
+                    'Don\'t repply this email. It\'s was generated automatically'
+                })
+
+    def transition_send(self):
+        pool = Pool()
+        Website = pool.get('galatea.website')
+        User = pool.get('galatea.user')
+
+        password = self.start.password
+        website = self.start.website
+
+        users = User.search([('id', 'in', Transaction().context['active_ids'])])
+
+        for user in users:
+            recipients = [user.email]
+            sites = []
+            for site in user.websites:
+                sites.append(site.uri)
+            subject = self.raise_user_error('email_subject',
+                (website.name),
+                raise_exception=False)
+            body = self.raise_user_error('email_text',
+                (user.display_name, user.email, password, "\n".join(sites)),
+                raise_exception=False)
+
+            Website.send_email(website.smtp_server, recipients, subject, body)
+
+        User.write(users, {'password': password})
+
+        self.result.info = self.raise_user_error('send_info',
+                (','.join(str(u.email) for u in users)),
+                raise_exception=False)
+        return 'result'
+
+    def default_result(self, fields):
+        info_ = self.result.info
+        return {
+            'info': info_,
+            }
