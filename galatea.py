@@ -287,7 +287,7 @@ class GalateaSendPassword(Wizard):
 
             Website.send_email(website.smtp_server, recipients, subject, body)
 
-        User.write(users, {'password': password})
+        GalateaUser.write(users, {'password': password})
 
         self.result.info = self.raise_user_error('send_info',
                 (','.join(str(u.email) for u in users)),
