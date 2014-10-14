@@ -214,7 +214,7 @@ class GalateaSendPasswordStart(ModelView):
     __name__ = 'galatea.send.password.start'
     password = fields.Char('Password', required=True)
     website = fields.Many2One('galatea.website', 'Website', required=True,
-        help='Select shop will be export this product.')
+        help='Select a website to send email (STMP server).')
 
     @classmethod
     def default_website(cls):
