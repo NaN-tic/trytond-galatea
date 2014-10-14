@@ -210,7 +210,7 @@ class GalateaUserWebSite(ModelSQL):
 
 
 class GalateaSendPasswordStart(ModelView):
-    'Galatea User Start'
+    'Galatea Send Start'
     __name__ = 'galatea.send.password.start'
     password = fields.Char('Password', required=True)
     website = fields.Many2One('galatea.website', 'Website', required=True,
@@ -225,7 +225,7 @@ class GalateaSendPasswordStart(ModelView):
 
 
 class GalateaSendPasswordResult(ModelView):
-    'Galatea Use Result'
+    'Galatea Send Result'
     __name__ = 'galatea.send.password.result'
     info = fields.Text('Info', readonly=True)
 
