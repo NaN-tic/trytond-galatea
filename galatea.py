@@ -260,24 +260,30 @@ class GalateaSendPassword(Wizard):
     def transition_send(self):
         pool = Pool()
         Website = pool.get('galatea.website')
-        User = pool.get('galatea.user')
+        User = pool.get('res.user')
+        GalateaUser = pool.get('galatea.user')
 
         password = self.start.password
         website = self.start.website
 
-        users = User.search([('id', 'in', Transaction().context['active_ids'])])
+        users = GalateaUser.search([('id', 'in', Transaction().context['active_ids'])])
 
         for user in users:
             recipients = [user.email]
             sites = []
             for site in user.websites:
                 sites.append(site.uri)
-            subject = self.raise_user_error('email_subject',
-                (website.name),
-                raise_exception=False)
-            body = self.raise_user_error('email_text',
-                (user.display_name, user.email, password, "\n".join(sites)),
-                raise_exception=False)
+            if user.party.lang:
+                lang = user.party.lang.code
+            else:
+                lang = User(Transaction().user).language.code
+            with Transaction().set_context(language=lang):
+                subject = self.raise_user_error('email_subject',
+                    (website.name),
+                    raise_exception=False)
+                body = self.raise_user_error('email_text',
+                    (user.display_name, user.email, password, "\n".join(sites)),
+                    raise_exception=False)
 
             Website.send_email(website.smtp_server, recipients, subject, body)
 
