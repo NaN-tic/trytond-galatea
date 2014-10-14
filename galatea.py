@@ -266,7 +266,7 @@ class GalateaSendPassword(Wizard):
         password = self.start.password
         website = self.start.website
 
-        users = GalateaUser.search([('id', 'in', Transaction().context['active_ids'])])
+        users = GalateaUser.browse(Transaction().context['active_ids'])
 
         for user in users:
             recipients = [user.email]
