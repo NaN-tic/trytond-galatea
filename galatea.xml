@@ -105,6 +105,29 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
         <menuitem name="Users" id="menu_galatea_user" 
             action="action_galatea_user_view" parent="menu_galatea_users"/>
 
+        <!-- Galatea Send Password -->
+        <record model="ir.ui.view" id="galatea_send_password_start">
+            <field name="model">galatea.send.password.start</field>
+            <field name="type">form</field>
+            <field name="name">galatea_send_password_start</field>
+        </record>
+        <record model="ir.ui.view" id="galatea_send_password_result">
+            <field name="model">galatea.send.password.result</field>
+            <field name="type">form</field>
+            <field name="name">galatea_send_password_result</field>
+        </record>
+
+        <record model="ir.action.wizard" id="wizard_galatea_send_password">
+            <field name="name">Send New Password</field>
+            <field name="wiz_name">galatea.send.password</field>
+            <field name="model">galatea.user</field>
+        </record>
+        <record model="ir.action.keyword" id="galatea_send_password_keyword">
+            <field name="keyword">form_action</field>
+            <field name="model">galatea.user,-1</field>
+            <field name="action" ref="wizard_galatea_send_password"/>
+        </record>
+
         <!-- Access -->
         <record model="ir.model.access" id="access_galatea_website">
             <field name="model" search="[('model', '=', 'galatea.website')]"/>
