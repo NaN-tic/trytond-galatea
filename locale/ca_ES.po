@@ -258,7 +258,7 @@ msgstr "Usuari creació"
 
 msgctxt "field:galatea.user-galatea.website,id:"
 msgid "ID"
-msgstr "Identificador"
+msgstr "ID"
 
 msgctxt "field:galatea.user-galatea.website,rec_name:"
 msgid "Name"
@@ -274,11 +274,11 @@ msgstr "Lloc Web"
 
 msgctxt "field:galatea.user-galatea.website,write_date:"
 msgid "Write Date"
-msgstr "Data modificación"
+msgstr "Data modificació"
 
 msgctxt "field:galatea.user-galatea.website,write_uid:"
 msgid "Write User"
-msgstr "Usuario modificación"
+msgstr "Usuari modificació"
 
 msgctxt "field:galatea.website,active:"
 msgid "Active"
