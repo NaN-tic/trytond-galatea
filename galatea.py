@@ -140,7 +140,7 @@ class GalateaUser(ModelSQL, ModelView):
     active = fields.Boolean('Active', help='Allow login users')
     websites = fields.Many2Many('galatea.user-galatea.website', 
         'user', 'website', 'Websites',
-        help='Users will be available this websites to login')
+        help='Users will be available in those websites to login')
 
     @staticmethod
     def default_timezone():
