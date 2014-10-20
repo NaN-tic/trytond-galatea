@@ -433,7 +433,7 @@ msgid "Allow user in manager sections"
 msgstr "Permet usuaris gestionar seccions"
 
 msgctxt "help:galatea.user,websites:"
-msgid "Users will be available this websites to login"
+msgid "Users will be available in those websites to login"
 msgstr "Els usuaris podràn identificar-se en aquests llocs web"
 
 msgctxt "help:galatea.website,folder:"
