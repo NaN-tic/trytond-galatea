@@ -73,10 +73,6 @@ msgid "Wrong connection to SMTP server. Not send email."
 msgstr ""
 "No se ha podido conectar al servidor SMTP. No se ha enviado el correo."
 
-msgctxt "field:galatea.cms.carousel.item,id:"
-msgid "ID"
-msgstr "ID"
-
 msgctxt "field:galatea.send.password.result,id:"
 msgid "ID"
 msgstr "ID"
@@ -263,7 +259,7 @@ msgstr "Usuario creación"
 
 msgctxt "field:galatea.user-galatea.website,id:"
 msgid "ID"
-msgstr "Identificador"
+msgstr "ID"
 
 msgctxt "field:galatea.user-galatea.website,rec_name:"
 msgid "Name"
