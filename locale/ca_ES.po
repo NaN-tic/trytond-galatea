@@ -292,6 +292,10 @@ msgctxt "field:galatea.website,countries:"
 msgid "Countries Available"
 msgstr "Països disponibles"
 
+msgctxt "field:galatea.website,country:"
+msgid "Country"
+msgstr "País"
+
 msgctxt "field:galatea.website,create_date:"
 msgid "Create Date"
 msgstr "Data creació"
@@ -435,6 +439,10 @@ msgstr "Permet usuaris gestionar seccions"
 msgctxt "help:galatea.user,websites:"
 msgid "Users will be available in those websites to login"
 msgstr "Els usuaris podràn identificar-se en aquests llocs web"
+
+msgctxt "help:galatea.website,country:"
+msgid "Default Country"
+msgstr "País per defecte"
 
 msgctxt "help:galatea.website,folder:"
 msgid "Flask App directory"
