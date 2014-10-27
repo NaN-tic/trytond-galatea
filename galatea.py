@@ -39,6 +39,8 @@ class GalateaWebSite(ModelSQL, ModelView):
     active = fields.Boolean('Active')
     registration = fields.Boolean('Registration',
         help='Add website in users when users do a new registration')
+    country = fields.Many2One('country.country', 'Country', required=True,
+        help='Default Country')
     countries = fields.Many2Many(
         'galatea.website-country.country', 'website', 'country',
         'Countries Available')
