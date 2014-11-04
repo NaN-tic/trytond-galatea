@@ -224,5 +224,5 @@ class GalateaStaticFile(ModelSQL, ModelView):
         """
         cursor = Transaction().cursor
         return os.path.join(
-            CONFIG['data_path'], cursor.database_name, "galatea"
+            CONFIG.get('data_path'), cursor.database_name, "galatea"
         )
