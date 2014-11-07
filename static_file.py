@@ -1,11 +1,11 @@
-#This file is part galatea module for Tryton.
-#The COPYRIGHT file at the top level of this repository contains
-#the full copyright notices and license terms.
+# This file is part galatea module for Tryton.
+# The COPYRIGHT file at the top level of this repository contains
+# the full copyright notices and license terms.
 from trytond.model import ModelSQL, ModelView, fields
 from trytond.pool import Pool
 from trytond.pyson import Eval, Not, Equal
 from trytond.transaction import Transaction
-from trytond.config import CONFIG
+from trytond.config import config
 from .tools import slugify, slugify_file
 
 import os
@@ -224,5 +224,5 @@ class GalateaStaticFile(ModelSQL, ModelView):
         """
         cursor = Transaction().cursor
         return os.path.join(
-            CONFIG.get('data_path'), cursor.database_name, "galatea"
+            config.get('data_path'), cursor.database_name, "galatea"
         )
