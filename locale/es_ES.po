@@ -2,6 +2,10 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
+msgctxt "error:galatea.remove.cache:"
+msgid "Directory \"%s\" not exist."
+msgstr "El directorio \"%s\" no existe."
+
 msgctxt "error:galatea.send.password:"
 msgid "%s. New password reset"
 msgstr "%s. Nueva contraseña"
@@ -72,6 +76,10 @@ msgctxt "error:galatea.website:"
 msgid "Wrong connection to SMTP server. Not send email."
 msgstr ""
 "No se ha podido conectar al servidor SMTP. No se ha enviado el correo."
+
+msgctxt "field:galatea.remove.cache.start,id:"
+msgid "ID"
+msgstr "ID"
 
 msgctxt "field:galatea.send.password.result,id:"
 msgid "ID"
@@ -461,6 +469,10 @@ msgctxt "help:galatea.website,uri:"
 msgid "Base Uri Site (with \"/\")"
 msgstr "URI base del sitio web (con \"/\")"
 
+msgctxt "model:galatea.remove.cache.start,name:"
+msgid "Galatea Remove Cache Start"
+msgstr "Inicio eliminar cache Galatea"
+
 msgctxt "model:galatea.send.password.result,name:"
 msgid "Galatea Send Result"
 msgstr "Galatea Envio Resulado"
@@ -512,6 +524,10 @@ msgstr "Galatea Directorios Estáticos"
 msgctxt "model:ir.action,name:action_galatea_user_view"
 msgid "Galatea User"
 msgstr "Galatea Usuario"
+
+msgctxt "model:ir.action,name:wizard_galatea_remove_cache"
+msgid "Remove Cache"
+msgstr "Eliminar cache"
 
 msgctxt "model:ir.action,name:wizard_galatea_send_password"
 msgid "Send New Password"
@@ -565,6 +581,14 @@ msgctxt "selection:galatea.static.file,type:"
 msgid "Remote File"
 msgstr "Fichero remoto"
 
+msgctxt "view:galatea.remove.cache.start:"
+msgid "Be careful this action do command system!"
+msgstr "Esta acción ejecutará un comando de sistema."
+
+msgctxt "view:galatea.remove.cache.start:"
+msgid "Galatea Remove Cache"
+msgstr "Borrar cache Galatea"
+
 msgctxt "view:galatea.send.password.result:"
 msgid "Galatea Send Password"
 msgstr "Galatea envío contraseña"
@@ -606,6 +630,10 @@ msgid "Email"
 msgstr "Email"
 
 msgctxt "view:galatea.website:"
+msgid "Remove Cache"
+msgstr "Eliminar cache"
+
+msgctxt "view:galatea.website:"
 msgid "Web Site"
 msgstr "Sitio Web"
 
@@ -616,6 +644,14 @@ msgstr "Sitios Web"
 msgctxt "view:party.party:"
 msgid "Galatea"
 msgstr "Galatea"
+
+msgctxt "wizard_button:galatea.remove.cache,start,end:"
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgctxt "wizard_button:galatea.remove.cache,start,remove:"
+msgid "Remove"
+msgstr "Eliminar"
 
 msgctxt "wizard_button:galatea.send.password,result,end:"
 msgid "Close"

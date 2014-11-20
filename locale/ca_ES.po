@@ -2,6 +2,10 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
+msgctxt "error:galatea.remove.cache:"
+msgid "Directory \"%s\" not exist."
+msgstr "El directori \"%s\" no existeix."
+
 msgctxt "error:galatea.send.password:"
 msgid "%s. New password reset"
 msgstr "%s. Nova contrasenya"
@@ -71,6 +75,10 @@ msgstr "Disposa d'un altre lloc web amb el mateix nom."
 msgctxt "error:galatea.website:"
 msgid "Wrong connection to SMTP server. Not send email."
 msgstr "No s'ha pogut connectar al servidor SMTP. No s'ha enviat el correu."
+
+msgctxt "field:galatea.remove.cache.start,id:"
+msgid "ID"
+msgstr "ID"
 
 msgctxt "field:galatea.send.password.result,id:"
 msgid "ID"
@@ -460,6 +468,10 @@ msgctxt "help:galatea.website,uri:"
 msgid "Base Uri Site (with \"/\")"
 msgstr "Base Uri del lloc web (amb \"/\")"
 
+msgctxt "model:galatea.remove.cache.start,name:"
+msgid "Galatea Remove Cache Start"
+msgstr "Inici eliminar memòria cau Galatea"
+
 msgctxt "model:galatea.send.password.result,name:"
 msgid "Galatea Send Result"
 msgstr "Galata Envia Resultat"
@@ -511,6 +523,10 @@ msgstr "Galatea directoris estàtics"
 msgctxt "model:ir.action,name:action_galatea_user_view"
 msgid "Galatea User"
 msgstr "Galatea Usuari"
+
+msgctxt "model:ir.action,name:wizard_galatea_remove_cache"
+msgid "Remove Cache"
+msgstr "Elimina memòria cau"
 
 msgctxt "model:ir.action,name:wizard_galatea_send_password"
 msgid "Send New Password"
@@ -564,6 +580,14 @@ msgctxt "selection:galatea.static.file,type:"
 msgid "Remote File"
 msgstr "Fitxer remot"
 
+msgctxt "view:galatea.remove.cache.start:"
+msgid "Be careful this action do command system!"
+msgstr "Aquesta acció realitzarà una comanda de sistema."
+
+msgctxt "view:galatea.remove.cache.start:"
+msgid "Galatea Remove Cache"
+msgstr "Eliminar memòria cau Galatea"
+
 msgctxt "view:galatea.send.password.result:"
 msgid "Galatea Send Password"
 msgstr "Galatea envia contrasenya"
@@ -605,6 +629,10 @@ msgid "Email"
 msgstr "Correu electrònic"
 
 msgctxt "view:galatea.website:"
+msgid "Remove Cache"
+msgstr "Elimina memòria cau"
+
+msgctxt "view:galatea.website:"
 msgid "Web Site"
 msgstr "Lloc Web"
 
@@ -615,6 +643,14 @@ msgstr "Llocs Web"
 msgctxt "view:party.party:"
 msgid "Galatea"
 msgstr "Galatea"
+
+msgctxt "wizard_button:galatea.remove.cache,start,end:"
+msgid "Cancel"
+msgstr "Cancel·la"
+
+msgctxt "wizard_button:galatea.remove.cache,start,remove:"
+msgid "Remove"
+msgstr "Eliminar"
 
 msgctxt "wizard_button:galatea.send.password,result,end:"
 msgid "Close"
