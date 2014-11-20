@@ -5,10 +5,12 @@ from trytond.model import ModelView, ModelSQL, fields
 from trytond.wizard import Wizard, StateTransition, StateView, Button
 from trytond.pool import Pool, PoolMeta
 from trytond.transaction import Transaction
+from trytond.config import config
 from email import Utils
 from email.header import Header
 from email.mime.text import MIMEText
-
+from fabric.api import env as fenv, sudo as fsudo
+from fabric.contrib.files import exists as fexists
 import pytz
 import random
 import string
@@ -19,9 +21,11 @@ except ImportError:
     hashlib = None
     import sha
 
-__all__ = ['GalateaWebSite', 'GalateaWebsiteCountry', 'GalateaWebsiteCurrency',
-    'GalateaUser', 'GalateaUserWebSite', 'GalateaSendPasswordStart',
-    'GalateaSendPasswordResult', 'GalateaSendPassword']
+__all__ = ['GalateaWebSite', 'GalateaWebsiteCountry',
+    'GalateaWebsiteCurrency', 'GalateaUser', 'GalateaUserWebSite',
+    'GalateaRemoveCacheStart', 'GalateaRemoveCache',
+    'GalateaSendPasswordStart', 'GalateaSendPasswordResult',
+    'GalateaSendPassword']
 __metaclass__ = PoolMeta
 
 
@@ -60,6 +64,9 @@ class GalateaWebSite(ModelSQL, ModelView):
             ]
         cls._error_messages.update({
                 'smtp_error': 'Wrong connection to SMTP server. Not send email.',
+                })
+        cls._buttons.update({
+                'remove_cache': {},
                 })
 
     @staticmethod
@@ -101,6 +108,17 @@ class GalateaWebSite(ModelSQL, ModelView):
             server.quit()
         except:
             Website.raise_user_error('smtp_error')
+
+    @classmethod
+    def cache_directories(cls, website):
+        directories = []
+        directories.append('%s/media/cache' % (website.folder))
+        return directories
+
+    @classmethod
+    @ModelView.button_action('galatea.wizard_galatea_remove_cache')
+    def remove_cache(cls, websites):
+        pass
 
 
 class GalateaWebsiteCountry(ModelSQL):
@@ -209,6 +227,48 @@ class GalateaUserWebSite(ModelSQL):
             select=True, required=True)
     website = fields.Many2One('galatea.website', 'Website', ondelete='RESTRICT',
             select=True, required=True)
+
+
+class GalateaRemoveCacheStart(ModelView):
+    'Galatea Remove Cache Start'
+    __name__ = 'galatea.remove.cache.start'
+
+
+
+class GalateaRemoveCache(Wizard):
+    'Galatea Remove Cache'
+    __name__ = "galatea.remove.cache"
+    start = StateView('galatea.remove.cache.start',
+        'galatea.galatea_remove_cache_start', [
+            Button('Cancel', 'end', 'tryton-cancel'),
+            Button('Remove', 'remove', 'tryton-ok', default=True),
+            ])
+    remove = StateTransition()
+
+    @classmethod
+    def __setup__(cls):
+        super(GalateaRemoveCache, cls).__setup__()
+        cls._error_messages.update({
+            'not_dir_exist': 'Directory "%s" not exist.',
+        })
+
+    def transition_remove(self):
+        pool = Pool()
+        Website = pool.get('galatea.website')
+
+        fenv.host_string = config.get('galatea', 'host')
+        fenv.password = config.get('galatea', 'password')
+
+        websites = Website.browse(Transaction().context['active_ids'])
+
+        for website in websites:
+            cache_directories = Website.cache_directories(website)
+            for directory in cache_directories:
+                if fexists(directory, use_sudo=True):
+                    fsudo("rm -rf %s/*" % directory)
+                else:
+                    self.raise_user_error('not_dir_exist', directory)
+        return 'end'
 
 
 class GalateaSendPasswordStart(ModelView):

@@ -13,6 +13,7 @@ def register():
         GalateaWebsiteCurrency,
         GalateaUser,
         GalateaUserWebSite,
+        GalateaRemoveCacheStart,
         GalateaSendPasswordStart,
         GalateaSendPasswordResult,
         GalateaStaticFolder,
@@ -20,5 +21,6 @@ def register():
         Party,
         module='galatea', type_='model')
     Pool.register(
+        GalateaRemoveCache,
         GalateaSendPassword,
         module='galatea', type_='wizard')
