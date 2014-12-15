@@ -99,7 +99,7 @@ msgstr "Contraseña"
 
 msgctxt "field:galatea.send.password.start,website:"
 msgid "Website"
-msgstr "Sitio Web"
+msgstr "Sitio web"
 
 msgctxt "field:galatea.static.file,create_date:"
 msgid "Create Date"
@@ -247,7 +247,7 @@ msgstr "Zona horaria"
 
 msgctxt "field:galatea.user,websites:"
 msgid "Websites"
-msgstr "Sitio web"
+msgstr "Sitios web"
 
 msgctxt "field:galatea.user,write_date:"
 msgid "Write Date"
@@ -279,7 +279,7 @@ msgstr "Usuario"
 
 msgctxt "field:galatea.user-galatea.website,website:"
 msgid "Website"
-msgstr "Sitio Web"
+msgstr "Sitio web"
 
 msgctxt "field:galatea.user-galatea.website,write_date:"
 msgid "Write Date"
@@ -383,7 +383,7 @@ msgstr "Nombre"
 
 msgctxt "field:galatea.website-country.country,website:"
 msgid "Website"
-msgstr "Sitio Web"
+msgstr "Sitio web"
 
 msgctxt "field:galatea.website-country.country,write_date:"
 msgid "Write Date"
@@ -415,7 +415,7 @@ msgstr "Nombre"
 
 msgctxt "field:galatea.website-currency.currency,website:"
 msgid "Website"
-msgstr "Sitio Web"
+msgstr "Sitio web"
 
 msgctxt "field:galatea.website-currency.currency,write_date:"
 msgid "Write Date"
@@ -511,7 +511,7 @@ msgstr "Monedas disponibles en este sitio web"
 
 msgctxt "model:ir.action,name:act_website_form"
 msgid "Web Sites"
-msgstr "Sitios Web"
+msgstr "Sitios web"
 
 msgctxt "model:ir.action,name:action_galatea_static_file_view"
 msgid "Galatea Static Files"
@@ -563,7 +563,7 @@ msgstr "Usuarios"
 
 msgctxt "model:ir.ui.menu,name:menu_website_form"
 msgid "Web Sites"
-msgstr "Sitios Web"
+msgstr "Sitios web"
 
 msgctxt "model:res.group,name:group_galatea"
 msgid "Galatea"
@@ -635,11 +635,11 @@ msgstr "Eliminar cache"
 
 msgctxt "view:galatea.website:"
 msgid "Web Site"
-msgstr "Sitio Web"
+msgstr "Sitio web"
 
 msgctxt "view:galatea.website:"
 msgid "Web Sites"
-msgstr "Sitios Web"
+msgstr "Sitios web"
 
 msgctxt "view:party.party:"
 msgid "Galatea"

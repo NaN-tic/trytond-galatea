@@ -98,7 +98,7 @@ msgstr "Contrasenya"
 
 msgctxt "field:galatea.send.password.start,website:"
 msgid "Website"
-msgstr "Lloc Web"
+msgstr "Lloc web"
 
 msgctxt "field:galatea.static.file,create_date:"
 msgid "Create Date"
@@ -246,7 +246,7 @@ msgstr "Zona horària"
 
 msgctxt "field:galatea.user,websites:"
 msgid "Websites"
-msgstr "Lloc web"
+msgstr "Llocs web"
 
 msgctxt "field:galatea.user,write_date:"
 msgid "Write Date"
@@ -278,7 +278,7 @@ msgstr "Usuari"
 
 msgctxt "field:galatea.user-galatea.website,website:"
 msgid "Website"
-msgstr "Lloc Web"
+msgstr "Lloc web"
 
 msgctxt "field:galatea.user-galatea.website,write_date:"
 msgid "Write Date"
@@ -382,7 +382,7 @@ msgstr "Nom"
 
 msgctxt "field:galatea.website-country.country,website:"
 msgid "Website"
-msgstr "Lloc Web"
+msgstr "Lloc web"
 
 msgctxt "field:galatea.website-country.country,write_date:"
 msgid "Write Date"
@@ -414,7 +414,7 @@ msgstr "Nom"
 
 msgctxt "field:galatea.website-currency.currency,website:"
 msgid "Website"
-msgstr "Lloc Web"
+msgstr "Lloc web"
 
 msgctxt "field:galatea.website-currency.currency,write_date:"
 msgid "Write Date"
@@ -510,7 +510,7 @@ msgstr "Monedes disponibles en el lloc web"
 
 msgctxt "model:ir.action,name:act_website_form"
 msgid "Web Sites"
-msgstr "Llocs Web"
+msgstr "Llocs web"
 
 msgctxt "model:ir.action,name:action_galatea_static_file_view"
 msgid "Galatea Static Files"
@@ -562,7 +562,7 @@ msgstr "Usuaris"
 
 msgctxt "model:ir.ui.menu,name:menu_website_form"
 msgid "Web Sites"
-msgstr "Llocs Web"
+msgstr "Llocs web"
 
 msgctxt "model:res.group,name:group_galatea"
 msgid "Galatea"
@@ -634,11 +634,11 @@ msgstr "Elimina memòria cau"
 
 msgctxt "view:galatea.website:"
 msgid "Web Site"
-msgstr "Lloc Web"
+msgstr "Lloc web"
 
 msgctxt "view:galatea.website:"
 msgid "Web Sites"
-msgstr "Llocs Web"
+msgstr "Llocs web"
 
 msgctxt "view:party.party:"
 msgid "Galatea"
