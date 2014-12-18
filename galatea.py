@@ -50,6 +50,11 @@ class GalateaWebSite(ModelSQL, ModelView):
         )
     smtp_server = fields.Many2One('smtp.server', 'SMTP Server',
         domain=[('state', '=', 'done')], required=True)
+    metadescription = fields.Char('Meta Description', translate=True,
+            help='Almost all search engines recommend it to be shorter ' \
+            'than 155 characters of plain text')
+    metakeyword = fields.Char('Meta Keyword', translate=True)
+    metatitle = fields.Char('Meta Title', translate=True)
 
     @classmethod
     def __setup__(cls):
