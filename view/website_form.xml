@@ -23,6 +23,14 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
             <label name="registration"/>
             <field name="registration"/>
         </page>
+        <page id="seo" string="SEO">
+            <label name="metadescription"/>
+            <field name="metadescription"/>
+            <label name="metakeyword"/>
+            <field name="metakeyword"/>
+            <label name="metatitle"/>
+            <field name="metatitle"/>
+        </page>
         <page id="email" string="Email">
             <label name="smtp_server"/>
             <field name="smtp_server"/>
