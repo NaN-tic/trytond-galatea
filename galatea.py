@@ -154,7 +154,7 @@ class GalateaUser(ModelSQL, ModelView):
         ondelete='CASCADE')
     display_name = fields.Char('Display Name', required=True)
     email = fields.Char("e-Mail", required=True)
-    password = fields.Char('Password')
+    password = fields.Char('Password', required=True)
     salt = fields.Char('Salt', size=8)
     activation_code = fields.Char('Unique Activation Code')
     company = fields.Many2One('company.company', 'Company', required=True)
