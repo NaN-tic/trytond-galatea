@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The COPYRIGHT file at the top level of this repository contains the full
+     copyright notices and license terms. -->
+<tryton>
+    <data>
+        <!-- galatea.template -->
+        <record model="ir.ui.view" id="galatea_template_view_form">
+            <field name="model">galatea.template</field>
+            <field name="type">form</field>
+            <field name="name">galatea_template_form</field>
+        </record>
+
+        <record model="ir.ui.view" id="galatea_template_view_list">
+            <field name="model">galatea.template</field>
+            <field name="type">tree</field>
+            <field name="name">galatea_template_list</field>
+        </record>
+
+        <record model="ir.action.act_window" id="act_galatea_template">
+            <field name="name">Galatea Template</field>
+            <field name="res_model">galatea.template</field>
+        </record>
+        <record model="ir.action.act_window.view" id="act_galatea_template_view1">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="galatea_template_view_list"/>
+            <field name="act_window" ref="act_galatea_template"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_galatea_template_view2">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="galatea_template_view_form"/>
+            <field name="act_window" ref="act_galatea_template"/>
+        </record>
+
+        <record model="ir.model.access" id="access_galatea_template">
+            <field name="model" search="[('model', '=', 'galatea.template')]"/>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+
+        <record model="ir.model.access" id="access_galatea_template_admin">
+            <field name="model" search="[('model', '=', 'galatea.template')]"/>
+            <field name="group" ref="group_galatea_admin"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
+
+        <record model="ir.model.access" id="access_galatea_template_galatea">
+            <field name="model" search="[('model', '=', 'galatea.template')]"/>
+            <field name="group" ref="group_galatea"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+
+        <!-- galatea.uri -->
+        <record model="ir.ui.view" id="galatea_uri_view_form">
+            <field name="model">galatea.uri</field>
+            <field name="type">form</field>
+            <field name="name">galatea_uri_form</field>
+        </record>
+
+        <record model="ir.ui.view" id="galatea_uri_view_tree">
+            <field name="model">galatea.uri</field>
+            <field name="type">tree</field>
+            <field name="name">galatea_uri_tree</field>
+            <field name="field_childs">childs</field>
+        </record>
+
+        <record model="ir.ui.view" id="galatea_uri_view_list">
+            <field name="model">galatea.uri</field>
+            <field name="type">tree</field>
+            <field name="priority" eval="10"/>
+            <field name="name">galatea_uri_list</field>
+        </record>
+
+        <record model="ir.action.act_window" id="act_galatea_uri_tree">
+            <field name="name">Galatea URIs</field>
+            <field name="res_model">galatea.uri</field>
+            <field name="domain">[('parent', '=', None)]</field>
+        </record>
+        <record model="ir.action.act_window.view"
+                id="act_galatea_uri_tree_view1">
+            <field name="act_window" ref="act_galatea_uri_tree"/>
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="galatea_uri_view_tree"/>
+        </record>
+        <record model="ir.action.act_window.view"
+                id="act_galatea_uri_tree_view2">
+            <field name="act_window" ref="act_galatea_uri_tree"/>
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="galatea_uri_view_form"/>
+        </record>
+
+        <record model="ir.action.act_window" id="act_galatea_uri">
+            <field name="name">Galatea URIs</field>
+            <field name="res_model">galatea.uri</field>
+        </record>
+        <record model="ir.action.act_window.view" id="act_galatea_uri_view1">
+            <field name="act_window" ref="act_galatea_uri"/>
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="galatea_uri_view_list"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_galatea_uri_view2">
+            <field name="act_window" ref="act_galatea_uri"/>
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="galatea_uri_view_form"/>
+        </record>
+
+        <record model="ir.model.access" id="access_galatea_uri">
+            <field name="model" search="[('model', '=', 'galatea.uri')]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+
+        <record model="ir.model.access" id="access_galatea_uri_admin">
+            <field name="model" search="[('model', '=', 'galatea.uri')]"/>
+            <field name="group" ref="group_galatea_admin"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
+
+        <record model="ir.model.access" id="access_galatea_galatea_uri">
+            <field name="model" search="[('model', '=', 'galatea.uri')]"/>
+            <field name="group" ref="group_galatea"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+
+        <!-- Menus -->
+        <menuitem id="menu_galatea_template"
+            action="act_galatea_template"
+            parent="menu_galatea_configuration" sequence="20"/>
+
+        <menuitem id="menu_galatea_uri_tree" action="act_galatea_uri_tree"
+            parent="menu_galatea" sequence="10"/>
+        <menuitem id="menu_galatea_uri" action="act_galatea_uri"
+            parent="menu_galatea_uri_tree"/>
+    </data>
+</tryton>

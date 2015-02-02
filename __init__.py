@@ -3,6 +3,7 @@
 # the full copyright notices and license terms.
 from trytond.pool import Pool
 from .galatea import *
+from .resource import *
 from .static_file import *
 from .party import *
 
@@ -16,6 +17,9 @@ def register():
         GalateaRemoveCacheStart,
         GalateaSendPasswordStart,
         GalateaSendPasswordResult,
+        GalateaTemplate,
+        GalateaTemplateModel,
+        GalateaUri,
         GalateaStaticFolder,
         GalateaStaticFile,
         Party,

@@ -18,7 +18,6 @@ class GalateaStaticFolder(ModelSQL, ModelView):
     "Static folder for Galatea"
     __name__ = "galatea.static.folder"
     name = fields.Char('Name', required=True,
-        on_change_with=['name'],
         help='Folder name contains az09 characters')
     description = fields.Char('Description', select=1)
     files = fields.One2Many('galatea.static.file', 'folder', 'Files')
@@ -40,14 +39,14 @@ class GalateaStaticFolder(ModelSQL, ModelView):
             'folder_cannot_change': "Folder name cannot be changed"
         })
 
+    @fields.depends('name')
     def on_change_with_name(self):
         """
         Slugified folder name
         """
-        if self.get('name'):
-            if not self.get('name'):
-                self['name'] = slugify(self['name'])
-            return self['name']
+        if self.name:
+            self.name = slugify(self.name)
+            return self.name
 
     def check_name(self):
         '''

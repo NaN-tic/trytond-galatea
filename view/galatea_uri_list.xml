@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!-- The COPYRIGHT file at the top level of this repository contains the full
+     copyright notices and license terms. -->
+<tree string="Galatea URIs">
+    <field name="uri"/>
+    <field name="title"/>
+    <field name="type"/>
+    <field name="template"/>
+    <field name="content"/>
+    <field name="external_redirection"/>
+    <field name="internal_redirection"/>
+    <field name="website"/>
+    <field name="active"/>
+</tree>

@@ -33,7 +33,8 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
             <field name="group" ref="group_galatea"/>
         </record>
 
-        <menuitem name="Configuration" id="menu_galatea_configuration" parent="menu_galatea"/>
+        <menuitem name="Configuration" id="menu_galatea_configuration"
+            parent="menu_galatea" sequence="1"/>
         <record model="ir.ui.menu-res.group" id="menu_group_galatea_admin">
           <field name="menu" ref="menu_galatea_configuration"/>
           <field name="group" ref="group_galatea_admin"/>
@@ -64,7 +65,8 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
             <field name="view" ref="website_view_form"/>
             <field name="act_window" ref="act_website_form"/>
         </record>
-        <menuitem id="menu_website_form" action="act_website_form" parent="menu_galatea_configuration"/>
+        <menuitem id="menu_website_form" action="act_website_form"
+            parent="menu_galatea_configuration" sequence="10"/>
 
         <!-- Galatea User -->
         <menuitem name="Users" id="menu_galatea_users" parent="menu_galatea"/>
