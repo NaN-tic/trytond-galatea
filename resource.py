@@ -90,6 +90,19 @@ class GalateaUri(ModelSQL, ModelView):
             'invisible': Eval('type') != 'external_redirection',
             'required': Eval('type') == 'external_redirection',
             }, depends=['type'])
+    redirection_code = fields.Selection([
+            ('301', '301:'),
+            ('302', '302:'),
+            ('303', '303:'),
+            ('305', '305:'),
+            ('307', '307:'),
+            ], 'Redirection Code', sort=False,
+        states={
+            'invisible': ~Eval('type').in_(['internal_redirection',
+                    'external_redirection']),
+            'required': Eval('type').in_(['internal_redirection',
+                    'external_redirection']),
+            })
     menus = fields.One2Many('galatea.cms.menu', 'target_uri', 'Menus',
             readonly=True)
     active = fields.Boolean('Active', select=True)
@@ -162,7 +175,18 @@ class GalateaUri(ModelSQL, ModelView):
 
     @classmethod
     def search_uri(cls, name, clause):
-        # TODO
+        if (len(clause) == 3 and isinstance(clause[2], basestring)
+                and len(clause[2].split('/')) > 1):
+            slugs = clause[2].split('/')
+            # TODO
+            domain = [
+                ('slug', clause[1], slugs.pop()),
+                ]
+            prefix = 'parent.'
+            while slugs:
+                domain.append((prefix + 'slug', clause[1], slugs.pop()))
+                prefix += 'parent.'
+            return domain
         return [
             ('slug',) + tuple(clause[1:]),
             ]
@@ -186,6 +210,10 @@ class GalateaUri(ModelSQL, ModelView):
             return Model.search([
                     ('model', '=', self.content.__class__.__name__),
                     ])[0].id
+
+    @staticmethod
+    def default_redirection_code():
+        return '303'
 
     @staticmethod
     def default_active():

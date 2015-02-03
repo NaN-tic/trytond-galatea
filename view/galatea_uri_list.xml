@@ -3,7 +3,7 @@
      copyright notices and license terms. -->
 <tree string="Galatea URIs">
     <field name="uri"/>
-    <field name="title"/>
+    <field name="name"/>
     <field name="type"/>
     <field name="template"/>
     <field name="content"/>
