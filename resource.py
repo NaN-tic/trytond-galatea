@@ -186,7 +186,6 @@ class GalateaUri(ModelSQL, ModelView):
             while slugs:
                 domain.append((prefix + 'slug', clause[1], slugs.pop()))
                 prefix += 'parent.'
-            print "search_uri:", domain
             return domain
         return [
             ('slug',) + tuple(clause[1:]),
@@ -233,6 +232,7 @@ class GalateaUri(ModelSQL, ModelView):
 class GalateaVisiblePage(ModelSQL, ModelView):
     '''Galatea Visible Page'''
 
+    # TODO: it should be "title"
     name = fields.Char('Title', translate=True,
         required=True, on_change=['name', 'slug'])
     canonical_uri = fields.Many2One('galatea.uri', 'Canonical URI',
@@ -252,7 +252,6 @@ class GalateaVisiblePage(ModelSQL, ModelView):
     uris = fields.One2Many('galatea.uri', 'content', 'URIs', readonly=True)
     uri = fields.Function(fields.Many2One('galatea.uri', 'URI'),
         'get_uri', searcher='search_uri')
-    uri = fields.Function(fields.Char('Uri'), 'get_uri')
     # TODO: replace by uri_langs?
     # slug_langs = fields.Function(fields.Dict(None, 'Slug Langs'),
     #     'get_slug_langs')
@@ -402,9 +401,7 @@ class GalateaVisiblePage(ModelSQL, ModelView):
             if not vals.get('canonical_uri'):
                 assert vals.get('slug')
                 assert vals.get('websites')
-                print 'websites:', vals['websites']
                 uri_vals = cls.calc_uri_vals(vals)
-                print "uri_vals:", uri_vals
                 uri, = Uri.create([uri_vals])
                 vals['canonical_uri'] = uri.id
         new_records = super(GalateaVisiblePage, cls).create(vlist)
