@@ -46,6 +46,7 @@ class GalateaUri(ModelSQL, ModelView):
     '''Galatea Uri'''
     __name__ = 'galatea.uri'
     _rec_name = 'uri'
+    _order = [('parent', 'ASC'), ('sequence', 'ASC'), ('id', 'ASC')]
 
     website = fields.Many2One('galatea.website', 'Website', required=True,
         select=True, ondelete='CASCADE')
@@ -249,6 +250,9 @@ class GalateaVisiblePage(ModelSQL, ModelView):
     slug = fields.Function(fields.Char('Slug', translate=True, required=True),
         'on_change_with_slug', setter='set_canonical_uri_field',
         searcher='search_canonical_uri_field')
+    template = fields.Function(fields.Many2One('galatea.template', 'Template'),
+        'on_change_with_template', setter='set_canonical_uri_field',
+        searcher='search_canonical_uri_field')
     uris = fields.One2Many('galatea.uri', 'content', 'URIs', readonly=True)
     uri = fields.Function(fields.Many2One('galatea.uri', 'URI'),
         'get_uri', searcher='search_uri')
@@ -299,6 +303,11 @@ class GalateaVisiblePage(ModelSQL, ModelView):
             return self.canonical_uri.slug
         if self.slug:
             return slugify(self.slug)
+
+    @fields.depends('canonical_uri')
+    def on_change_with_template(self, name=None):
+        if self.canonical_uri:
+            return self.canonical_uri.template.id
 
     @classmethod
     def set_canonical_uri_field(cls, records, name, value):
