@@ -245,12 +245,14 @@ class GalateaVisiblePage(ModelSQL, ModelView):
             # ('template.allowed_models.model', 'in', ['galatea.blog.post']),
             ],
         states={
+            'required': Greater(Eval('id', -1), 0),
             'invisible': ~Greater(Eval('id', -1), 0),
             }, depends=['websites', 'id'])
     slug = fields.Function(fields.Char('Slug', translate=True, required=True),
         'on_change_with_slug', setter='set_canonical_uri_field',
         searcher='search_canonical_uri_field')
-    template = fields.Function(fields.Many2One('galatea.template', 'Template'),
+    template = fields.Function(fields.Many2One('galatea.template', 'Template',
+            required=True),
         'on_change_with_template', setter='set_canonical_uri_field',
         searcher='search_canonical_uri_field')
     uris = fields.One2Many('galatea.uri', 'content', 'URIs', readonly=True)
@@ -299,10 +301,10 @@ class GalateaVisiblePage(ModelSQL, ModelView):
 
     @fields.depends('canonical_uri', 'slug')
     def on_change_with_slug(self, name=None):
-        if self.canonical_uri:
-            return self.canonical_uri.slug
         if self.slug:
             return slugify(self.slug)
+        if self.canonical_uri:
+            return self.canonical_uri.slug
 
     @fields.depends('canonical_uri')
     def on_change_with_template(self, name=None):
