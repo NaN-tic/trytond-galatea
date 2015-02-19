@@ -492,3 +492,16 @@ class GalateaVisiblePage(ModelSQL, ModelView):
         super(GalateaVisiblePage, cls).write(*args)
         if uri_args:
             Uri.write(*uri_args)
+
+    @classmethod
+    def delete(cls, pages):
+        pool = Pool()
+        Uri = pool.get('galatea.uri')
+
+        uris_to_delete = set()
+        for page in pages:
+            uris_to_delete.add(page.canonical_uri)
+            for uri in page.uris:
+                uris_to_delete.add(uri)
+        super(GalateaVisiblePage, cls).delete(pages)
+        Uri.delete(list(uris_to_delete))
