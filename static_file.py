@@ -1,15 +1,18 @@
 # This file is part galatea module for Tryton.
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
+import os
+import os.path
+import urllib
+
 from trytond.model import ModelSQL, ModelView, fields
 from trytond.pool import Pool
 from trytond.pyson import Eval, Not, Equal
 from trytond.transaction import Transaction
 from trytond.config import config
+
 from .tools import slugify, slugify_file
 
-import os
-import urllib
 
 __all__ = ['GalateaStaticFolder', 'GalateaStaticFile']
 
@@ -76,31 +79,28 @@ class GalateaStaticFile(ModelSQL, ModelView):
     "Static files for Galatea"
     __name__ = "galatea.static.file"
     name = fields.Char('File Name', required=True)
-    folder = fields.Many2One('galatea.static.folder', 'Folder',
-        states={
+    folder = fields.Many2One('galatea.static.folder', 'Folder', states={
             'required': Equal(Eval('type'), 'local'),
-        })
+            })
     type = fields.Selection([
-        ('local', 'Local File'),
-        ('remote', 'Remote File'),
-        ], 'File Type')
-    remote_path = fields.Char(
-        'Remote File', select=True, translate=True,
+            ('local', 'Local File'),
+            ('remote', 'Remote File'),
+            ], 'File Type')
+    remote_path = fields.Char('Remote File', select=True, translate=True,
         states={
             'required': Equal(Eval('type'), 'remote'),
             'invisible': Not(Equal(Eval('type'), 'remote'))
-        })
+            })
     file_binary = fields.Function(fields.Binary('File', filename='name'),
         'get_file_binary', 'set_file_binary')
-    file_path = fields.Function(fields.Char('File Path'), 'get_file_path')
-    url = fields.Function(fields.Char('URL'), 'get_url')
+    file_path = fields.Function(fields.Char('File Path'),
+        'get_file_path')
+    url = fields.Function(fields.Char('URL'),
+        'get_url')
 
     @classmethod
     def __setup__(cls):
         super(GalateaStaticFile, cls).__setup__()
-        cls._constraints += [
-            ('check_file_name', 'invalid_file_name'),
-            ]
         cls._error_messages.update({
             'invalid_file_name': """Invalid file name:
                 (1) '..' in file name (OR)
@@ -109,44 +109,40 @@ class GalateaStaticFile(ModelSQL, ModelView):
             })
 
     @staticmethod
-    def default_type():
-        return 'local'
-
-    @staticmethod
     def default_folder():
         Folder = Pool().get('galatea.static.folder')
         folders = Folder.search([])
         if len(folders) == 1:
             return folders[0].id
 
-    @classmethod
-    def create(cls, vlist):
-        for vals in vlist:
-            vals['name'] = slugify_file(vals['name'])
-        return super(GalateaStaticFile, cls).create(vlist)
+    @staticmethod
+    def default_type():
+        return 'local'
 
-    @classmethod
-    def write(cls, files, values):
-        if values.get('name'):
-            cls.raise_user_error('change_file_name')
-        return super(GalateaStaticFile, cls).write(files, values)
-
-    @classmethod
-    def delete(cls, files):
-        for f in files:
-            if f.type == 'local':
-                os.remove(f.file_path)
-        super(GalateaStaticFile, cls).delete(files)
-
-    def check_file_name(self):
+    def get_file_binary(self, name):
         '''
-        Check the validity of folder name
-        Allowing the use of / or . will be risky as that could
-        eventually lead to previlege escalation
+        Getter for the binary_file field. This fetches the file from the
+        file system, coverts it to buffer and returns it.
+
+        :param name: Field name
+        :return: File buffer
         '''
-        if ('..' in self.name) or ('/' in self.name):
-            return False
-        return True
+        location = (self.file_path if self.type == 'local'
+            else urllib.urlretrieve(self.remote_path)[0])
+        with open(location, 'rb') as file_reader:
+            return buffer(file_reader.read())
+
+    @classmethod
+    def set_file_binary(cls, files, name, value):
+        """
+        Setter for the functional binary field.
+
+        :param files: Records
+        :param name: Ignored
+        :param value: The file buffer
+        """
+        for static_file in files:
+            static_file._set_file_binary(value)
 
     def _set_file_binary(self, value):
         """
@@ -163,31 +159,6 @@ class GalateaStaticFile(ModelSQL, ModelView):
             with open(self.file_path, 'wb') as file_writer:
                 file_writer.write(file_binary)
 
-    @classmethod
-    def set_file_binary(cls, files, name, value):
-        """
-        Setter for the functional binary field.
-
-        :param files: Records
-        :param name: Ignored
-        :param value: The file buffer
-        """
-        for static_file in files:
-            static_file._set_file_binary(value)
-
-    def get_file_binary(self, name):
-        '''
-        Getter for the binary_file field. This fetches the file from the
-        file system, coverts it to buffer and returns it.
-
-        :param name: Field name
-        :return: File buffer
-        '''
-        location = self.file_path if self.type == 'local' \
-            else urllib.urlretrieve(self.remote_path)[0]
-        with open(location, 'rb') as file_reader:
-            return buffer(file_reader.read())
-
     def get_file_path(self, name):
         """
         Returns the full path to the file in the file system
@@ -195,21 +166,11 @@ class GalateaStaticFile(ModelSQL, ModelView):
         :param name: Field name
         :return: File path
         """
-        return os.path.abspath(
-            os.path.join(
-                self.get_galatea_base_path(),
-                self.folder.name, self.name
-            )) \
-            if self.type == 'local' else self.remote_path
-
-    def get_url(self, name):
-        """Return the url if within an active request context or return
-        False values
-        """
-        if self.type == 'local':
-            return '/galatea-static/%s/%s' % (self.folder.name, self.name)
-        elif self.type == 'remote':
-            return self.remote_path
+        return (os.path.abspath(
+                os.path.join(
+                    self.get_galatea_base_path(),
+                    self.folder.name, self.name))
+            if self.type == 'local' else self.remote_path)
 
     @staticmethod
     def get_galatea_base_path():
@@ -222,6 +183,49 @@ class GalateaStaticFile(ModelSQL, ModelView):
         <Tryton Data Path>/<Database Name>/galatea
         """
         cursor = Transaction().cursor
-        return os.path.join(
-            config.get('database', 'path'), cursor.database_name, "galatea"
-        )
+        return os.path.join(config.get('database', 'path'),
+            cursor.database_name, "galatea")
+
+    def get_url(self, name):
+        """Return the url if within an active request context or return
+        False values
+        """
+        if self.type == 'local':
+            return '/galatea-static/%s/%s' % (self.folder.name, self.name)
+        elif self.type == 'remote':
+            return self.remote_path
+
+    @classmethod
+    def validate(cls, static_files):
+        super(GalateaStaticFile, cls).validate(static_files)
+        for static_file in static_files:
+            static_file.check_file_name()
+
+    def check_file_name(self):
+        '''
+        Check the validity of folder name
+        Allowing the use of / or . will be risky as that could
+        eventually lead to previlege escalation
+        '''
+        if ('..' in self.name) or ('/' in self.name):
+            self.raise_user_error('invalid_file_name')
+
+    @classmethod
+    def create(cls, vlist):
+        for vals in vlist:
+            vals['name'] = slugify_file(vals['name'])
+        return super(GalateaStaticFile, cls).create(vlist)
+
+    @classmethod
+    def write(cls, files, values):
+        # TODO: Why? maybe a warning
+        # if values.get('name'):
+        #     cls.raise_user_error('change_file_name')
+        return super(GalateaStaticFile, cls).write(files, values)
+
+    @classmethod
+    def delete(cls, files):
+        for f in files:
+            if f.type == 'local' and os.path.exists(f.file_path):
+                os.remove(f.file_path)
+        super(GalateaStaticFile, cls).delete(files)
