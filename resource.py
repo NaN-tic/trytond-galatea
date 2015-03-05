@@ -165,10 +165,10 @@ class GalateaUri(ModelSQL, ModelView):
 
         uri = _get_uri_recursive(self)
 
-        locale = Transaction().context.get('language', 'en')
-        if (not uri.startswith('/%s/' % locale[:2])
-                and uri != '/%s' % locale[:2]):
-            uri = '/%s%s' % (locale[:2], uri)
+        # locale = Transaction().context.get('language', 'en')
+        # if (not uri.startswith('/%s/' % locale[:2])
+        #         and uri != '/%s' % locale[:2]):
+        #     uri = '/%s%s' % (locale[:2], uri)
 
         if self.website.uri and self.website.uri != '/':
             uri = '%s%s' % (self.website.uri, uri)
@@ -191,6 +191,27 @@ class GalateaUri(ModelSQL, ModelView):
         return [
             ('slug',) + tuple(clause[1:]),
             ]
+
+    @property
+    def alternate_uris(self, lang_codes=None):
+        pool = Pool()
+        Lang = pool.get('ir.lang')
+
+        if not lang_codes:
+            langs = Lang.search([
+                    ('translatable', '=', True),
+                    ])
+            lang_codes = [l.code for l in langs]
+
+        current_lang = Transaction().context['language']
+        alternate_uris = {}
+        for lang_code in lang_codes:
+            if lang_code == current_lang:
+                continue
+            web_code = lang_code.split('_')[0]
+            with Transaction().set_context(language=lang_code):
+                alternate_uris[lang_code] = self.__class__(self.id).uri
+        return alternate_uris
 
     @staticmethod
     def default_type():
