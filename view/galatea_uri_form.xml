@@ -12,6 +12,8 @@
     <field name="name"/>
     <label name="slug"/>
     <field name="slug"/>
+    <label name="anchor"/>
+    <field name="anchor"/>
     <newline/>
     <label name="type"/>
     <field name="type"/>

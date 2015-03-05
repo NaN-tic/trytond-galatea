@@ -4,6 +4,7 @@
 <tree string="Galatea URIs" sequence="sequence">
     <field name="slug"/>
     <field name="name"/>
+    <field name="anchor"/>
     <field name="type"/>
     <field name="template"/>
     <field name="content"/>

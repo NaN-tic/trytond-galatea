@@ -52,6 +52,7 @@ class GalateaUri(ModelSQL, ModelView):
         select=True, ondelete='CASCADE')
     name = fields.Char('Name', translate=True, required=True)
     slug = fields.Char('Slug', translate=True, required=True, select=True)
+    anchor = fields.Boolean('Is Anchor?')
     parent = fields.Many2One('galatea.uri', 'Parent', select=True, domain=[
             ('website', '=', Eval('website')),
             ], depends=['website'])
@@ -159,16 +160,12 @@ class GalateaUri(ModelSQL, ModelView):
 
     def get_uri(self, name):
         def _get_uri_recursive(uri):
+            separator = '#' if uri.anchor else '/'
             if uri.parent:
-                return '%s/%s' % (_get_uri_recursive(uri.parent), uri.slug)
-            return '/%s' % uri.slug
+                return _get_uri_recursive(uri.parent) + separator + uri.slug
+            return separator + uri.slug
 
         uri = _get_uri_recursive(self)
-
-        # locale = Transaction().context.get('language', 'en')
-        # if (not uri.startswith('/%s/' % locale[:2])
-        #         and uri != '/%s' % locale[:2]):
-        #     uri = '/%s%s' % (locale[:2], uri)
 
         if self.website.uri and self.website.uri != '/':
             uri = '%s%s' % (self.website.uri, uri)
@@ -178,8 +175,8 @@ class GalateaUri(ModelSQL, ModelView):
     def search_uri(cls, name, clause):
         if (len(clause) == 3 and isinstance(clause[2], basestring)
                 and len(clause[2].split('/')) > 1):
-            slugs = clause[2].split('/')
-            # TODO
+            # TODO: improve to find exactly slugs with anchor=True
+            slugs = clause[2].replace('#', '/').split('/')
             domain = [
                 ('slug', clause[1], slugs.pop()),
                 ]
@@ -208,7 +205,6 @@ class GalateaUri(ModelSQL, ModelView):
         for lang_code in lang_codes:
             if lang_code == current_lang:
                 continue
-            web_code = lang_code.split('_')[0]
             with Transaction().set_context(language=lang_code):
                 alternate_uris[lang_code] = self.__class__(self.id).uri
         return alternate_uris
