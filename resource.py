@@ -108,6 +108,8 @@ class GalateaUri(ModelSQL, ModelView):
     menus = fields.One2Many('galatea.cms.menu', 'target_uri', 'Menus',
             readonly=True)
     active = fields.Boolean('Active', select=True)
+    sitemap = fields.Boolean('Sitemap', select=True, help='Wether this URI '
+        'should be visible in the sitemap or not.')
 
     @classmethod
     def __setup__(cls):
@@ -124,8 +126,12 @@ class GalateaUri(ModelSQL, ModelView):
         super(GalateaUri, cls).validate(uris)
         cls.check_recursion(uris)
 
-    @classmethod
-    def default_website(cls):
+    @staticmethod
+    def default_sitemap():
+        return True
+
+    @staticmethod
+    def default_website():
         Website = Pool().get('galatea.website')
         websites = Website.search([('active', '=', True)])
         if len(websites) == 1:
