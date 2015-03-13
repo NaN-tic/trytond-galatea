@@ -6,8 +6,12 @@
     <field name="website"/>
     <label name="parent"/>
     <field name="parent"/>
-    <label name="active"/>
-    <field name="active"/>
+    <group id="checkboxes" col="20" colspan="2">
+        <label name="active"/>
+        <field name="active"/>
+        <label name="sitemap"/>
+        <field name="sitemap"/>
+    </group>
     <label name="name"/>
     <field name="name"/>
     <label name="slug"/>
