@@ -193,6 +193,7 @@ class GalateaUri(ModelSQL, ModelView):
             return domain
         return [
             ('slug',) + tuple(clause[1:]),
+            ('parent', '=', None),
             ]
 
     @property
