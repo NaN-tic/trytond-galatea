@@ -1,4 +1,4 @@
-#:after:trytond_doc/areas_funcionales:title:areas_funcionales#
+#:after:trytond_doc/areas_funcionales:toctree:areas_funcionales#
 
 .. toctree::
    :maxdepth: 2
