@@ -5,7 +5,7 @@ import os
 import os.path
 import urllib
 
-from trytond.model import ModelSQL, ModelView, fields
+from trytond.model import ModelSQL, ModelView, fields, Unique
 from trytond.pool import Pool
 from trytond.pyson import Eval, Not, Equal
 from trytond.transaction import Transaction
@@ -28,11 +28,9 @@ class GalateaStaticFolder(ModelSQL, ModelView):
     @classmethod
     def __setup__(cls):
         super(GalateaStaticFolder, cls).__setup__()
-        cls._constraints += [
-            ('check_name', 'invalid_name'),
-        ]
+        table = cls.__table__()
         cls._sql_constraints += [
-            ('unique_folder', 'UNIQUE(name)',
+            ('unique_folder', Unique(table, table.name),
              'Folder name needs to be unique')
         ]
         cls._error_messages.update({
@@ -51,6 +49,12 @@ class GalateaStaticFolder(ModelSQL, ModelView):
             self.name = slugify(self.name)
             return self.name
 
+    @classmethod
+    def validate(cls, files):
+        for file_ in files:
+            file_.check_name()
+        super(GalateaStaticFolder, cls).validate(files)
+
     def check_name(self):
         '''
         Check the validity of folder name
@@ -58,8 +62,7 @@ class GalateaStaticFolder(ModelSQL, ModelView):
         eventually lead to previlege escalation
         '''
         if ('.' in self.name) or (self.name.startswith('/')):
-            return False
-        return True
+            self.raise_user_error('invalid_name')
 
     @classmethod
     def write(cls, folders, vals):

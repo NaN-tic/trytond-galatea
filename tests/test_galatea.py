@@ -4,22 +4,12 @@
 # the full copyright notices and license terms.
 import unittest
 import trytond.tests.test_tryton
-from trytond.tests.test_tryton import test_view, test_depends
+from trytond.tests.test_tryton import ModuleTestCase
 
 
-class GalateaTestCase(unittest.TestCase):
+class GalateaTestCase(ModuleTestCase):
     'Test Galatea module'
-
-    def setUp(self):
-        trytond.tests.test_tryton.install_module('galatea')
-
-    def test0005views(self):
-        'Test views'
-        test_view('galatea')
-
-    def test0006depends(self):
-        'Test depends'
-        test_depends()
+    module = 'galatea'
 
 
 def suite():

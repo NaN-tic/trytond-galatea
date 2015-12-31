@@ -79,12 +79,14 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
             <field name="group" ref="group_galatea"/>
         </record>
 
+        <!--
         <record id="galatea_user_form" model="ir.ui.view">
             <field name="model">galatea.user</field>
             <field name="type">form</field>
             <field name="inherit" ref="party.party_view_form"/>
             <field name="name">galatea_user_form</field>
         </record>
+        -->
         <record model="ir.ui.view" id="galatea_user_form2">
             <field name="model">galatea.user</field>
             <field name="type">form</field>
@@ -112,7 +114,7 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
             <field name="act_window" ref="action_galatea_user_view"/>
         </record>
 
-        <menuitem name="Users" id="menu_galatea_user" 
+        <menuitem name="Users" id="menu_galatea_user"
             action="action_galatea_user_view" parent="menu_galatea_users"/>
 
         <!-- Galatea Send Password -->
@@ -190,6 +192,14 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
             <field name="perm_write" eval="True"/>
             <field name="perm_create" eval="True"/>
             <field name="perm_delete" eval="False"/>
+        </record>
+
+        <record model="ir.model.access" id="access_galatea_party_party_default">
+            <field name="model" search="[('model', '=', 'party.party')]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_delete" eval="True"/>
         </record>
 
         <record model="ir.model.access" id="access_galatea_party_party">
