@@ -140,17 +140,12 @@ class GalateaUri(ModelSQL, ModelView):
     @fields.depends('name', 'slug')
     def on_change_name(self):
         if self.name and not self.slug:
-            return {
-                'slug': slugify(self.name),
-                }
-        return {}
+            self.slug = slugify(self.name)
 
     @fields.depends('slug')
     def on_change_slug(self):
         if self.slug:
-            return {
-                'slug': slugify(self.slug),
-                }
+            self.sluf = slugify(self.slug),
 
     @staticmethod
     def default_left():
@@ -259,7 +254,7 @@ class GalateaVisiblePage(ModelSQL, ModelView):
 
     # TODO: it should be "title"
     name = fields.Char('Title', translate=True,
-        required=True, on_change=['name', 'slug'])
+        required=True)
     canonical_uri = fields.Many2One('galatea.uri', 'Canonical URI',
         required=True, select=True, domain=[
             # TODO: fail with tag websites functional field
@@ -318,10 +313,8 @@ class GalateaVisiblePage(ModelSQL, ModelView):
 
     @fields.depends('name', 'slug')
     def on_change_name(self):
-        res = {}
         if self.name and not self.slug:
-            res['slug'] = slugify(self.name)
-        return res
+            self.slug = slugify(self.name)
 
     @fields.depends('canonical_uri', 'slug')
     def on_change_with_slug(self, name=None):

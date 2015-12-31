@@ -81,7 +81,7 @@
         <record model="ir.action.act_window" id="act_galatea_uri_tree">
             <field name="name">Galatea URIs</field>
             <field name="res_model">galatea.uri</field>
-            <field name="domain">[('parent', '=', None)]</field>
+            <field name="domain" eval="[('parent', '=', None)]" pyson="1"/>
         </record>
         <record model="ir.action.act_window.view"
                 id="act_galatea_uri_tree_view1">

@@ -2,7 +2,7 @@
 <!-- This file is part galatea module for Tryton.
 The COPYRIGHT file at the top level of this repository contains the full copyright notices and license terms. -->
 <data>
-    <xpath expr="/form/notebook/page[@id=&quot;accounting&quot;]" position="after">
+    <xpath expr="/form/notebook" position="inside">
         <page string="Galatea" col="4" id="galatea">
             <separator name="galatea_users" colspan="4"/>
             <field name="galatea_users" colspan="4"/>
