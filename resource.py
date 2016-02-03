@@ -215,12 +215,11 @@ class GalateaUri(ModelSQL, ModelView):
     def default_type():
         return 'content'
 
-    @classmethod
-    def get_content_types(cls, uri=None):
-        res = [(None, '')]
-        if uri and uri.template:
-            res += [(m.model, m.name) for m in uri.template.allowed_models]
-        return res
+    def get_content_types(self):
+        result = [(None, '')]
+        if self.template:
+            result += [(m.model, m.name) for m in self.template.allowed_models]
+        return result
 
     @fields.depends('content')
     def on_change_with_content_model(self, name=None):
