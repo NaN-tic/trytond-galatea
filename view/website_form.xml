@@ -10,6 +10,8 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
     <field name="folder"/>
     <label name="static_folder"/>
     <field name="static_folder"/>
+    <label name="title"/>
+    <field name="title"/>
     <label name="active"/>
     <field name="active"/>
     <label name="company"/>

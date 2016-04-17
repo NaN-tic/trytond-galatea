@@ -33,6 +33,7 @@ class GalateaWebSite(ModelSQL, ModelView):
     'Galatea Web Site'
     __name__ = "galatea.website"
     name = fields.Char('Name', required=True, select=True)
+    title = fields.Char('Title')
     uri = fields.Char('Uri', required=True,
         help='Base Uri Site (with "/")')
     folder = fields.Char('Folder', required=True,
