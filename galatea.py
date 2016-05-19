@@ -1,7 +1,7 @@
 # This file is part galatea module for Tryton.
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
-from trytond.model import ModelView, ModelSQL, fields
+from trytond.model import ModelView, ModelSQL, fields, Unique
 from trytond.wizard import Wizard, StateTransition, StateView, Button
 from trytond.pool import Pool
 from trytond.transaction import Transaction
@@ -63,12 +63,14 @@ class GalateaWebSite(ModelSQL, ModelView):
     @classmethod
     def __setup__(cls):
         super(GalateaWebSite, cls).__setup__()
+        t = cls.__table__()
         cls._sql_constraints = [
-            ('name_uniq', 'UNIQUE(name)',
-             'Another site with the same name already exists!')
+            ('name_uniq', Unique(t, t.name),
+                'Another site with the same name already exists!')
             ]
         cls._error_messages.update({
-                'smtp_error': 'Wrong connection to SMTP server. Not send email.',
+                'smtp_error': 'Wrong connection to SMTP server. '
+                        'Not send email.',
                 })
         cls._buttons.update({
                 'remove_cache': {},
@@ -181,8 +183,9 @@ class GalateaUser(ModelSQL, ModelView):
     @classmethod
     def __setup__(cls):
         super(GalateaUser, cls).__setup__()
+        t = cls.__table__()
         cls._sql_constraints += [
-            ('unique_email_company', 'UNIQUE(email, company)',
+            ('unique_email_company', Unique(t, t.email, t.company),
                 'Email must be unique in a company'),
         ]
 
