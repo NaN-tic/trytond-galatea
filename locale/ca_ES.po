@@ -1,4 +1,4 @@
-# 
+#
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
@@ -8,7 +8,7 @@ msgstr "El directori \"%s\" no existeix."
 
 msgctxt "error:galatea.send.password:"
 msgid "%s. New password reset"
-msgstr "%s. Nova contrasenya"
+msgstr "%s. Nova contrasenya reiniciada"
 
 msgctxt "error:galatea.send.password:"
 msgid ""
@@ -63,6 +63,14 @@ msgstr ""
 "Nom del directori incorrecte:\n"
 "                (1) '.' el nom del directori (o bé)\n"
 "                (2) el directori acaba amb '/'"
+
+msgctxt "error:galatea.template:"
+msgid "The file name of the Galatea Template must be unique."
+msgstr "El nom de la plantilla Galatea ha de ser únic."
+
+msgctxt "error:galatea.uri:"
+msgid "The URI (Parent + SLUG) of the Galatea URI must be unique."
+msgstr "La URI (pare + SLUG) de Galatea URI ha de ser única."
 
 msgctxt "error:galatea.user:"
 msgid "Email must be unique in a company"
@@ -185,6 +193,174 @@ msgid "Write Date"
 msgstr "Data modificació"
 
 msgctxt "field:galatea.static.folder,write_uid:"
+msgid "Write User"
+msgstr "Usuari modificació"
+
+msgctxt "field:galatea.template,allowed_models:"
+msgid "Allowed Models"
+msgstr "Models permès"
+
+msgctxt "field:galatea.template,create_date:"
+msgid "Create Date"
+msgstr "Data creació"
+
+msgctxt "field:galatea.template,create_uid:"
+msgid "Create User"
+msgstr "Usuari creació"
+
+msgctxt "field:galatea.template,filename:"
+msgid "Filename"
+msgstr "Nom fitxer"
+
+msgctxt "field:galatea.template,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:galatea.template,rec_name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:galatea.template,write_date:"
+msgid "Write Date"
+msgstr "Usuari creació"
+
+msgctxt "field:galatea.template,write_uid:"
+msgid "Write User"
+msgstr "Usuari modificació"
+
+msgctxt "field:galatea.template-ir.model,create_date:"
+msgid "Create Date"
+msgstr "Data creació"
+
+msgctxt "field:galatea.template-ir.model,create_uid:"
+msgid "Create User"
+msgstr "Usuari creació"
+
+msgctxt "field:galatea.template-ir.model,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:galatea.template-ir.model,model:"
+msgid "Model"
+msgstr "Model"
+
+msgctxt "field:galatea.template-ir.model,rec_name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:galatea.template-ir.model,template:"
+msgid "Galatea Template"
+msgstr "Plantilla Galatea"
+
+msgctxt "field:galatea.template-ir.model,write_date:"
+msgid "Write Date"
+msgstr "Usuari creació"
+
+msgctxt "field:galatea.template-ir.model,write_uid:"
+msgid "Write User"
+msgstr "Usuari modificació"
+
+msgctxt "field:galatea.uri,active:"
+msgid "Active"
+msgstr "Actiu"
+
+msgctxt "field:galatea.uri,anchor:"
+msgid "Is Anchor?"
+msgstr "Es un ancoratge?"
+
+msgctxt "field:galatea.uri,childs:"
+msgid "Children"
+msgstr "Fills"
+
+msgctxt "field:galatea.uri,content:"
+msgid "Content"
+msgstr "Contingut"
+
+msgctxt "field:galatea.uri,content_model:"
+msgid "Content Model"
+msgstr "Contingut model"
+
+msgctxt "field:galatea.uri,create_date:"
+msgid "Create Date"
+msgstr "Data creació"
+
+msgctxt "field:galatea.uri,create_uid:"
+msgid "Create User"
+msgstr "Usuari creació"
+
+msgctxt "field:galatea.uri,external_redirection:"
+msgid "External Redirection"
+msgstr "Redirecció externa"
+
+msgctxt "field:galatea.uri,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:galatea.uri,internal_redirection:"
+msgid "Internal Redirection"
+msgstr "Redirecció interna"
+
+msgctxt "field:galatea.uri,left:"
+msgid "Left"
+msgstr "Esquerra"
+
+msgctxt "field:galatea.uri,menus:"
+msgid "Menus"
+msgstr "Menús"
+
+msgctxt "field:galatea.uri,name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:galatea.uri,parent:"
+msgid "Parent"
+msgstr "Pare"
+
+msgctxt "field:galatea.uri,rec_name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:galatea.uri,redirection_code:"
+msgid "Redirection Code"
+msgstr "Codi redirecció"
+
+msgctxt "field:galatea.uri,right:"
+msgid "Right"
+msgstr "Dreta"
+
+msgctxt "field:galatea.uri,sequence:"
+msgid "Sequence"
+msgstr "Seqüència"
+
+msgctxt "field:galatea.uri,sitemap:"
+msgid "Sitemap"
+msgstr "Mapa web"
+
+msgctxt "field:galatea.uri,slug:"
+msgid "Slug"
+msgstr "Slug"
+
+msgctxt "field:galatea.uri,template:"
+msgid "Template"
+msgstr "Plantilla"
+
+msgctxt "field:galatea.uri,type:"
+msgid "Type"
+msgstr "Tipus"
+
+msgctxt "field:galatea.uri,uri:"
+msgid "URI"
+msgstr "URI"
+
+msgctxt "field:galatea.uri,website:"
+msgid "Website"
+msgstr "Lloc Web"
+
+msgctxt "field:galatea.uri,write_date:"
+msgid "Write Date"
+msgstr "Usuari creació"
+
+msgctxt "field:galatea.uri,write_uid:"
 msgid "Write User"
 msgstr "Usuari modificació"
 
@@ -448,6 +624,18 @@ msgctxt "help:galatea.static.folder,name:"
 msgid "Folder name contains az09 characters"
 msgstr "El nom del directori ha de contenir els caràcters az09"
 
+msgctxt "help:galatea.template,allowed_models:"
+msgid ""
+"The models compatible with this template, which instances can be associated "
+"with an uri that use this template."
+msgstr ""
+"Models compatibles amb aquesta plantilla, quan la instancia es associada amb"
+" una uri que s'usa en aquesta plantilla."
+
+msgctxt "help:galatea.uri,sitemap:"
+msgid "Wether this URI should be visible in the sitemap or not."
+msgstr "Mentres aquesta URI està visible en el mapa web o no."
+
 msgctxt "help:galatea.user,active:"
 msgid "Allow login users"
 msgstr "Permet identificar usuaris"
@@ -507,6 +695,18 @@ msgctxt "model:galatea.static.folder,name:"
 msgid "Static folder for Galatea"
 msgstr "Directoris estàtics per Galatea"
 
+msgctxt "model:galatea.template,name:"
+msgid "Galatea Template"
+msgstr "Plantilla Galatea"
+
+msgctxt "model:galatea.template-ir.model,name:"
+msgid "Galatea Template - Model"
+msgstr "Plantilla Galatea - Model"
+
+msgctxt "model:galatea.uri,name:"
+msgid "Galatea Uri"
+msgstr "Galatea Uri"
+
 msgctxt "model:galatea.user,name:"
 msgid "Galatea Users"
 msgstr "Galatea Usuaris"
@@ -526,6 +726,22 @@ msgstr "Relació països i llocs web"
 msgctxt "model:galatea.website-currency.currency,name:"
 msgid "Currencies to be made available on website"
 msgstr "Monedes disponibles en el lloc web"
+
+msgctxt "model:ir.action,name:act_galatea_template"
+msgid "Galatea Template"
+msgstr "Plantilla Galatea"
+
+msgctxt "model:ir.action,name:act_galatea_uri"
+msgid "Galatea URIs"
+msgstr "Galatea URIs"
+
+msgctxt "model:ir.action,name:act_galatea_uri_tree"
+msgid "Galatea URIs"
+msgstr "Galatea URIs"
+
+msgctxt "model:ir.action,name:act_galatea_user_form"
+msgid "Galatea Users"
+msgstr "Galatea Usuaris"
 
 msgctxt "model:ir.action,name:act_website_form"
 msgid "Web Sites"
@@ -571,6 +787,18 @@ msgctxt "model:ir.ui.menu,name:menu_galatea_static"
 msgid "Static"
 msgstr "Estàtic"
 
+msgctxt "model:ir.ui.menu,name:menu_galatea_template"
+msgid "Galatea Template"
+msgstr "Plantilla Galatea"
+
+msgctxt "model:ir.ui.menu,name:menu_galatea_uri"
+msgid "Galatea URIs"
+msgstr "Galatea URIs"
+
+msgctxt "model:ir.ui.menu,name:menu_galatea_uri_tree"
+msgid "Galatea URIs"
+msgstr "Galatea URIs"
+
 msgctxt "model:ir.ui.menu,name:menu_galatea_user"
 msgid "Users"
 msgstr "Usuaris"
@@ -598,6 +826,38 @@ msgstr "Fitxer local"
 msgctxt "selection:galatea.static.file,type:"
 msgid "Remote File"
 msgstr "Fitxer remot"
+
+msgctxt "selection:galatea.uri,redirection_code:"
+msgid "301:"
+msgstr "301:"
+
+msgctxt "selection:galatea.uri,redirection_code:"
+msgid "302:"
+msgstr "302:"
+
+msgctxt "selection:galatea.uri,redirection_code:"
+msgid "303:"
+msgstr "303:"
+
+msgctxt "selection:galatea.uri,redirection_code:"
+msgid "305:"
+msgstr "305:"
+
+msgctxt "selection:galatea.uri,redirection_code:"
+msgid "307:"
+msgstr "307:"
+
+msgctxt "selection:galatea.uri,type:"
+msgid "Content"
+msgstr "Contingut"
+
+msgctxt "selection:galatea.uri,type:"
+msgid "External Redirection"
+msgstr "Redirecció externa"
+
+msgctxt "selection:galatea.uri,type:"
+msgid "Internal Redirection"
+msgstr "Redirecció interna"
 
 msgctxt "view:galatea.remove.cache.start:"
 msgid "Be careful this action do command system!"
@@ -630,6 +890,18 @@ msgstr "Fitxers"
 msgctxt "view:galatea.static.folder:"
 msgid "Static Folder"
 msgstr "Directori estàtic"
+
+msgctxt "view:galatea.template:"
+msgid "Galatea Template"
+msgstr "Plantilla Galatea"
+
+msgctxt "view:galatea.uri:"
+msgid "Galatea URIs"
+msgstr "Galatea URIs"
+
+msgctxt "view:galatea.uri:"
+msgid "Galatea Uri"
+msgstr "Galatea Uri"
 
 msgctxt "view:galatea.user:"
 msgid "Galatea User"
