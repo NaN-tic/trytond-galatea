@@ -26,7 +26,6 @@ __all__ = ['GalateaWebSite', 'GalateaWebsiteCountry',
     'GalateaRemoveCacheStart', 'GalateaRemoveCache',
     'GalateaSendPasswordStart', 'GalateaSendPasswordResult',
     'GalateaSendPassword']
-__metaclass__ = PoolMeta
 
 
 class GalateaWebSite(ModelSQL, ModelView):
