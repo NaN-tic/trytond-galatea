@@ -43,6 +43,10 @@ msgstr ""
 "                (2) contiene el carácter '/'"
 
 msgctxt "error:galatea.static.file:"
+msgid "Not allow to copy"
+msgstr "No está disponible la acción de copiar."
+
+msgctxt "error:galatea.static.file:"
 msgid "You can't change file name"
 msgstr "No puede cambiar el nombre del fichero"
 
@@ -63,6 +67,10 @@ msgstr ""
 "Nombre directorio incorrecto:\n"
 "                (1) '..' en el nombre (o bien)\n"
 "                (2) contiene el carácter '/'"
+
+msgctxt "error:galatea.static.folder:"
+msgid "Not allow to copy"
+msgstr "No está disponible la acción de copiar."
 
 msgctxt "error:galatea.template:"
 msgid "The file name of the Galatea Template must be unique."
