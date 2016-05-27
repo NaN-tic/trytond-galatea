@@ -1,6 +1,6 @@
 # The COPYRIGHT file at the top level of this repository contains the full
 # copyright notices and license terms.
-from trytond.model import ModelSQL, ModelView, fields
+from trytond.model import ModelSQL, ModelView, fields, Unique
 from trytond.pool import Pool
 from trytond.pyson import Bool, If, Eval, Greater
 from trytond.transaction import Transaction
@@ -27,11 +27,12 @@ class GalateaTemplate(ModelSQL, ModelView):
     @classmethod
     def __setup__(cls):
         super(GalateaTemplate, cls).__setup__()
+        t = cls.__table__()
+
         cls._sql_constraints += [
-            ('filename_uniq', 'UNIQUE (filename)',
+            ('filename_uniq', Unique(t, t.filename),
                 'The file name of the Galatea Template must be unique.'),
             ]
-
 
 class GalateaTemplateModel(ModelSQL):
     'Galatea Template - Model'
@@ -114,10 +115,12 @@ class GalateaUri(ModelSQL, ModelView):
     @classmethod
     def __setup__(cls):
         super(GalateaUri, cls).__setup__()
+        t = cls.__table__()
+
         cls._order.insert(0, ('sequence', 'ASC'))
         cls._order.insert(1, ('id', 'ASC'))
         cls._sql_constraints += [
-            ('uri_uniq', 'UNIQUE (parent, slug)',
+            ('uri_uniq', Unique(t, t.parent, t.slug),
                 'The URI (Parent + SLUG) of the Galatea URI must be unique.'),
             ]
 
