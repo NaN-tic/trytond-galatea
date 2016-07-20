@@ -272,6 +272,7 @@ class GalateaVisiblePage(ModelSQL, ModelView):
     slug = fields.Function(fields.Char('Slug', translate=True, required=True),
         'on_change_with_slug', setter='set_canonical_uri_field',
         searcher='search_canonical_uri_field')
+    slug_langs = fields.Function(fields.Dict(None, 'Slug Langs'), 'get_slug_langs')
     template = fields.Function(fields.Many2One('galatea.template', 'Template',
             required=True),
         'on_change_with_template', setter='set_canonical_uri_field',
@@ -279,10 +280,7 @@ class GalateaVisiblePage(ModelSQL, ModelView):
     uris = fields.One2Many('galatea.uri', 'content', 'URIs', readonly=True)
     uri = fields.Function(fields.Many2One('galatea.uri', 'URI'),
         'get_uri', searcher='search_uri')
-    # TODO: replace by uri_langs?
-    # slug_langs = fields.Function(fields.Dict(None, 'Slug Langs'),
-    #     'get_slug_langs')
-    # _slug_langs_cache = Cache('galatea_blog_post.slug_langs')
+    uri_langs = fields.Function(fields.Dict(None, 'URI Langs'), 'get_uri_langs')
     # TODO: maybe websites should be a searchable functional field as sum of
     # canonical_uri/uris website field
     # websites = fields.Many2Many('galatea.cms.article-galatea.website',
@@ -351,26 +349,41 @@ class GalateaVisiblePage(ModelSQL, ModelView):
                 ]
         return domain
 
-    # TODO: replace by uri_langs?
-    # def get_slug_langs(self, name):
-    #     'Return dict slugs for each active languages'
-    #     pool = Pool()
-    #     Lang = pool.get('ir.lang')
-    #     Post = pool.get('galatea.blog.post')
+    def get_slug_langs(self, name):
+        '''Slug from all languages actives'''
+        pool = Pool()
+        Lang = pool.get('ir.lang')
+        Model = pool.get(self.__name__)
 
-    #     post_id = self.id
-    #     langs = Lang.search([
-    #         ('active', '=', True),
-    #         ('translatable', '=', True),
-    #         ])
+        langs = Lang.search([
+            ('active', '=', True),
+            ('translatable', '=', True),
+            ])
 
-    #     slugs = {}
-    #     for lang in langs:
-    #         with Transaction().set_context(language=lang.code):
-    #             post, = Post.read([post_id], ['slug'])
-    #             slugs[lang.code] = post['slug']
+        slugs = {}
+        for lang in langs:
+            with Transaction().set_context(language=lang.code):
+                m, = Model.read([self.id], ['slug'])
+                slugs[lang.code] = m['slug']
+        return slugs
 
-    #     return slugs
+    def get_uri_langs(self, name):
+        '''Canonical URI from all languages actives'''
+        pool = Pool()
+        Lang = pool.get('ir.lang')
+        Model = pool.get(self.__name__)
+
+        langs = Lang.search([
+            ('active', '=', True),
+            ('translatable', '=', True),
+            ])
+
+        slugs = {}
+        for lang in langs:
+            with Transaction().set_context(language=lang.code):
+                m, = Model.read([self.id], ['uri.uri'])
+                slugs[lang.code] = m['uri.uri']
+        return slugs
 
     def get_uri(self, name):
         context = Transaction().context
