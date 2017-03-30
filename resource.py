@@ -477,13 +477,11 @@ class GalateaVisiblePage(ModelSQL, ModelView):
 
     @classmethod
     def copy(cls, records, default=None):
-        pool = Pool()
-        Uri = pool.get('galatea.uri')
+        Uri = Pool().get('galatea.uri')
 
         if default is None:
             default = {}
-        else:
-            default = default.copy()
+        default = default.copy()
 
         new_records = []
         for record in records:
