@@ -3,10 +3,22 @@
 The COPYRIGHT file at the top level of this repository contains the full copyright notices and license terms. -->
 <tryton>
     <data>
-        <record model="ir.ui.view" id="bsure_party_view_form">
-            <field name="model">party.party</field>
-            <field name="inherit" ref="party.party_view_form"/>
-            <field name="name">party_form</field> 
+        <record model="ir.action.act_window" id="act_galatea_user_form">
+            <field name="name">Galatea Users</field>
+            <field name="res_model">galatea.user</field>
+            <field name="domain" eval="[('party', 'in', Eval('active_ids'))]"
+                pyson="1"/>
+        </record>
+        <record model="ir.action.keyword"
+                id="act_open_galatea_users_keyword">
+            <field name="keyword">form_relate</field>
+            <field name="model">party.party,-1</field>
+            <field name="action" ref="act_galatea_user_form"/>
+        </record>
+        <record model="ir.action-res.group"
+            id="act_galatea_user_form-group_galatea">
+            <field name="action" ref="act_galatea_user_form"/>
+            <field name="group" ref="group_galatea"/>
         </record>
     </data>
 </tryton>

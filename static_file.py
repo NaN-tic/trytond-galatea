@@ -37,7 +37,8 @@ class GalateaStaticFolder(ModelSQL, ModelView):
             'invalid_name': """Invalid folder name:
                 (1) '.' in folder name (OR)
                 (2) folder name begins with '/'""",
-            'folder_cannot_change': "Folder name cannot be changed"
+            'folder_cannot_change': "Folder name cannot be changed",
+            'not_allow_copy': "Not allow to copy",
         })
 
     @fields.depends('name')
@@ -46,8 +47,7 @@ class GalateaStaticFolder(ModelSQL, ModelView):
         Slugified folder name
         """
         if self.name:
-            self.name = slugify(self.name)
-            return self.name
+            return slugify(self.name)
 
     @classmethod
     def validate(cls, files):
@@ -76,6 +76,10 @@ class GalateaStaticFolder(ModelSQL, ModelView):
             # TODO: Support this feature in future versions
             cls.raise_user_error('folder_cannot_change')
         return super(GalateaStaticFolder, cls).write(folders, vals)
+
+    @classmethod
+    def copy(cls, files, default=None):
+        cls.raise_user_error('not_allow_copy')
 
 
 class GalateaStaticFile(ModelSQL, ModelView):
@@ -109,6 +113,7 @@ class GalateaStaticFile(ModelSQL, ModelView):
                 (1) '..' in file name (OR)
                 (2) file name contains '/'""",
             'change_file_name': "You can't change file name",
+            'not_allow_copy': "Not allow to copy",
             })
 
     @staticmethod
@@ -122,18 +127,21 @@ class GalateaStaticFile(ModelSQL, ModelView):
     def default_type():
         return 'local'
 
-    def get_file_binary(self, name):
-        '''
-        Getter for the binary_file field. This fetches the file from the
-        file system, coverts it to buffer and returns it.
+    def _set_file_binary(self, value):
+        """
+        Setter for static file that stores file in file system
 
-        :param name: Field name
-        :return: File buffer
-        '''
-        location = (self.file_path if self.type == 'local'
-            else urllib.urlretrieve(self.remote_path)[0])
-        with open(location, 'rb') as file_reader:
-            return buffer(file_reader.read())
+        :param value: The value to set
+        """
+        if self.type == 'local':
+            file_binary = bytes(value)
+            # If the folder does not exist, create it recursively
+            directory = os.path.dirname(self.file_path)
+            if not os.path.isdir(directory):
+                os.makedirs(directory, 0775)
+            os.umask(0022)
+            with open(self.file_path, 'wb') as file_writer:
+                file_writer.write(file_binary)
 
     @classmethod
     def set_file_binary(cls, files, name, value):
@@ -142,25 +150,31 @@ class GalateaStaticFile(ModelSQL, ModelView):
 
         :param files: Records
         :param name: Ignored
-        :param value: The file buffer
+        :param value: The file bytes
         """
         for static_file in files:
             static_file._set_file_binary(value)
 
-    def _set_file_binary(self, value):
-        """
-        Setter for static file that stores file in file system
+    def get_file_binary(self, name):
+        '''
+        Getter for the binary_file field. This fetches the file from the
+        file system, coverts it to bytes and returns it.
 
-        :param value: The value to set
-        """
+        :param name: Field name
+        :return: File bytes
+        '''
         if self.type == 'local':
-            file_binary = buffer(value)
-            # If the folder does not exist, create it recursively
-            directory = os.path.dirname(self.file_path)
-            if not os.path.isdir(directory):
-                os.makedirs(directory)
-            with open(self.file_path, 'wb') as file_writer:
-                file_writer.write(file_binary)
+            location = self.file_path
+            if not os.path.exists(location):
+                return
+        else:
+            try:
+                location = urllib.urlretrieve(self.remote_path)[0]
+            except:
+                return
+
+        with open(location, 'rb') as file_reader:
+            return fields.Binary.cast(file_reader.read())
 
     def get_file_path(self, name):
         """
@@ -185,9 +199,8 @@ class GalateaStaticFile(ModelSQL, ModelView):
 
         <Tryton Data Path>/<Database Name>/galatea
         """
-        cursor = Transaction().cursor
         return os.path.join(config.get('database', 'path'),
-            cursor.database_name, "galatea")
+            Transaction().database.name, "galatea")
 
     def get_url(self, name):
         """Return the url if within an active request context or return
@@ -225,6 +238,10 @@ class GalateaStaticFile(ModelSQL, ModelView):
         # if values.get('name'):
         #     cls.raise_user_error('change_file_name')
         return super(GalateaStaticFile, cls).write(files, values)
+
+    @classmethod
+    def copy(cls, files, default=None):
+        cls.raise_user_error('not_allow_copy')
 
     @classmethod
     def delete(cls, files):

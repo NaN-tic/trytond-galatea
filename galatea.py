@@ -1,9 +1,9 @@
 # This file is part galatea module for Tryton.
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
-from trytond.model import ModelView, ModelSQL, fields
+from trytond.model import ModelView, ModelSQL, fields, Unique
 from trytond.wizard import Wizard, StateTransition, StateView, Button
-from trytond.pool import Pool, PoolMeta
+from trytond.pool import Pool
 from trytond.transaction import Transaction
 from trytond.config import config
 from email import Utils
@@ -26,14 +26,12 @@ __all__ = ['GalateaWebSite', 'GalateaWebsiteCountry',
     'GalateaRemoveCacheStart', 'GalateaRemoveCache',
     'GalateaSendPasswordStart', 'GalateaSendPasswordResult',
     'GalateaSendPassword']
-__metaclass__ = PoolMeta
 
 
 class GalateaWebSite(ModelSQL, ModelView):
     'Galatea Web Site'
     __name__ = "galatea.website"
     name = fields.Char('Name', required=True, select=True)
-    title = fields.Char('Title')
     uri = fields.Char('Uri', required=True,
         help='Base Uri Site (with "/")')
     folder = fields.Char('Folder', required=True,
@@ -64,12 +62,14 @@ class GalateaWebSite(ModelSQL, ModelView):
     @classmethod
     def __setup__(cls):
         super(GalateaWebSite, cls).__setup__()
+        t = cls.__table__()
         cls._sql_constraints = [
-            ('name_uniq', 'UNIQUE(name)',
-             'Another site with the same name already exists!')
+            ('name_uniq', Unique(t, t.name),
+                'Another site with the same name already exists!')
             ]
         cls._error_messages.update({
-                'smtp_error': 'Wrong connection to SMTP server. Not send email.',
+                'smtp_error': 'Wrong connection to SMTP server. '
+                        'Not send email.',
                 })
         cls._buttons.update({
                 'remove_cache': {},
@@ -93,8 +93,9 @@ class GalateaWebSite(ModelSQL, ModelView):
 
     @staticmethod
     def send_email(server, recipients, subject, body):
-        Website = Pool().get('galatea.website')
-        SMTP = Pool().get('smtp.server')
+        pool = Pool()
+        Website = pool.get('galatea.website')
+        SMTP = pool.get('smtp.server')
 
         from_ = server.smtp_email
         if server.smtp_use_email:
@@ -164,7 +165,7 @@ class GalateaUser(ModelSQL, ModelView):
         )
     manager = fields.Boolean('Manager', help='Allow user in manager sections')
     active = fields.Boolean('Active', help='Allow login users')
-    websites = fields.Many2Many('galatea.user-galatea.website', 
+    websites = fields.Many2Many('galatea.user-galatea.website',
         'user', 'website', 'Websites',
         help='Users will be available in those websites to login')
 
@@ -188,8 +189,9 @@ class GalateaUser(ModelSQL, ModelView):
     @classmethod
     def __setup__(cls):
         super(GalateaUser, cls).__setup__()
+        t = cls.__table__()
         cls._sql_constraints += [
-            ('unique_email_company', 'UNIQUE(email, company)',
+            ('unique_email_company', Unique(t, t.email, t.company),
                 'Email must be unique in a company'),
         ]
 
@@ -204,7 +206,10 @@ class GalateaUser(ModelSQL, ModelView):
         if values.get('password'):
             values['salt'] = ''.join(random.sample(
                 string.ascii_letters + string.digits, 8))
-            password = values['password'] + values['salt']
+            password = values['password']
+            if isinstance(password, unicode):
+                password = password.encode('utf-8')
+            password += values['salt']
             if hashlib:
                 digest = hashlib.sha1(password).hexdigest()
             else:

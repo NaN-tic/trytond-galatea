@@ -1,6 +1,6 @@
 # The COPYRIGHT file at the top level of this repository contains the full
 # copyright notices and license terms.
-from trytond.model import ModelSQL, ModelView, fields
+from trytond.model import ModelSQL, ModelView, fields, Unique
 from trytond.pool import Pool
 from trytond.pyson import Bool, If, Eval, Greater
 from trytond.transaction import Transaction
@@ -27,11 +27,12 @@ class GalateaTemplate(ModelSQL, ModelView):
     @classmethod
     def __setup__(cls):
         super(GalateaTemplate, cls).__setup__()
+        t = cls.__table__()
+
         cls._sql_constraints += [
-            ('filename_uniq', 'UNIQUE (filename)',
+            ('filename_uniq', Unique(t, t.filename),
                 'The file name of the Galatea Template must be unique.'),
             ]
-
 
 class GalateaTemplateModel(ModelSQL):
     'Galatea Template - Model'
@@ -87,9 +88,7 @@ class GalateaUri(ModelSQL, ModelView):
         'Internal Redirection', states={
             'invisible': Eval('type') != 'internal_redirection',
             'required': Eval('type') == 'internal_redirection',
-            }, domain=[
-            ('website', '=', Eval('website')),
-            ], depends=['type', 'website'])
+            }, depends=['type'])
     external_redirection = fields.Char('External Redirection', states={
             'invisible': Eval('type') != 'external_redirection',
             'required': Eval('type') == 'external_redirection',
@@ -116,10 +115,12 @@ class GalateaUri(ModelSQL, ModelView):
     @classmethod
     def __setup__(cls):
         super(GalateaUri, cls).__setup__()
+        t = cls.__table__()
+
         cls._order.insert(0, ('sequence', 'ASC'))
         cls._order.insert(1, ('id', 'ASC'))
         cls._sql_constraints += [
-            ('uri_uniq', 'UNIQUE (parent, slug)',
+            ('uri_uniq', Unique(t, t.parent, t.slug),
                 'The URI (Parent + SLUG) of the Galatea URI must be unique.'),
             ]
 
@@ -271,6 +272,7 @@ class GalateaVisiblePage(ModelSQL, ModelView):
     slug = fields.Function(fields.Char('Slug', translate=True, required=True),
         'on_change_with_slug', setter='set_canonical_uri_field',
         searcher='search_canonical_uri_field')
+    slug_langs = fields.Function(fields.Dict(None, 'Slug Langs'), 'get_slug_langs')
     template = fields.Function(fields.Many2One('galatea.template', 'Template',
             required=True),
         'on_change_with_template', setter='set_canonical_uri_field',
@@ -278,10 +280,7 @@ class GalateaVisiblePage(ModelSQL, ModelView):
     uris = fields.One2Many('galatea.uri', 'content', 'URIs', readonly=True)
     uri = fields.Function(fields.Many2One('galatea.uri', 'URI'),
         'get_uri', searcher='search_uri')
-    # TODO: replace by uri_langs?
-    # slug_langs = fields.Function(fields.Dict(None, 'Slug Langs'),
-    #     'get_slug_langs')
-    # _slug_langs_cache = Cache('galatea_blog_post.slug_langs')
+    uri_langs = fields.Function(fields.Dict(None, 'URI Langs'), 'get_uri_langs')
     # TODO: maybe websites should be a searchable functional field as sum of
     # canonical_uri/uris website field
     # websites = fields.Many2Many('galatea.cms.article-galatea.website',
@@ -350,26 +349,41 @@ class GalateaVisiblePage(ModelSQL, ModelView):
                 ]
         return domain
 
-    # TODO: replace by uri_langs?
-    # def get_slug_langs(self, name):
-    #     'Return dict slugs for each active languages'
-    #     pool = Pool()
-    #     Lang = pool.get('ir.lang')
-    #     Post = pool.get('galatea.blog.post')
+    def get_slug_langs(self, name):
+        '''Slug from all languages actives'''
+        pool = Pool()
+        Lang = pool.get('ir.lang')
+        Model = pool.get(self.__name__)
 
-    #     post_id = self.id
-    #     langs = Lang.search([
-    #         ('active', '=', True),
-    #         ('translatable', '=', True),
-    #         ])
+        langs = Lang.search([
+            ('active', '=', True),
+            ('translatable', '=', True),
+            ])
 
-    #     slugs = {}
-    #     for lang in langs:
-    #         with Transaction().set_context(language=lang.code):
-    #             post, = Post.read([post_id], ['slug'])
-    #             slugs[lang.code] = post['slug']
+        slugs = {}
+        for lang in langs:
+            with Transaction().set_context(language=lang.code):
+                m, = Model.read([self.id], ['slug'])
+                slugs[lang.code] = m['slug']
+        return slugs
 
-    #     return slugs
+    def get_uri_langs(self, name):
+        '''Canonical URI from all languages actives'''
+        pool = Pool()
+        Lang = pool.get('ir.lang')
+        Model = pool.get(self.__name__)
+
+        langs = Lang.search([
+            ('active', '=', True),
+            ('translatable', '=', True),
+            ])
+
+        slugs = {}
+        for lang in langs:
+            with Transaction().set_context(language=lang.code):
+                m, = Model.read([self.id], ['uri.uri'])
+                slugs[lang.code] = m['uri.uri']
+        return slugs
 
     def get_uri(self, name):
         context = Transaction().context
@@ -463,13 +477,11 @@ class GalateaVisiblePage(ModelSQL, ModelView):
 
     @classmethod
     def copy(cls, records, default=None):
-        pool = Pool()
-        Uri = pool.get('galatea.uri')
+        Uri = Pool().get('galatea.uri')
 
         if default is None:
             default = {}
-        else:
-            default = default.copy()
+        default = default.copy()
 
         new_records = []
         for record in records:
