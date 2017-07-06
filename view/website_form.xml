@@ -40,6 +40,9 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
             <field name="country"/>
             <field name="countries" colspan="4"/>
         </page>
+        <page id="languages" string="Languages">
+            <field name="languages" colspan="4"/>
+        </page>
     </notebook>
     <group col="5" colspan="4" id="buttons">
         <button icon="tryton-cancel" name="remove_cache" string="Remove Cache"/>
