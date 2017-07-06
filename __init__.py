@@ -11,6 +11,7 @@ def register():
     Pool.register(
         GalateaWebSite,
         GalateaWebsiteCountry,
+        GalateaWebsiteLang,
         GalateaWebsiteCurrency,
         GalateaUser,
         GalateaUserWebSite,

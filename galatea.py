@@ -21,7 +21,7 @@ except ImportError:
     hashlib = None
     import sha
 
-__all__ = ['GalateaWebSite', 'GalateaWebsiteCountry',
+__all__ = ['GalateaWebSite', 'GalateaWebsiteCountry', 'GalateaWebsiteLang',
     'GalateaWebsiteCurrency', 'GalateaUser', 'GalateaUserWebSite',
     'GalateaRemoveCacheStart', 'GalateaRemoveCache',
     'GalateaSendPasswordStart', 'GalateaSendPasswordResult',
@@ -44,9 +44,10 @@ class GalateaWebSite(ModelSQL, ModelView):
         help='Add website in users when users do a new registration')
     country = fields.Many2One('country.country', 'Country', required=True,
         help='Default Country')
-    countries = fields.Many2Many(
-        'galatea.website-country.country', 'website', 'country',
-        'Countries Available')
+    countries = fields.Many2Many('galatea.website-country.country',
+        'website', 'country', 'Countries')
+    languages = fields.Many2Many('galatea.website-ir.lang',
+        'website', 'language', 'Languages')
     currency = fields.Many2One('currency.currency', 'Currency', required=True)
     timezone = fields.Selection(
         [(x, x) for x in pytz.common_timezones], 'Timezone', translate=False
@@ -133,6 +134,13 @@ class GalateaWebsiteCountry(ModelSQL):
     __name__ = 'galatea.website-country.country'
     website = fields.Many2One('galatea.website', 'Website')
     country = fields.Many2One('country.country', 'Country')
+
+
+class GalateaWebsiteLang(ModelSQL):
+    "Website Language Relations"
+    __name__ = 'galatea.website-ir.lang'
+    website = fields.Many2One('galatea.website', 'Website')
+    language = fields.Many2One('ir.lang', 'Language')
 
 
 class GalateaWebsiteCurrency(ModelSQL):
