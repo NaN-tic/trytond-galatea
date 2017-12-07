@@ -6,7 +6,7 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
         <form string="Galatea User"/>
     </xpath>
     <xpath expr="/form/group[@id='checkboxes']" position="after">
-        <pdb; label name="email"/>
+        <label name="email"/>
         <field name="email"/>
         <label name="password"/>
         <field name="password" widget="password"/>
