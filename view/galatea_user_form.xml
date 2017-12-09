@@ -1,25 +1,27 @@
 <?xml version="1.0"?>
 <!-- This file is part galatea module for Tryton.
 The COPYRIGHT file at the top level of this repository contains the full copyright notices and license terms. -->
-<data>
-    <xpath expr="/form" position="replace_attributes">
-        <form string="Galatea User"/>
-    </xpath>
-    <xpath expr="/form/group[@id='checkboxes']" position="after">
-        <label name="email"/>
-        <field name="email"/>
-        <label name="password"/>
-        <field name="password" widget="password"/>
-        <label name="active"/>
-        <field name="active"/>
-        <label name="manager"/>
-        <field name="manager"/>
-        <label name="company"/>
-        <field name="company"/>
-        <label name="timezone"/>
-        <field name="timezone"/>
-        <newline/>
-        <separator name="websites" colspan="4"/>
-        <field name="websites" colspan="4"/>
-    </xpath>
-</data>
+<form string="Galatea User" col="6">
+    <label name="party"/>
+    <field name="party"/>
+    <label name="display_name"/>
+    <field name="display_name"/>
+    <label name="company"/>
+    <field name="company"/>
+    <label name="email"/>
+    <field name="email"/>
+    <label name="password"/>
+    <field name="password" widget="password"/>
+    <label name="active"/>
+    <field name="active"/>
+    <label name="manager"/>
+    <field name="manager"/>
+    <label name="timezone"/>
+    <field name="timezone"/>
+    <newline/>
+    <notebook colspan="6">
+        <page name="websites">
+            <field name="websites" colspan="4"/>
+        </page>
+    </notebook>
+</form>
