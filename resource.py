@@ -34,6 +34,7 @@ class GalateaTemplate(ModelSQL, ModelView):
                 'The file name of the Galatea Template must be unique.'),
             ]
 
+
 class GalateaTemplateModel(ModelSQL):
     'Galatea Template - Model'
     __name__ = 'galatea.template-ir.model'
@@ -78,9 +79,10 @@ class GalateaUri(ModelSQL, ModelView):
             'required': Eval('type') == 'content',
             }, depends=['content_model', 'type'])
     content = fields.Reference('Content', selection='get_content_types',
-            selection_change_with=['template'], select=True, states={
+        select=True, states={
             'invisible': Eval('type') != 'content',
-            }, depends=['website', 'type'])
+            },
+        depends=['website', 'type'])
     content_model = fields.Function(fields.Many2One('ir.model',
             'Content Model'),
         'on_change_with_content_model')
@@ -218,6 +220,7 @@ class GalateaUri(ModelSQL, ModelView):
     def default_type():
         return 'content'
 
+    @fields.depends('template')
     def get_content_types(self):
         result = [(None, '')]
         if self.template:
@@ -268,11 +271,13 @@ class GalateaVisiblePage(ModelSQL, ModelView):
         states={
             'required': Greater(Eval('id', -1), 0),
             'invisible': ~Greater(Eval('id', -1), 0),
-            }, depends=['websites', 'id'])
+            },
+        depends=['id'])
     slug = fields.Function(fields.Char('Slug', translate=True, required=True),
         'on_change_with_slug', setter='set_canonical_uri_field',
         searcher='search_canonical_uri_field')
-    slug_langs = fields.Function(fields.Dict(None, 'Slug Langs'), 'get_slug_langs')
+    slug_langs = fields.Function(
+        fields.Dict(None, 'Slug Langs'), 'get_slug_langs')
     template = fields.Function(fields.Many2One('galatea.template', 'Template',
             required=True),
         'on_change_with_template', setter='set_canonical_uri_field',
@@ -280,7 +285,8 @@ class GalateaVisiblePage(ModelSQL, ModelView):
     uris = fields.One2Many('galatea.uri', 'content', 'URIs', readonly=True)
     uri = fields.Function(fields.Many2One('galatea.uri', 'URI'),
         'get_uri', searcher='search_uri')
-    uri_langs = fields.Function(fields.Dict(None, 'URI Langs'), 'get_uri_langs')
+    uri_langs = fields.Function(
+        fields.Dict(None, 'URI Langs'), 'get_uri_langs')
     # TODO: maybe websites should be a searchable functional field as sum of
     # canonical_uri/uris website field
     # websites = fields.Many2Many('galatea.cms.article-galatea.website',

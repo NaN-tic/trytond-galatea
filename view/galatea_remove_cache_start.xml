@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- This file is part galatea module for Tryton.
 The COPYRIGHT file at the top level of this repository contains the full copyright notices and license terms. -->
-<form string="Galatea Remove Cache">
+<form>
     <image name="tryton-dialog-information" xexpand="0" xfill="0"/>
     <group col="1" id="labels">
         <label string="Be careful this action do command system!"

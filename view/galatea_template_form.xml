@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- The COPYRIGHT file at the top level of this repository contains the full
      copyright notices and license terms. -->
-<form string="Galatea Template">
+<form>
     <label name="filename"/>
     <field name="filename"/>
     <separator name="allowed_models" colspan="4"/>
