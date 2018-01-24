@@ -22,7 +22,6 @@ def register():
         resource.GalateaTemplate,
         resource.GalateaTemplateModel,
         resource.GalateaUri,
-        resource.GalateaVisiblePage,
         static_file.GalateaStaticFolder,
         static_file.GalateaStaticFile,
         party.Party,
