@@ -258,7 +258,7 @@ class GalateaUser(ModelSQL, ModelView, UserMixin):
 
     @classmethod
     def get_user(cls, website, request):
-        return GalateaUser.search(cls._get_user_domain(website, request), limit=1)
+        return cls.search(cls._get_user_domain(website, request), limit=1)
 
 
 class GalateaUserWebSite(ModelSQL):
