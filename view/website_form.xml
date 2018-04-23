@@ -22,6 +22,8 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
         <page id="configuration" string="Configuration">
             <label name="registration"/>
             <field name="registration"/>
+            <label name="logo"/>
+            <field name="logo"/>
         </page>
         <page id="seo" string="SEO">
             <label name="metadescription"/>

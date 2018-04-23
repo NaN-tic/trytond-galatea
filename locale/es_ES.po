@@ -509,6 +509,14 @@ msgctxt "field:galatea.website,id:"
 msgid "ID"
 msgstr "ID"
 
+msgctxt "field:galatea.website,languages:"
+msgid "Languages"
+msgstr "Idiomas"
+
+msgctxt "field:galatea.website,logo:"
+msgid "Logo"
+msgstr "Logotipo"
+
 msgctxt "field:galatea.website,metadescription:"
 msgid "Meta Description"
 msgstr "Meta Description"
@@ -620,6 +628,38 @@ msgstr "Fecha modificación"
 msgctxt "field:galatea.website-currency.currency,write_uid:"
 msgid "Write User"
 msgstr "Usuario modificación"
+
+msgctxt "field:galatea.website-ir.lang,create_date:"
+msgid "Create Date"
+msgstr "Fecha de creación"
+
+msgctxt "field:galatea.website-ir.lang,create_uid:"
+msgid "Create User"
+msgstr "Usuario de creación"
+
+msgctxt "field:galatea.website-ir.lang,id:"
+msgid "ID"
+msgstr "Identificador"
+
+msgctxt "field:galatea.website-ir.lang,language:"
+msgid "Language"
+msgstr "Idioma"
+
+msgctxt "field:galatea.website-ir.lang,rec_name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:galatea.website-ir.lang,website:"
+msgid "Website"
+msgstr "Sitio web"
+
+msgctxt "field:galatea.website-ir.lang,write_date:"
+msgid "Write Date"
+msgstr "Fecha de modificación"
+
+msgctxt "field:galatea.website-ir.lang,write_uid:"
+msgid "Write User"
+msgstr "Usuario de modificación"
 
 msgctxt "field:party.party,galatea_users:"
 msgid "Galatea Users"
@@ -736,6 +776,10 @@ msgstr "Países relacionados con el sitio web"
 msgctxt "model:galatea.website-currency.currency,name:"
 msgid "Currencies to be made available on website"
 msgstr "Monedas disponibles en este sitio web"
+
+msgctxt "model:galatea.website-ir.lang,name:"
+msgid "Website Language Relations"
+msgstr "Relaciones de idioma de sitio web"
 
 msgctxt "model:ir.action,name:act_galatea_template"
 msgid "Galatea Template"

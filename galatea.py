@@ -61,6 +61,7 @@ class GalateaWebSite(ModelSQL, ModelView):
             'than 155 characters of plain text')
     metakeyword = fields.Char('Meta Keyword', translate=True)
     metatitle = fields.Char('Meta Title', translate=True)
+    logo = fields.Char('Logo')
 
     @classmethod
     def __setup__(cls):
