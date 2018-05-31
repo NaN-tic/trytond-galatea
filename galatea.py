@@ -6,16 +6,15 @@ from trytond.wizard import Wizard, StateTransition, StateView, Button
 from trytond.pool import Pool
 from trytond.transaction import Transaction
 from trytond.sendmail import SMTPDataManager, sendmail_transactional
-from trytond.config import config
 from email.utils import make_msgid
 from email.header import Header
 from email.mime.text import MIMEText
-from fabric.api import env as fenv, sudo as fsudo
-from fabric.contrib.files import exists as fexists
+import subprocess
 from flask_login import UserMixin
 import pytz
 import random
 import string
+import os
 
 try:
     import hashlib
@@ -299,16 +298,14 @@ class GalateaRemoveCache(Wizard):
         pool = Pool()
         Website = pool.get('galatea.website')
 
-        fenv.host_string = config.get('galatea', 'host')
-        fenv.password = config.get('galatea', 'password')
-
         websites = Website.browse(Transaction().context['active_ids'])
 
         for website in websites:
             cache_directories = Website.cache_directories(website)
             for directory in cache_directories:
-                if fexists(directory, use_sudo=True):
-                    fsudo("rm -rf %s/*" % directory)
+                if os.path.exists(directory):
+                    process = subprocess.Popen("rm -rf %s/*" % directory)
+                    output, err = process.communicate()
                 else:
                     self.raise_user_error('not_dir_exist', directory)
         return 'end'
