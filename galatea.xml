@@ -201,5 +201,16 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
             <field name="perm_create" eval="True"/>
             <field name="perm_delete" eval="False"/>
         </record>
+
+        <record model="ir.model.button" id="remove_cache_button">
+            <field name="name">remove_cache</field>
+            <field name="string">Remove Cache</field>
+            <field name="model" search="[('model', '=', 'galatea.website')]"/>
+        </record>
+        <record model="ir.model.button-res.group"
+            id="remove_cache_button_group_account">
+            <field name="button" ref="remove_cache_button"/>
+            <field name="group" ref="access_galatea_admin_galatea_website"/>
+        </record>
     </data>
 </tryton>
