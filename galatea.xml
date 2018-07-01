@@ -210,7 +210,7 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
         <record model="ir.model.button-res.group"
             id="remove_cache_button_group_account">
             <field name="button" ref="remove_cache_button"/>
-            <field name="group" ref="access_galatea_admin_galatea_website"/>
+            <field name="group" ref="group_galatea_admin"/>
         </record>
     </data>
 </tryton>
