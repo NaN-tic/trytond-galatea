@@ -15,12 +15,7 @@ from flask_login import UserMixin
 import pytz
 import random
 import string
-
-try:
-    import hashlib
-except ImportError:
-    hashlib = None
-    import sha
+import hashlib
 
 __all__ = ['GalateaWebSite', 'GalateaWebsiteCountry', 'GalateaWebsiteLang',
     'GalateaWebsiteCurrency', 'GalateaUser', 'GalateaUserWebSite',
@@ -219,10 +214,7 @@ class GalateaUser(ModelSQL, ModelView, UserMixin):
             if isinstance(password, unicode):
                 password = password.encode('utf-8')
             password += values['salt']
-            if hashlib:
-                digest = hashlib.sha1(password).hexdigest()
-            else:
-                digest = sha.new(password).hexdigest()
+            digest = hashlib.sha1(password).hexdigest()
             values['password'] = digest
 
         return values
