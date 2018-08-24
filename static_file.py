@@ -3,7 +3,7 @@
 # the full copyright notices and license terms.
 import os
 import os.path
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 from trytond.model import ModelSQL, ModelView, fields, Unique
 from trytond.pool import Pool
@@ -138,8 +138,8 @@ class GalateaStaticFile(ModelSQL, ModelView):
             # If the folder does not exist, create it recursively
             directory = os.path.dirname(self.file_path)
             if not os.path.isdir(directory):
-                os.makedirs(directory, 0775)
-            os.umask(0022)
+                os.makedirs(directory, 0o775)
+            os.umask(0o022)
             with open(self.file_path, 'wb') as file_writer:
                 file_writer.write(file_binary)
 
@@ -169,7 +169,7 @@ class GalateaStaticFile(ModelSQL, ModelView):
                 return
         else:
             try:
-                location = urllib.urlretrieve(self.remote_path)[0]
+                location = urllib.request.urlretrieve(self.remote_path)[0]
             except:
                 return
 

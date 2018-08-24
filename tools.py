@@ -15,10 +15,7 @@ def slugify(value):
     if not slug:
         name = ''
     else:
-        if isinstance(value, unicode):
-            name = slug.slug(value)
-        else:
-            name = slug.slug(unicode(value, 'UTF-8'))
+        name = slug.slug(value)
     return name
 
 
@@ -28,10 +25,7 @@ def slugify_file(value):
         return value
     fname = value.lower().split('.')
     fn = fname[0]
-    if isinstance(fn, unicode):
-        name = slug.slug(fn)
-    else:
-        name = slug.slug(unicode(fn, 'UTF-8'))
+    name = slug.slug(fn)
 
     if len(fname) > 1:
         return '%s.%s' % (name, fname[1])

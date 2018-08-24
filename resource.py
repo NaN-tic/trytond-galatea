@@ -179,7 +179,7 @@ class GalateaUri(ModelSQL, ModelView):
 
     @classmethod
     def search_uri(cls, name, clause):
-        if (len(clause) == 3 and isinstance(clause[2], basestring)
+        if (len(clause) == 3 and isinstance(clause[2], str)
                 and len(clause[2].split('/')) > 1):
             # TODO: improve to find exactly slugs with anchor=True
             slugs = clause[2].replace('#', '/').split('/')
