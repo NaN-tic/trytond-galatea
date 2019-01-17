@@ -331,7 +331,7 @@ class GalateaVisiblePage(ModelSQL, ModelView):
 
     @fields.depends('canonical_uri')
     def on_change_with_template(self, name=None):
-        if self.canonical_uri:
+        if self.canonical_uri and self.canonical_uri.template:
             return self.canonical_uri.template.id
 
     @classmethod
