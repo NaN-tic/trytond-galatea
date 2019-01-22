@@ -204,9 +204,9 @@ class GalateaUser(ModelSQL, ModelView, UserMixin):
             values['salt'] = ''.join(random.sample(
                 string.ascii_letters + string.digits, 8))
             password = values['password']
-            password = password.encode('utf-8')
+            password = str(password.encode('utf-8'), 'utf-8')
             password += values['salt']
-            digest = hashlib.sha1(password).hexdigest()
+            digest = hashlib.sha1(password.encode('utf-8')).hexdigest()
             values['password'] = digest
 
         return values
