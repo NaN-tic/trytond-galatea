@@ -29,4 +29,5 @@ def register():
     Pool.register(
         galatea.GalateaRemoveCache,
         galatea.GalateaSendPassword,
+        party.PartyReplace,
         module='galatea', type_='wizard')

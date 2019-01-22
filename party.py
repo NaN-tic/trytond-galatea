@@ -4,7 +4,7 @@
 from trytond.model import fields
 from trytond.pool import PoolMeta
 
-__all__ = ['Party']
+__all__ = ['Party', 'PartyReplace']
 
 
 class Party:
@@ -20,3 +20,14 @@ class Party:
             default = default.copy()
         default.setdefault('galatea_users', None)
         return super(Party, cls).copy(parties, default=default)
+
+
+class PartyReplace:
+    __metaclass__ = PoolMeta
+    __name__ = 'party.replace'
+
+    @classmethod
+    def fields_to_replace(cls):
+        return super(PartyReplace, cls).fields_to_replace() + [
+            ('galatea.user', 'party'),
+            ]
