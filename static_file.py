@@ -10,7 +10,8 @@ from trytond.pool import Pool
 from trytond.pyson import Eval, Not, Equal
 from trytond.transaction import Transaction
 from trytond.config import config
-
+from trytond.i18n import gettext
+from trytond.exceptions import UserError
 from .tools import slugify, slugify_file
 
 
@@ -33,13 +34,6 @@ class GalateaStaticFolder(ModelSQL, ModelView):
             ('unique_folder', Unique(table, table.name),
              'Folder name needs to be unique')
         ]
-        cls._error_messages.update({
-            'invalid_name': """Invalid folder name:
-                (1) '.' in folder name (OR)
-                (2) folder name begins with '/'""",
-            'folder_cannot_change': "Folder name cannot be changed",
-            'not_allow_copy': "Not allow to copy",
-        })
 
     @fields.depends('name')
     def on_change_with_name(self):
@@ -62,7 +56,7 @@ class GalateaStaticFolder(ModelSQL, ModelView):
         eventually lead to previlege escalation
         '''
         if ('.' in self.name) or (self.name.startswith('/')):
-            self.raise_user_error('invalid_name')
+            raise UserError(gettext('galatea.invalid_name'))
 
     @classmethod
     def write(cls, folders, vals):
@@ -74,12 +68,12 @@ class GalateaStaticFolder(ModelSQL, ModelView):
         """
         if vals.get('name'):
             # TODO: Support this feature in future versions
-            cls.raise_user_error('folder_cannot_change')
+            raise UserError(gettext('galatea.folder_cannot_change'))
         return super(GalateaStaticFolder, cls).write(folders, vals)
 
     @classmethod
     def copy(cls, files, default=None):
-        cls.raise_user_error('not_allow_copy')
+        raise UserError(gettext('galatea.not_allow_copy'))
 
 
 class GalateaStaticFile(ModelSQL, ModelView):
@@ -104,17 +98,6 @@ class GalateaStaticFile(ModelSQL, ModelView):
         'get_file_path')
     url = fields.Function(fields.Char('URL'),
         'get_url')
-
-    @classmethod
-    def __setup__(cls):
-        super(GalateaStaticFile, cls).__setup__()
-        cls._error_messages.update({
-            'invalid_file_name': """Invalid file name:
-                (1) '..' in file name (OR)
-                (2) file name contains '/'""",
-            'change_file_name': "You can't change file name",
-            'not_allow_copy': "Not allow to copy",
-            })
 
     @staticmethod
     def default_folder():
@@ -224,7 +207,7 @@ class GalateaStaticFile(ModelSQL, ModelView):
         eventually lead to previlege escalation
         '''
         if ('..' in self.name) or ('/' in self.name):
-            self.raise_user_error('invalid_file_name')
+            raise UserError(gettext('galatea.invalid_file_name'))
 
     @classmethod
     def create(cls, vlist):
@@ -236,12 +219,12 @@ class GalateaStaticFile(ModelSQL, ModelView):
     def write(cls, files, values):
         # TODO: Why? maybe a warning
         # if values.get('name'):
-        #     cls.raise_user_error('change_file_name')
+        #     raise UserError(gettext('galatea.change_file_name'))
         return super(GalateaStaticFile, cls).write(files, values)
 
     @classmethod
     def copy(cls, files, default=None):
-        cls.raise_user_error('not_allow_copy')
+        raise UserError(gettext('galatea.not_allow_copy'))
 
     @classmethod
     def delete(cls, files):

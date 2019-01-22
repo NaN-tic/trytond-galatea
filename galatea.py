@@ -6,6 +6,8 @@ from trytond.wizard import Wizard, StateTransition, StateView, Button
 from trytond.pool import Pool
 from trytond.transaction import Transaction
 from trytond.sendmail import SMTPDataManager, sendmail_transactional
+from trytond.i18n import gettext
+from trytond.exceptions import UserError
 from email.utils import make_msgid
 from email.header import Header
 from email.mime.text import MIMEText
@@ -65,10 +67,6 @@ class GalateaWebSite(ModelSQL, ModelView):
             ('name_uniq', Unique(t, t.name),
                 'Another site with the same name already exists!')
             ]
-        cls._error_messages.update({
-                'smtp_error': ('Wrong connection to SMTP server. '
-                    'Not send email.'),
-                })
         cls._buttons.update({
                 'remove_cache': {},
                 })
@@ -278,13 +276,6 @@ class GalateaRemoveCache(Wizard):
             ])
     remove = StateTransition()
 
-    @classmethod
-    def __setup__(cls):
-        super(GalateaRemoveCache, cls).__setup__()
-        cls._error_messages.update({
-            'not_dir_exist': 'Directory "%s" not exist.',
-        })
-
     def transition_remove(self):
         pool = Pool()
         Website = pool.get('galatea.website')
@@ -298,7 +289,8 @@ class GalateaRemoveCache(Wizard):
                     process = subprocess.Popen("rm -rf %s/*" % directory)
                     output, err = process.communicate()
                 else:
-                    self.raise_user_error('not_dir_exist', directory)
+                    raise UserError(gettext('galatea.not_dir_exist',
+                        directory=directory))
         return 'end'
 
 
@@ -340,16 +332,6 @@ class GalateaSendPassword(Wizard):
     @classmethod
     def __setup__(cls):
         super(GalateaSendPassword, cls).__setup__()
-        cls._error_messages.update({
-                'send_info': 'Send new password to %s',
-                'email_subject': '%s. New password reset',
-                'email_text': ('Hello %s\n'
-                    'New password reset for your user account %s: %s\n\n'
-                    '%s\n\n'
-                    'You could drop this email.\n'
-                    'Don\'t repply this email. '
-                    'It\'s was generated automatically')
-                })
 
     def transition_send(self):
         pool = Pool()
@@ -372,23 +354,18 @@ class GalateaSendPassword(Wizard):
             else:
                 lang = User(Transaction().user).language.code
             with Transaction().set_context(language=lang):
-                subject = self.raise_user_error('email_subject',
-                    (website.name),
-                    raise_exception=False)
-                body = self.raise_user_error('email_text',
-                    (user.display_name,
-                        user.email,
-                        password,
-                        "\n".join(sites)),
-                    raise_exception=False)
-
+                subject = gettext('galatea.email_subject',
+                    website=website.name)
+                body = gettext('galatea.email_text',
+                    name=user.display_name,
+                    email=user.email,
+                    password=password,
+                    websites="\n".join(sites))
             Website.send_email(website.smtp_server, recipients, subject, body)
 
         GalateaUser.write(users, {'password': password})
-
-        self.result.info = self.raise_user_error('send_info',
-                (','.join(str(u.email) for u in users)),
-                raise_exception=False)
+        self.result.info = gettext('galatea.send_info',
+                email=','.join(str(u.email) for u in users))
         return 'result'
 
     def default_result(self, fields):
