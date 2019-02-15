@@ -91,7 +91,8 @@ class GalateaUri(ModelSQL, ModelView):
             'invisible': Eval('type') != 'internal_redirection',
             'required': Eval('type') == 'internal_redirection',
             }, depends=['type'])
-    external_redirection = fields.Char('External Redirection', states={
+    external_redirection = fields.Char('External Redirection', translate=True,
+        states={
             'invisible': Eval('type') != 'external_redirection',
             'required': Eval('type') == 'external_redirection',
             }, depends=['type'])
