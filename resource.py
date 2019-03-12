@@ -445,11 +445,16 @@ class GalateaVisiblePage(ModelSQL, ModelView):
     def create(cls, vlist):
         pool = Pool()
         Uri = pool.get('galatea.uri')
+        Website = Pool().get('galatea.website')
 
         vlist = [x.copy() for x in vlist]
         for vals in vlist:
             if not vals.get('canonical_uri'):
                 assert vals.get('slug')
+                if not vals.get('websites'):
+                    websites = Website.search([])
+                    if websites:
+                        vals['websites'] = [[u'add', [w.id for w in websites]]]
                 assert vals.get('websites')
                 uri_vals = cls.calc_uri_vals(vals)
                 uri, = Uri.create([uri_vals])
