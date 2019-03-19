@@ -31,3 +31,11 @@ def slugify_file(value):
         return '%s.%s' % (name, fname[1])
     else:
         return name
+
+
+def remove_special_chars(text):
+    """Remove some specials chars from text:
+        - Blanks (\s)
+        - New lines (\n or \r)
+    """
+    return text.replace(' ', '').replace('\n', '').replace('\r', '')
