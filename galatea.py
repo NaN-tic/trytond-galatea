@@ -6,6 +6,7 @@ from trytond.wizard import Wizard, StateTransition, StateView, Button
 from trytond.pool import Pool
 from trytond.transaction import Transaction
 from trytond.sendmail import SMTPDataManager, sendmail_transactional
+from .tools import remove_special_chars
 from email.utils import make_msgid
 from email.header import Header
 from email.mime.text import MIMEText
@@ -241,8 +242,9 @@ class GalateaUser(ModelSQL, ModelView, UserMixin):
 
     @classmethod
     def _get_user_domain(cls, website, request):
+        email = remove_special_chars(request.form.get('email'))
         return [
-            ('email', '=', request.form.get('email')),
+            ('email', '=', email),
             ('active', '=', True),
             ('websites', 'in', [website]),
             ]
