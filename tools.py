@@ -9,30 +9,39 @@ except ImportError:
     logging.getLogger('galatea').error(
         'Unable to import slug. Install slug package.')
 
+
 def slugify(value):
     """Convert value to slug: az09 and replace spaces by -"""
-    try:
+    if not slug:
+        name = ''
+    else:
         if isinstance(value, unicode):
             name = slug.slug(value)
         else:
             name = slug.slug(unicode(value, 'UTF-8'))
-    except:
-        name = ''
     return name
+
 
 def slugify_file(value):
     """Convert attachment name to slug: az09 and replace spaces by -"""
+    if not slug:
+        return value
     fname = value.lower().split('.')
     fn = fname[0]
-    try:
-        if isinstance(fn, unicode):
-            name = slug.slug(fn)
-        else:
-            name = slug.slug(unicode(fn, 'UTF-8'))
+    if isinstance(fn, unicode):
+        name = slug.slug(fn)
+    else:
+        name = slug.slug(unicode(fn, 'UTF-8'))
 
-        if len(fname) > 1:
-            return '%s.%s' % (name, fname[1])
-        else:
-            return name
-    except:
-        return value
+    if len(fname) > 1:
+        return '%s.%s' % (name, fname[1])
+    else:
+        return name
+
+
+def remove_special_chars(text):
+    """Remove some specials chars from text:
+        - Blanks (\s)
+        - New lines (\n or \r)
+    """
+    return text.replace(' ', '').replace('\n', '').replace('\r', '')
