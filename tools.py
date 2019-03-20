@@ -43,5 +43,7 @@ def remove_special_chars(text):
     """Remove some specials chars from text:
         - Blanks (\s)
         - New lines (\n or \r)
+        - Tab (\t)
     """
-    return text.replace(' ', '').replace('\n', '').replace('\r', '')
+    return text.replace(' ', '').replace('\n', '').replace('\r', '').\
+        replace('\t', '')
