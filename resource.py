@@ -109,8 +109,6 @@ class GalateaUri(ModelSQL, ModelView):
             'required': Eval('type').in_(['internal_redirection',
                     'external_redirection']),
             })
-    menus = fields.One2Many('galatea.cms.menu', 'target_uri', 'Menus',
-            readonly=True)
     active = fields.Boolean('Active', select=True)
     sitemap = fields.Boolean('Sitemap', select=True, help='Wether this URI '
         'should be visible in the sitemap or not.')
