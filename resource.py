@@ -1,6 +1,6 @@
 # The COPYRIGHT file at the top level of this repository contains the full
 # copyright notices and license terms.
-from trytond.model import ModelSQL, ModelView, fields, Unique
+from trytond.model import ModelSQL, ModelView, fields, Unique, tree
 from trytond.pool import Pool
 from trytond.pyson import Bool, If, Eval, Greater
 from trytond.transaction import Transaction
@@ -44,7 +44,7 @@ class GalateaTemplateModel(ModelSQL):
         required=True, select=True)
 
 
-class GalateaUri(ModelSQL, ModelView):
+class GalateaUri(tree(), ModelSQL, ModelView):
     '''Galatea Uri'''
     __name__ = 'galatea.uri'
     _rec_name = 'uri'
@@ -124,11 +124,6 @@ class GalateaUri(ModelSQL, ModelView):
             ('uri_uniq', Unique(t, t.parent, t.slug),
                 'The URI (Parent + SLUG) of the Galatea URI must be unique.'),
             ]
-
-    @classmethod
-    def validate(cls, uris):
-        super(GalateaUri, cls).validate(uris)
-        cls.check_recursion(uris)
 
     @staticmethod
     def default_sitemap():
