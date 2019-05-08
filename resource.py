@@ -382,7 +382,7 @@ class GalateaVisiblePage(ModelSQL, ModelView):
         for lang in langs:
             with Transaction().set_context(language=lang.code):
                 m, = Model.read([self.id], ['uri.uri'])
-                slugs[lang.code] = m['uri.uri']
+                slugs[lang.code] = m['uri.']['uri']
         return slugs
 
     def get_uri(self, name):
