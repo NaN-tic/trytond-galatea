@@ -323,10 +323,8 @@ class GalateaVisiblePage(ModelSQL, ModelView):
         if self.name and not self.slug:
             self.slug = slugify(self.name)
 
-    @fields.depends('canonical_uri', 'slug')
+    @fields.depends('canonical_uri')
     def on_change_with_slug(self, name=None):
-        if self.slug:
-            return slugify(self.slug)
         if self.canonical_uri:
             return self.canonical_uri.slug
 
