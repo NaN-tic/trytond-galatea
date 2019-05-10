@@ -7,23 +7,25 @@
     <label name="parent"/>
     <field name="parent"/>
     <group id="checkboxes" col="20" colspan="2">
-        <label name="active"/>
-        <field name="active"/>
+        <label name="anchor"/>
+        <field name="anchor"/>
         <label name="sitemap"/>
         <field name="sitemap"/>
+        <label name="active"/>
+        <field name="active"/>
     </group>
     <label name="name"/>
     <field name="name"/>
     <label name="slug"/>
     <field name="slug"/>
-    <label name="anchor"/>
-    <field name="anchor"/>
+    <label name="uri"/>
+    <field name="uri"/>
     <newline/>
     <label name="type"/>
     <field name="type"/>
     <label name="redirection_code"/>
     <field name="redirection_code"/>
-    <group id="uri_target" colspan="4" col="4">
+    <group id="uri_target" colspan="6" col="4">
         <label name="internal_redirection"/>
         <field name="internal_redirection" colspan="3"/>
         <label name="template"/>
