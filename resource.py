@@ -110,7 +110,7 @@ class GalateaUri(tree(), ModelSQL, ModelView):
                     'external_redirection']),
             })
     active = fields.Boolean('Active', select=True)
-    sitemap = fields.Boolean('Sitemap', select=True, help='Wether this URI '
+    sitemap = fields.Boolean('Sitemap', select=True, help='Whether this URI '
         'should be visible in the sitemap or not.')
 
     @classmethod
