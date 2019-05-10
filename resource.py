@@ -47,7 +47,6 @@ class GalateaTemplateModel(ModelSQL):
 class GalateaUri(tree(), ModelSQL, ModelView):
     '''Galatea Uri'''
     __name__ = 'galatea.uri'
-    _rec_name = 'uri'
     _order = [('parent', 'ASC'), ('sequence', 'ASC'), ('id', 'ASC')]
 
     website = fields.Many2One('galatea.website', 'Website', required=True,
@@ -170,6 +169,13 @@ class GalateaUri(tree(), ModelSQL, ModelView):
         if self.website.uri and self.website.uri != '/':
             uri = '%s%s' % (self.website.uri, uri)
         return uri
+
+    @classmethod
+    def search_rec_name(cls, name, clause):
+        return ['OR',
+            ('name',) + tuple(clause[1:]),
+            ('slug',) + tuple(clause[1:]),
+            ]
 
     @classmethod
     def search_uri(cls, name, clause):
