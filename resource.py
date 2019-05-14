@@ -47,6 +47,7 @@ class GalateaTemplateModel(ModelSQL):
 class GalateaUri(tree(), ModelSQL, ModelView):
     '''Galatea Uri'''
     __name__ = 'galatea.uri'
+    _rec_name = 'uri'
     _order = [('parent', 'ASC'), ('sequence', 'ASC'), ('id', 'ASC')]
 
     website = fields.Many2One('galatea.website', 'Website', required=True,
