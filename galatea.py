@@ -226,6 +226,24 @@ class GalateaUser(ModelSQL, ModelView, UserMixin):
         return super(GalateaUser, cls).write(users, values)
 
     @classmethod
+    def search_rec_name(cls, name, clause):
+        domain = super(GalateaUser, cls).search_rec_name(name, clause)
+        if clause[1].startswith('!') or clause[1].startswith('not '):
+            bool_op = 'AND'
+        else:
+            bool_op = 'OR'
+        return [bool_op,
+            domain,
+            ('email',) + tuple(clause[1:]),
+            ('party.name',) + tuple(clause[1:]),
+            ('party.addresses.street',) + tuple(clause[1:]),
+            ('party.addresses.zip',) + tuple(clause[1:]),
+            ('party.addresses.city',) + tuple(clause[1:]),
+            ('party.addresses.subdivision.name',) + tuple(clause[1:]),
+            ('party.contact_mechanisms.value',) + tuple(clause[1:]),
+            ]
+
+    @classmethod
     def signal_login(cls, user, session=None, website=None):
         "Flask signal to login"
         return
