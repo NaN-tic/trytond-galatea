@@ -791,6 +791,10 @@ msgctxt "model:ir.message,text:send_info"
 msgid "Send new password to %(email)s."
 msgstr "Enviat nova contrasenya a %(email)s"
 
+msgctxt "model:ir.model.button,string:activate_button"
+msgid "Activate"
+msgstr "Activa"
+
 msgctxt "model:ir.model.button,string:remove_cache_button"
 msgid "Remove Cache"
 msgstr "Elimina memòria cau"

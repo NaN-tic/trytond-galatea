@@ -792,6 +792,10 @@ msgctxt "model:ir.message,text:send_info"
 msgid "Send new password to %(email)s."
 msgstr "Enviado nueva contraseña a %(email)s."
 
+msgctxt "model:ir.model.button,string:activate_button"
+msgid "Activate"
+msgstr "Activar"
+
 msgctxt "model:ir.model.button,string:remove_cache_button"
 msgid "Remove Cache"
 msgstr "Eliminar cache"

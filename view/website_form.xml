@@ -47,6 +47,6 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
         </page>
     </notebook>
     <group col="5" colspan="4" id="buttons">
-        <button icon="tryton-cancel" name="remove_cache" string="Remove Cache"/>
+        <button icon="tryton-cancel" name="remove_cache"/>
     </group>
 </form>

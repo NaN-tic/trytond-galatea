@@ -9,4 +9,5 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
     <field name="company"/>
     <field name="active" tree_invisible="1"/>
     <field name="websites" tree_invisible="1"/>
+    <button name="activate" tree_invisible="1"/>
 </tree>
