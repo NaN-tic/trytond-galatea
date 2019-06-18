@@ -4,6 +4,7 @@
 from trytond.model import ModelView, ModelSQL, fields, Unique
 from trytond.wizard import Wizard, StateTransition, StateView, Button
 from trytond.pool import Pool
+from trytond.pyson import Eval
 from trytond.transaction import Transaction
 from trytond.sendmail import SMTPDataManager, sendmail_transactional
 from trytond.i18n import gettext
@@ -189,7 +190,19 @@ class GalateaUser(ModelSQL, ModelView, UserMixin):
         cls._sql_constraints += [
             ('unique_email_company', Unique(t, t.email, t.company),
                 'Email must be unique in a company'),
-        ]
+            ]
+        cls._buttons.update({
+                'activate': {
+                    'invisible': ~Eval('activation_code'),
+                    'depends': ['activation_code'],
+                    },
+                })
+
+    @classmethod
+    @ModelView.button
+    def activate(cls, users):
+        active_users = [user for user in users if user.activation_code]
+        cls.write(active_users, {'activation_code': None})
 
     @staticmethod
     def _convert_values(values):
