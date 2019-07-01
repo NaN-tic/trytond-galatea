@@ -319,7 +319,8 @@ class GalateaRemoveCache(Wizard):
             cache_directories = Website.cache_directories(website)
             for directory in cache_directories:
                 if os.path.exists(directory):
-                    process = subprocess.Popen("rm -rf %s/*" % directory)
+                    process = subprocess.Popen(
+                        'rm -rf %s/*' % directory, shell=True)
                     output, err = process.communicate()
                 else:
                     raise UserError(gettext('galatea.not_dir_exist',
