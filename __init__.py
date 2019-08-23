@@ -2,6 +2,7 @@
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
 from trytond.pool import Pool
+from . import attachment
 from . import galatea
 from . import resource
 from . import static_file
@@ -10,6 +11,7 @@ from . import party
 
 def register():
     Pool.register(
+        attachment.Attachment,
         galatea.GalateaWebSite,
         galatea.GalateaWebsiteCountry,
         galatea.GalateaWebsiteLang,
