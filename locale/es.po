@@ -570,6 +570,10 @@ msgctxt "field:galatea.website-ir.lang,write_uid:"
 msgid "Write User"
 msgstr "Usuario de modificación"
 
+msgctxt "field:ir.attachment,allow_galatea:"
+msgid "Allow Galatea"
+msgstr "Disponible Galatea"
+
 msgctxt "field:party.party,galatea_users:"
 msgid "Galatea Users"
 msgstr "Galatea Usuarios"
