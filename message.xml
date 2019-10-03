@@ -13,18 +13,10 @@ this repository contains the full copyright notices and license terms. -->
           <field name="text">%(website)s. New password reset</field>
       </record>
       <record model="ir.message" id="email_text">
-          <field name="text">Hello %(name)s
-New password reset for your user account %(email)s: %(password)s
-
-%(websites)s
-
-You could drop this email.
-Don't repply this email. It's was generated automatically</field>
+          <field name="text">Hello %(name)s New password reset for your user account %(email)s: %(password)s %(websites)s You could drop this email. Don't repply this email. It's was generated automatically</field>
       </record>
       <record model="ir.message" id="invalid_name">
-          <field name="text">Invalid folder name:
-(1) '.' in folder name (OR)
-(2) folder name begins with '/'</field>
+          <field name="text">Invalid folder name: (1) '.' in folder name (OR) (2) folder name begins with '/'</field>
       </record>
       <record model="ir.message" id="folder_cannot_change">
           <field name="text">Folder name cannot be changed.</field>
@@ -33,9 +25,7 @@ Don't repply this email. It's was generated automatically</field>
           <field name="text">Not allow to copy.</field>
       </record>
       <record model="ir.message" id="invalid_file_name">
-          <field name="text">Invalid file name:
-(1) '..' in file name (OR)
-(2) file name contains '/'</field>
+          <field name="text">Invalid file name: (1) '..' in file name (OR) (2) file name contains '/'</field>
       </record>
       <record model="ir.message" id="change_file_name">
           <field name="text">You can't change file name.</field>
