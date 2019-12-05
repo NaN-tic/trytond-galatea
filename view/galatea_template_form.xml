@@ -4,6 +4,6 @@
 <form>
     <label name="filename"/>
     <field name="filename"/>
-    <separator name="allowed_models" colspan="4"/>
     <field name="allowed_models" colspan="4"/>
+    <field name="parameters" colspan="4"/>
 </form>

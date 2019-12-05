@@ -35,4 +35,5 @@
         <label name="external_redirection"/>
         <field name="external_redirection" colspan="3"/>
     </group>
+    <field name="values" colspan="6"/>
 </form>
