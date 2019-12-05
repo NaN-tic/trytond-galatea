@@ -137,11 +137,72 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
             <field name="perm_delete" eval="False"/>
         </record>
 
+        <!-- galatea.template.parameter -->
+        <record model="ir.ui.view" id="galatea_template_parameter_view_list">
+            <field name="model">galatea.template.parameter</field>
+            <field name="type">tree</field>
+            <field name="name">galatea_template_parameter_list</field>
+        </record>
+
+        <record model="ir.ui.view" id="galatea_template_parameter_view_form">
+            <field name="model">galatea.template.parameter</field>
+            <field name="type">form</field>
+            <field name="name">galatea_template_parameter_form</field>
+        </record>
+
+        <record model="ir.action.act_window" id="act_galatea_template_parameter_title">
+            <field name="name">Galatea Template Parameter</field>
+            <field name="res_model">galatea.template.parameter</field>
+        </record>
+        <record model="ir.action.act_window.view" id="act_galatea_template_parameter_list">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="galatea_template_parameter_view_list"/>
+            <field name="act_window" ref="act_galatea_template_parameter_title"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_galatea_template_parameter_form">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="galatea_template_parameter_view_form"/>
+            <field name="act_window" ref="act_galatea_template_parameter_title"/>
+        </record>
+
+        <!-- galatea.uri.value -->
+        <record model="ir.ui.view" id="galatea_uri_value_view_list">
+            <field name="model">galatea.uri.value</field>
+            <field name="type">tree</field>
+            <field name="name">galatea_uri_value_list</field>
+        </record>
+
+        <record model="ir.ui.view" id="galatea_uri_value_view_form">
+            <field name="model">galatea.uri.value</field>
+            <field name="type">form</field>
+            <field name="name">galatea_uri_value_form</field>
+        </record>
+
+        <record model="ir.action.act_window" id="act_galatea_uri_value_title">
+            <field name="name">Galatea URI Values</field>
+            <field name="res_model">galatea.uri.value</field>
+        </record>
+        <record model="ir.action.act_window.view" id="act_galatea_uri_value_list">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="galatea_uri_value_view_list"/>
+            <field name="act_window" ref="act_galatea_uri_value_title"/>
+        </record>
+        <record model="ir.action.act_window.view" id="act_galatea_uri_value_form">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="galatea_uri_value_view_form"/>
+            <field name="act_window" ref="act_galatea_uri_value_title"/>
+        </record>
+
         <!-- Menus -->
+        <menuitem id="menu_galatea_uri_value"
+            action="act_galatea_uri_value_title"
+            parent="menu_galatea_uri_tree"/>
+        <menuitem id="menu_galatea_template_parameter"
+            action="act_galatea_template_parameter_title"
+            parent="menu_galatea_template"/>
         <menuitem id="menu_galatea_template"
             action="act_galatea_template"
             parent="menu_galatea_configuration" sequence="20"/>
-
         <menuitem id="menu_galatea_uri_tree" action="act_galatea_uri_tree"
             parent="menu_galatea" sequence="10"/>
         <menuitem id="menu_galatea_uri" action="act_galatea_uri"
