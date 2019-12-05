@@ -23,6 +23,8 @@ class GalateaTemplate(ModelSQL, ModelView):
         'model', 'Allowed Models',
         help="The models compatible with this template, which instances can "
         "be associated with an uri that use this template.")
+    parameters = fields.One2Many('galatea.template.parameter', 'template',
+        'Parameters')
 
     @classmethod
     def __setup__(cls):
@@ -35,11 +37,37 @@ class GalateaTemplate(ModelSQL, ModelView):
             ]
 
 
+class GalateaTemplateParameter(ModelSQL, ModelView):
+    'Galatea Template Parameter'
+    __name__ = 'galatea.template.parameter'
+    name = fields.Char('Name', required=True)
+    variable = fields.Char('Variable', required=True)
+    unique = fields.Boolean('Unique')
+    required = fields.Boolean('Required')
+    template = fields.Many2One('galatea.template', 'Template')
+    allowed_models = fields.Many2Many('galatea.template.parameter-ir.model',
+        'parameter', 'model', 'Allowed Models')
+
+    @staticmethod
+    def default_unique():
+        return True
+
+
 class GalateaTemplateModel(ModelSQL):
     'Galatea Template - Model'
     __name__ = 'galatea.template-ir.model'
     template = fields.Many2One('galatea.template', 'Galatea Template',
         ondelete='CASCADE', required=True, select=True)
+    model = fields.Many2One('ir.model', 'Model', ondelete='CASCADE',
+        required=True, select=True)
+
+
+class GalateaTemplateParameterModel(ModelSQL):
+    'Galatea Template Parameter - Model'
+    __name__ = 'galatea.template.parameter-ir.model'
+    parameter = fields.Many2One('galatea.template.parameter',
+        'Galatea Template Parameter', ondelete='CASCADE', required=True,
+        select=True)
     model = fields.Many2One('ir.model', 'Model', ondelete='CASCADE',
         required=True, select=True)
 
@@ -78,6 +106,7 @@ class GalateaUri(tree(), ModelSQL, ModelView):
             'invisible': Eval('type') != 'content',
             'required': Eval('type') == 'content',
             }, depends=['content_model', 'type'])
+    values = fields.One2Many('galatea.uri.value', 'uri', 'Values')
     content = fields.Reference('Content', selection='get_content_types',
         select=True, states={
             'invisible': Eval('type') != 'content',
@@ -140,6 +169,18 @@ class GalateaUri(tree(), ModelSQL, ModelView):
     def on_change_name(self):
         if self.name and not self.slug:
             self.slug = slugify(self.name)
+
+    @fields.depends('template', 'values')
+    def on_change_template(self):
+        GalateaUriValue = Pool().get('galatea.uri.value')
+
+        if self.template:
+            values = []
+            for parameter in self.template.parameters:
+                value = GalateaUriValue()
+                value.parameter = parameter
+                values.append(value)
+            self.values = values
 
     @fields.depends('slug')
     def on_change_slug(self):
@@ -253,6 +294,45 @@ class GalateaUri(tree(), ModelSQL, ModelView):
             res = []
         res.append(self)
         return res
+
+    def get(self, name):
+        res = []
+        for value in self.values:
+            parameter = value.parameter
+            if parameter.variable == name:
+                if parameter.unique == True:
+                    return value.content
+                res.append(value.content)
+        return res
+
+
+class GalateaUriValue(ModelSQL, ModelView):
+    'Galatea Uri Value'
+    __name__ = 'galatea.uri.value'
+    uri = fields.Many2One('galatea.uri', 'URI', required=True)
+    parameter = fields.Many2One('galatea.template.parameter', 'Parameter',
+        required=True, domain=[
+            ('template', '=', Eval('template'))
+        ], depends=['template'])
+    content = fields.Reference('Content', selection='get_content_types',
+        select=True)
+    template = fields.Function(fields.Many2One('galatea.template', 'Template'),
+        'on_change_with_template')
+
+    @staticmethod
+    def default_unique():
+        return True
+
+    @fields.depends('parameter')
+    def get_content_types(self):
+        result = [(None, '')]
+        if self.parameter:
+            result += [(m.model, m.name) for m in self.parameter.allowed_models]
+        return result
+
+    @fields.depends('uri')
+    def on_change_with_template(self, name=None):
+        return self.uri.template.id if self.uri else None
 
 
 class GalateaVisiblePage(ModelSQL, ModelView):
@@ -474,7 +554,6 @@ class GalateaVisiblePage(ModelSQL, ModelView):
         website_id = [websites
             for action, websites in record_vals['websites']
             if action == 'add'][0][0]
-
         return {
             'website': website_id,
             # 'parent': ,
