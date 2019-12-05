@@ -303,8 +303,30 @@ class GalateaUri(tree(), ModelSQL, ModelView):
                 if parameter.unique == True:
                     return value.content
                 res.append(value.content)
+        if not res:
+            for parameter in self.template.parameters:
+                if parameter.variable == name:
+                    if parameter.unique:
+                        return
+                    else:
+                        return []
+            raise AttributeError('URI "%s" has no attribute "%s"' % (
+                    self.rec_name, name))
         return res
 
+    def __getattr__(self, name):
+        'Return the value of the parameter with the variable name given if '
+        'it does not exist already as a field. This allows us to acces values '
+        'as if they were fields (ie: uri.my_variable.content)'
+        try:
+            return super().__getattr__(name)
+        except AttributeError:
+            if name == 'template':
+                raise
+            for parameter in self.template.parameters:
+                if parameter.variable == name:
+                     return self.get(name)
+            raise
 
 class GalateaUriValue(ModelSQL, ModelView):
     'Galatea Uri Value'
@@ -318,10 +340,6 @@ class GalateaUriValue(ModelSQL, ModelView):
         select=True)
     template = fields.Function(fields.Many2One('galatea.template', 'Template'),
         'on_change_with_template')
-
-    @staticmethod
-    def default_unique():
-        return True
 
     @fields.depends('parameter')
     def get_content_types(self):
