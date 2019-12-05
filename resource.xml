@@ -165,6 +165,32 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
             <field name="act_window" ref="act_galatea_template_parameter_title"/>
         </record>
 
+        <record model="ir.model.access" id="access_galatea_template_parameter">
+            <field name="model" search="[('model', '=', 'galatea.template.parameter')]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+
+        <record model="ir.model.access" id="access_galatea_template_parameter_admin">
+            <field name="model" search="[('model', '=', 'galatea.template.parameter')]"/>
+            <field name="group" ref="group_galatea_admin"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
+
+        <record model="ir.model.access" id="access_galatea_galatea_template_parameter">
+            <field name="model" search="[('model', '=', 'galatea.template.parameter')]"/>
+            <field name="group" ref="group_galatea"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+
         <!-- galatea.uri.value -->
         <record model="ir.ui.view" id="galatea_uri_value_view_list">
             <field name="model">galatea.uri.value</field>
@@ -193,18 +219,45 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
             <field name="act_window" ref="act_galatea_uri_value_title"/>
         </record>
 
+        <record model="ir.model.access" id="access_galatea_uri_value">
+            <field name="model" search="[('model', '=', 'galatea.uri.value')]"/>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+
+        <record model="ir.model.access" id="access_galatea_uri_value_admin">
+            <field name="model" search="[('model', '=', 'galatea.uri.value')]"/>
+            <field name="group" ref="group_galatea_admin"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
+
+        <record model="ir.model.access" id="access_galatea_galatea_uri_value">
+            <field name="model" search="[('model', '=', 'galatea.uri.value')]"/>
+            <field name="group" ref="group_galatea"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+
         <!-- Menus -->
-        <menuitem id="menu_galatea_uri_value"
-            action="act_galatea_uri_value_title"
-            parent="menu_galatea_uri_tree"/>
-        <menuitem id="menu_galatea_template_parameter"
-            action="act_galatea_template_parameter_title"
-            parent="menu_galatea_template"/>
+        <menuitem id="menu_galatea_uri_tree" action="act_galatea_uri_tree"
+            parent="menu_galatea" sequence="10"/>
         <menuitem id="menu_galatea_template"
             action="act_galatea_template"
             parent="menu_galatea_configuration" sequence="20"/>
-        <menuitem id="menu_galatea_uri_tree" action="act_galatea_uri_tree"
-            parent="menu_galatea" sequence="10"/>
+        <menuitem id="menu_galatea_template_parameter"
+            action="act_galatea_template_parameter_title"
+            parent="menu_galatea_template"/>
+        <menuitem id="menu_galatea_uri_value"
+            action="act_galatea_uri_value_title"
+            parent="menu_galatea_uri_tree"/>
+
         <menuitem id="menu_galatea_uri" action="act_galatea_uri"
             parent="menu_galatea_uri_tree"/>
     </data>
