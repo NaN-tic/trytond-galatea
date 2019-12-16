@@ -106,7 +106,10 @@ class GalateaUri(tree(), ModelSQL, ModelView):
             'invisible': Eval('type') != 'content',
             'required': Eval('type') == 'content',
             }, depends=['content_model', 'type'])
-    values = fields.One2Many('galatea.uri.value', 'uri', 'Values')
+    values = fields.One2Many('galatea.uri.value', 'uri', 'Values',
+        states={
+            'invisible': Eval('type') != 'content',
+            }, depends=['type'])
     content = fields.Reference('Content', selection='get_content_types',
         select=True, states={
             'invisible': Eval('type') != 'content',
