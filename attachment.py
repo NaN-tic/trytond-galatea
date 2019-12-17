@@ -15,12 +15,14 @@ class Attachment(metaclass=PoolMeta):
     @fields.depends('allow_galatea', 'name')
     def on_change_name(self):
         if self.allow_galatea and self.name:
-            self.name = slugify(self.name)
+            first, dot, second = self.name.rpartition('.')
+            self.name = slugify(first) + dot + slugify(second)
 
     @fields.depends('allow_galatea', 'name')
     def on_change_allow_galatea(self):
         if self.allow_galatea and self.name:
-            self.name = slugify(self.name)
+            first, dot, second = self.name.rpartition('.')
+            self.name = slugify(first) + dot + slugify(second)
 
     @classmethod
     def create(cls, vlist):
