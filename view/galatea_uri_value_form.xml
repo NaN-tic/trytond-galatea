@@ -6,6 +6,12 @@
     <field name="parameter"/>
     <label name="uri"/>
     <field name="uri"/>
+    <label name="boolean"/>
+    <field name="boolean" colspan="3"/>
+    <label name="integer"/>
+    <field name="integer" colspan="3"/>
+    <label name="text"/>
+    <field name="text" colspan="3"/>
     <newline/>
     <label name="content"/>
     <field name="content"/>

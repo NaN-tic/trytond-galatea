@@ -7,5 +7,6 @@
     <field name="variable"/>
     <field name="unique"/>
     <field name="required"/>
+    <field name="type"/>
     <field name="allowed_models" tree_invisible="1"/>
 </tree>

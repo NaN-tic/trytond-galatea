@@ -13,5 +13,8 @@
     <field name="unique"/>
     <label name="required"/>
     <field name="required"/>
+    <label name="type"/>
+    <field name="type"/>
+    <newline/>
     <field name="allowed_models" colspan="4"/>
 </form>
