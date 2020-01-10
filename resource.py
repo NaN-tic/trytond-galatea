@@ -45,8 +45,16 @@ class GalateaTemplateParameter(ModelSQL, ModelView):
     unique = fields.Boolean('Unique')
     required = fields.Boolean('Required')
     template = fields.Many2One('galatea.template', 'Template')
+    type = fields.Selection([
+            ('boolean', 'Boolean'),
+            ('reference', 'Reference'),
+            ('integer', 'Integer'),
+            ('text', 'Text'),
+            ], 'Type', required=True)
     allowed_models = fields.Many2Many('galatea.template.parameter-ir.model',
-        'parameter', 'model', 'Allowed Models')
+        'parameter', 'model', 'Allowed Models', states={
+            'invisible': Eval('type') != 'reference',
+            }, depends=['type'])
 
     @staticmethod
     def default_unique():
@@ -304,8 +312,8 @@ class GalateaUri(tree(), ModelSQL, ModelView):
             parameter = value.parameter
             if parameter.variable == name:
                 if parameter.unique == True:
-                    return value.content
-                res.append(value.content)
+                    return value.get_value()
+                res.append(value.get_value())
         if not res:
             for parameter in self.template.parameters:
                 if parameter.variable == name:
@@ -339,10 +347,27 @@ class GalateaUriValue(ModelSQL, ModelView):
         required=True, domain=[
             ('template', '=', Eval('template'))
         ], depends=['template'])
+    type = fields.Function(fields.Selection([
+            ('boolean', 'Boolean'),
+            ('reference', 'Reference'),
+            ('integer', 'Integer'),
+            ('text', 'Text'),
+            ], 'Type'),'get_type')
     content = fields.Reference('Content', selection='get_content_types',
-        select=True)
+        select=True, states={
+            'invisible': Eval('type') != 'reference'
+            }, depends=['type'])
     template = fields.Function(fields.Many2One('galatea.template', 'Template'),
-        'on_change_with_template')
+            'on_change_with_template')
+    boolean = fields.Boolean('Boolean', states={
+            'invisible': Eval('type') != 'boolean',
+            }, depends=['type'])
+    integer = fields.Integer('Integer', states={
+            'invisible': Eval('type') != 'integer',
+            }, depends=['type'])
+    text = fields.Text('Text', states={
+            'invisible': Eval('type') != 'text',
+            }, depends=['type'])
 
     @fields.depends('parameter')
     def get_content_types(self):
@@ -351,10 +376,22 @@ class GalateaUriValue(ModelSQL, ModelView):
             result += [(m.model, m.name) for m in self.parameter.allowed_models]
         return result
 
-    @fields.depends('uri')
+    @fields.depends('_parent_uri', 'uri')
     def on_change_with_template(self, name=None):
         return self.uri.template.id if self.uri else None
 
+    @classmethod
+    def get_type(cls, values, name):
+        result = {}.fromkeys([x.id for x in values])
+        for value in values:
+            result[value.id] = value.parameter.type
+        return result
+
+    def get_value(self):
+        if self.type == 'reference':
+            return self.content
+        else:
+            return getattr(self, self.type)
 
 class GalateaVisiblePage(ModelSQL, ModelView):
     '''Galatea Visible Page'''
