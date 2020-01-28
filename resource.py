@@ -167,8 +167,9 @@ class GalateaUri(tree(), ModelSQL, ModelView):
 
         uri = _get_uri_recursive(self)
 
-        if self.website.uri and self.website.uri != '/':
-            uri = '%s%s' % (self.website.uri, uri)
+        # not add website uri because chrome lost session in href that has the domain
+        # if self.website.uri and self.website.uri != '/':
+        #     uri = '%s%s' % (self.website.uri, uri)
         return uri
 
     @classmethod
