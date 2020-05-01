@@ -377,7 +377,7 @@ class GalateaUriValue(ModelSQL, ModelView):
             result += [(m.model, m.name) for m in self.parameter.allowed_models]
         return result
 
-    @fields.depends('_parent_uri', 'uri')
+    @fields.depends('_parent_uri.id', 'uri')
     def on_change_with_template(self, name=None):
         return self.uri.template.id if self.uri else None
 
