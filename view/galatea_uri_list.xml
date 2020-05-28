@@ -12,5 +12,4 @@
     <field name="external_redirection"/>
     <field name="internal_redirection"/>
     <field name="website"/>
-    <field name="active"/>
 </tree>
