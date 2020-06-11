@@ -39,5 +39,4 @@ def remove_special_chars(text):
         - New lines (\n or \r)
         - Tab (\t)
     """
-    return text.replace(' ', '').replace('\n', '').replace('\r', '').\
-        replace('\t', '')
+    return text.replace(r' ', '').replace(r'\n', '').replace(r'\r', '').replace(r'\t', '')
