@@ -40,8 +40,8 @@ Don't repply this email. It's was generated automatically</field>
       <record model="ir.message" id="change_file_name">
           <field name="text">You can't change file name.</field>
       </record>
+      <record model="ir.message" id="msg_missing_user_site">
+          <field name="text">Missing site in the "%(user)s" user.</field>
+      </record>
     </data>
-    <record model="ir.message" id="msg_missing_user_site">
-        <field name="text">Missing site in the "%(user)s" user.</field>
-    </record>
 </tryton>
