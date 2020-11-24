@@ -20,6 +20,7 @@ import random
 import string
 import os
 import hashlib
+import secrets
 
 __all__ = ['GalateaWebSite', 'GalateaWebsiteCountry', 'GalateaWebsiteLang',
     'GalateaWebsiteCurrency', 'GalateaUser', 'GalateaUserWebSite',
@@ -165,6 +166,7 @@ class GalateaUser(ModelSQL, ModelView, UserMixin):
     websites = fields.Many2Many('galatea.user-galatea.website',
         'user', 'website', 'Websites',
         help='Users will be available in those websites to login')
+    login_expire = fields.Timestamp('Login Expire')
 
     @staticmethod
     def default_timezone():
@@ -282,6 +284,51 @@ class GalateaUser(ModelSQL, ModelView, UserMixin):
         domain = cls._get_user_domain(website, request)
         return cls.search(domain, limit=1)
 
+    @classmethod
+    def random_password(cls):
+        alphabet = string.ascii_letters + string.digits
+        return ''.join(secrets.choice(alphabet) for i in range(20))
+
+    @classmethod
+    def reset_password(cls, users, send_email=True):
+        pool = Pool()
+        Website = pool.get('galatea.website')
+        User = pool.get('res.user')
+        GalateaUser = pool.get('galatea.user')
+
+        to_write = []
+        for user in users:
+            password = cls.random_password()
+            recipients = [user.email]
+
+            if not user.websites:
+                raise UserError(gettext('galatea.msg_missing_user_site',
+                    user=user.rec_name))
+
+            if user.party.lang:
+                lang = user.party.lang.code
+            else:
+                ruser = User(Transaction().user)
+                lang = ruser.language and ruser.language.code or 'en'
+
+            with Transaction().set_context(language=lang):
+                subject = gettext('galatea.email_subject',
+                    website=" ".join([w.name for w in user.websites]))
+                body = gettext('galatea.email_text',
+                    name=user.display_name,
+                    email=user.email,
+                    password=password,
+                    websites="\n".join([w.uri for w in user.websites]))
+
+            if send_email and user.websites:
+                smtp_server = user.websites[0].smtp_server
+                Website.send_email(smtp_server, recipients, subject, body)
+
+            to_write.extend(([user], {'password': password}))
+
+        if to_write:
+            GalateaUser.write(*to_write)
+
 
 class GalateaUserWebSite(ModelSQL):
     'Galatea User - Website'
@@ -331,16 +378,6 @@ class GalateaRemoveCache(Wizard):
 class GalateaSendPasswordStart(ModelView):
     'Galatea Send Start'
     __name__ = 'galatea.send.password.start'
-    password = fields.Char('Password', required=True)
-    website = fields.Many2One('galatea.website', 'Website', required=True,
-        help='Select a website to send email (STMP server).')
-
-    @classmethod
-    def default_website(cls):
-        Website = Pool().get('galatea.website')
-        websites = Website.search([('active', '=', True)])
-        if len(websites) >= 1:
-            return websites[0].id
 
 
 class GalateaSendPasswordResult(ModelView):
@@ -368,36 +405,12 @@ class GalateaSendPassword(Wizard):
         super(GalateaSendPassword, cls).__setup__()
 
     def transition_send(self):
-        pool = Pool()
-        Website = pool.get('galatea.website')
-        User = pool.get('res.user')
-        GalateaUser = pool.get('galatea.user')
-
-        password = self.start.password
-        website = self.start.website
+        GalateaUser = Pool().get('galatea.user')
 
         users = GalateaUser.browse(Transaction().context['active_ids'])
 
-        for user in users:
-            recipients = [user.email]
-            sites = []
-            for site in user.websites:
-                sites.append(site.uri)
-            if user.party.lang:
-                lang = user.party.lang.code
-            else:
-                lang = User(Transaction().user).language.code
-            with Transaction().set_context(language=lang):
-                subject = gettext('galatea.email_subject',
-                    website=website.name)
-                body = gettext('galatea.email_text',
-                    name=user.display_name,
-                    email=user.email,
-                    password=password,
-                    websites="\n".join(sites))
-            Website.send_email(website.smtp_server, recipients, subject, body)
+        GalateaUser.reset_password(users)
 
-        GalateaUser.write(users, {'password': password})
         self.result.info = gettext('galatea.send_info',
                 email=','.join(str(u.email) for u in users))
         return 'result'
