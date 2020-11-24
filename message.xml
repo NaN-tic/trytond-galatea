@@ -41,4 +41,7 @@ Don't repply this email. It's was generated automatically</field>
           <field name="text">You can't change file name.</field>
       </record>
     </data>
+    <record model="ir.message" id="msg_missing_user_site">
+        <field name="text">Missing site in the "%(user)s" user.</field>
+    </record>
 </tryton>
