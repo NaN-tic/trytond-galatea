@@ -196,7 +196,7 @@ class GalateaUri(tree(), ModelSQL, ModelView):
     @fields.depends('slug')
     def on_change_slug(self):
         if self.slug:
-            self.sluf = slugify(self.slug),
+            self.slug = slugify(self.slug),
 
     @staticmethod
     def default_left():
