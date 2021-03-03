@@ -286,9 +286,12 @@ class GalateaUri(tree(), ModelSQL, ModelView):
         pool = Pool()
         Model = pool.get('ir.model')
         if self.content:
-            return Model.search([
-                    ('model', '=', self.content.__class__.__name__),
-                    ])[0].id
+            if isinstance(self.content, ModelSQL):
+                res = Model.search([
+                        ('model', '=', self.content.__class__.__name__),
+                        ])
+                if res:
+                    return res[0].id
 
     @staticmethod
     def default_redirection_code():
