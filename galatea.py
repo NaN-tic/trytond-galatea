@@ -249,7 +249,7 @@ class GalateaUser(ModelSQL, ModelView, UserMixin):
             ('email',) + tuple(clause[1:]),
             ('party.name',) + tuple(clause[1:]),
             ('party.addresses.street',) + tuple(clause[1:]),
-            ('party.addresses.zip',) + tuple(clause[1:]),
+            ('party.addresses.postal_code',) + tuple(clause[1:]),
             ('party.addresses.city',) + tuple(clause[1:]),
             ('party.addresses.subdivision.name',) + tuple(clause[1:]),
             ('party.contact_mechanisms.value',) + tuple(clause[1:]),
