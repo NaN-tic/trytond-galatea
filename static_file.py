@@ -116,7 +116,7 @@ class GalateaStaticFile(ModelSQL, ModelView):
 
         :param value: The value to set
         """
-        if self.type == 'local':
+        if self.type == 'local' and value:
             file_binary = bytes(value)
             # If the folder does not exist, create it recursively
             directory = os.path.dirname(self.file_path)
