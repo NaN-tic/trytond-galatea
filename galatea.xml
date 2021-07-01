@@ -27,7 +27,7 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
         </record>
 
         <!-- Menu Top -->
-        <menuitem name="Galatea" id="menu_galatea"  icon="tryton-galatea"/>
+        <menuitem name="Galatea" id="menu_galatea"  icon="tryton-galatea" sequence="100"/>
         <record model="ir.ui.menu-res.group" id="menu_galatea_group_galatea">
             <field name="menu" ref="menu_galatea"/>
             <field name="group" ref="group_galatea"/>
