@@ -1,6 +1,6 @@
 # The COPYRIGHT file at the top level of this repository contains the full
 # copyright notices and license terms.
-from trytond.model import ModelSQL, ModelView, fields, Unique, tree
+from trytond.model import ModelSQL, ModelView, DeactivableMixin, fields, Unique, tree
 from trytond.pool import Pool
 from trytond.pyson import Bool, If, Eval, Greater
 from trytond.transaction import Transaction
@@ -80,7 +80,7 @@ class GalateaTemplateParameterModel(ModelSQL):
         required=True, select=True)
 
 
-class GalateaUri(tree(), ModelSQL, ModelView):
+class GalateaUri(tree(), DeactivableMixin, ModelSQL, ModelView):
     '''Galatea Uri'''
     __name__ = 'galatea.uri'
     _rec_name = 'uri'
@@ -149,7 +149,6 @@ class GalateaUri(tree(), ModelSQL, ModelView):
             'required': Eval('type').in_(['internal_redirection',
                     'external_redirection']),
             })
-    active = fields.Boolean('Active', select=True)
     sitemap = fields.Boolean('Sitemap', select=True, help='Wether this URI '
         'should be visible in the sitemap or not.')
 
@@ -176,6 +175,26 @@ class GalateaUri(tree(), ModelSQL, ModelView):
         if len(websites) == 1:
             return websites[0].id
 
+    @staticmethod
+    def default_left():
+        return 0
+
+    @staticmethod
+    def default_right():
+        return 0
+
+    @staticmethod
+    def default_sequence():
+        return 1
+
+    @staticmethod
+    def default_type():
+        return 'content'
+
+    @staticmethod
+    def default_redirection_code():
+        return '303'
+
     @fields.depends('name', 'slug')
     def on_change_name(self):
         if self.name and not self.slug:
@@ -197,18 +216,6 @@ class GalateaUri(tree(), ModelSQL, ModelView):
     def on_change_slug(self):
         if self.slug:
             self.slug = slugify(self.slug),
-
-    @staticmethod
-    def default_left():
-        return 0
-
-    @staticmethod
-    def default_right():
-        return 0
-
-    @staticmethod
-    def default_sequence():
-        return 1
 
     def get_uri(self, name):
         def _get_uri_recursive(uri):
@@ -270,10 +277,6 @@ class GalateaUri(tree(), ModelSQL, ModelView):
                 alternate_uris[lang_code] = self.__class__(self.id).uri
         return alternate_uris
 
-    @staticmethod
-    def default_type():
-        return 'content'
-
     @fields.depends('template')
     def get_content_types(self):
         result = [(None, '')]
@@ -292,14 +295,6 @@ class GalateaUri(tree(), ModelSQL, ModelView):
                         ])
                 if res:
                     return res[0].id
-
-    @staticmethod
-    def default_redirection_code():
-        return '303'
-
-    @staticmethod
-    def default_active():
-        return True
 
     @property
     def breadcrumb(self):

@@ -1,7 +1,7 @@
 # This file is part galatea module for Tryton.
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
-from trytond.model import ModelView, ModelSQL, fields, Unique
+from trytond.model import ModelView, ModelSQL, DeactivableMixin, fields, Unique
 from trytond.wizard import Wizard, StateTransition, StateView, Button
 from trytond.pool import Pool
 from trytond.pyson import Eval
@@ -29,7 +29,7 @@ __all__ = ['GalateaWebSite', 'GalateaWebsiteCountry', 'GalateaWebsiteLang',
     'GalateaSendPassword']
 
 
-class GalateaWebSite(ModelSQL, ModelView):
+class GalateaWebSite(DeactivableMixin, ModelSQL, ModelView):
     'Galatea Web Site'
     __name__ = "galatea.website"
     name = fields.Char('Name', required=True, select=True)
@@ -40,7 +40,6 @@ class GalateaWebSite(ModelSQL, ModelView):
     static_folder = fields.Char('Static Folder', required=True,
         help='Flask Static directory')
     company = fields.Many2One('company.company', 'Company', required=True)
-    active = fields.Boolean('Active')
     registration = fields.Boolean('Registration',
         help='Add website in users when users do a new registration')
     country = fields.Many2One('country.country', 'Country', required=True,
@@ -77,10 +76,6 @@ class GalateaWebSite(ModelSQL, ModelView):
     @staticmethod
     def default_timezone():
         return 'UTC'
-
-    @staticmethod
-    def default_active():
-        return True
 
     @staticmethod
     def default_registration():
@@ -145,7 +140,7 @@ class GalateaWebsiteCurrency(ModelSQL):
         ondelete='CASCADE', select=1, required=True)
 
 
-class GalateaUser(ModelSQL, ModelView, UserMixin):
+class GalateaUser(DeactivableMixin, ModelSQL, ModelView, UserMixin):
     """Galatea Users"""
     __name__ = "galatea.user"
     _rec_name = 'display_name'
@@ -162,7 +157,6 @@ class GalateaUser(ModelSQL, ModelView, UserMixin):
         [(x, x) for x in pytz.common_timezones], 'Timezone', translate=False
         )
     manager = fields.Boolean('Manager', help='Allow user in manager sections')
-    active = fields.Boolean('Active', help='Allow login users')
     websites = fields.Many2Many('galatea.user-galatea.website',
         'user', 'website', 'Websites',
         help='Users will be available in those websites to login')
@@ -171,10 +165,6 @@ class GalateaUser(ModelSQL, ModelView, UserMixin):
     @staticmethod
     def default_timezone():
         return "UTC"
-
-    @staticmethod
-    def default_active():
-        return True
 
     @staticmethod
     def default_company():
