@@ -140,7 +140,11 @@ class GalateaWebsiteCurrency(ModelSQL):
         ondelete='CASCADE', select=1, required=True)
 
 
-class GalateaUser(DeactivableMixin, ModelSQL, ModelView, UserMixin):
+class GalateaUserMixin(UserMixin):
+    __no_slots__ = True
+
+
+class GalateaUser(DeactivableMixin, GalateaUserMixin, ModelSQL, ModelView):
     """Galatea Users"""
     __name__ = "galatea.user"
     _rec_name = 'display_name'
