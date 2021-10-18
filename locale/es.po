@@ -320,7 +320,7 @@ msgstr "Expiración login"
 
 msgctxt "field:galatea.user,last_login:"
 msgid "Last Login"
-msgstr "Último Login"
+msgstr "Último login"
 
 msgctxt "field:galatea.user,manager:"
 msgid "Manager"
