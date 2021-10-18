@@ -171,8 +171,8 @@ class GalateaUser(ModelSQL, ModelView, UserMixin):
     websites = fields.Many2Many('galatea.user-galatea.website',
         'user', 'website', 'Websites',
         help='Users will be available in those websites to login')
-    login_expire = fields.Timestamp('Login Expire')
-    last_login = fields.Timestamp('Last Login', readonly=True)
+    login_expire = fields.DateTime('Login Expire')
+    last_login = fields.DateTime('Last Login', readonly=True)
 
     @staticmethod
     def default_timezone():

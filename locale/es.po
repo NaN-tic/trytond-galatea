@@ -314,6 +314,14 @@ msgctxt "field:galatea.user,id:"
 msgid "ID"
 msgstr "ID"
 
+msgctxt "field:galatea.user,login_expire:"
+msgid "Login Expire"
+msgstr "Expiración login"
+
+msgctxt "field:galatea.user,last_login:"
+msgid "Last Login"
+msgstr "Último Login"
+
 msgctxt "field:galatea.user,manager:"
 msgid "Manager"
 msgstr "Gestor"
