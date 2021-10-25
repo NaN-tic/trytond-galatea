@@ -9,18 +9,23 @@ from trytond.transaction import Transaction
 from trytond.sendmail import SMTPDataManager, sendmail_transactional
 from trytond.i18n import gettext
 from trytond.exceptions import UserError
+from trytond import backend
 from .tools import remove_special_chars
+from datetime import datetime
 from email.utils import make_msgid
 from email.header import Header
 from email.mime.text import MIMEText
-import subprocess
 from flask_login import UserMixin
+import subprocess
+import logging
 import pytz
 import random
 import string
 import os
 import hashlib
 import secrets
+
+logger = logging.getLogger(__name__)
 
 __all__ = ['GalateaWebSite', 'GalateaWebsiteCountry', 'GalateaWebsiteLang',
     'GalateaWebsiteCurrency', 'GalateaUser', 'GalateaUserWebSite',
@@ -166,7 +171,8 @@ class GalateaUser(ModelSQL, ModelView, UserMixin):
     websites = fields.Many2Many('galatea.user-galatea.website',
         'user', 'website', 'Websites',
         help='Users will be available in those websites to login')
-    login_expire = fields.Timestamp('Login Expire')
+    login_expire = fields.DateTime('Login Expire')
+    last_login = fields.DateTime('Last Login', readonly=True)
 
     @staticmethod
     def default_timezone():
@@ -258,17 +264,27 @@ class GalateaUser(ModelSQL, ModelView, UserMixin):
     @classmethod
     def signal_login(cls, user, session=None, website=None):
         "Flask signal to login"
-        return
+        DatabaseOperationalError = backend.get('DatabaseOperationalError')
+
+        user_id = user.id
+        try:
+            with Transaction().new_transaction(autocommit=True):
+                User = Pool().get('galatea.user')
+                galatea_user = User(user_id)
+                galatea_user.last_login = datetime.now()
+                galatea_user.save()
+        except DatabaseOperationalError:
+            logger.debug('Galatea user last login failed', exc_info=True)
 
     @classmethod
     def signal_logout(cls, user, session=None, website=None):
         "Flask signal to logout"
-        return
+        pass
 
     @classmethod
     def signal_registration(cls, user, data=None, website=None):
         "Flask signal to registration"
-        return
+        pass
 
     @classmethod
     def _get_user_domain(cls, website, request):

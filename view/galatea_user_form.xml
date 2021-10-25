@@ -14,6 +14,8 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
     <field name="password" widget="password"/>
     <label name="login_expire"/>
     <field name="login_expire"/>
+    <label name="last_login"/>
+    <field name="last_login"/>
     <label name="active"/>
     <field name="active"/>
     <label name="manager"/>
