@@ -261,6 +261,8 @@ class GalateaUser(DeactivableMixin, ModelSQL, ModelView, UserMixin):
             with Transaction().new_transaction(autocommit=True):
                 User = Pool().get('galatea.user')
                 galatea_user = User(user_id)
+                if galatea_user.activation_code:
+                    galatea_user.activation_code = None
                 galatea_user.last_login = datetime.now()
                 galatea_user.save()
         except DatabaseOperationalError:
