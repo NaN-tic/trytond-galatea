@@ -290,7 +290,8 @@ class GalateaUser(ModelSQL, ModelView, UserMixin):
 
     @classmethod
     def _get_user_domain(cls, website, request):
-        email = remove_special_chars(request.form.get('email'))
+        email = remove_special_chars(request.authorization
+            and request.authorization.username or request.form.get('email'))
         return [
             ('email', '=', email),
             ('active', '=', True),
