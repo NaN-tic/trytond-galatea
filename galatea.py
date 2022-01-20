@@ -258,7 +258,7 @@ class GalateaUser(DeactivableMixin, GalateaUserMixin, ModelSQL, ModelView):
     @classmethod
     def signal_login(cls, user, session=None, website=None):
         "Flask signal to login"
-        DatabaseOperationalError = backend.get('DatabaseOperationalError')
+        DatabaseOperationalError = backend.DatabaseOperationalError
 
         user_id = user.id
         try:
