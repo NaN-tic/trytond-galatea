@@ -68,6 +68,18 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
         <menuitem id="menu_website_form" action="act_website_form"
             parent="menu_galatea_configuration" sequence="10"/>
 
+        <record model="ir.rule.group" id="rule_group_galatea_website_companies">
+            <field name="name">User in companies</field>
+            <field name="model" search="[('model', '=', 'galatea.website')]"/>
+            <field name="global_p" eval="True"/>
+        </record>
+        <record model="ir.rule" id="rule_galatea_website_companies">
+            <field name="domain"
+                eval="[('company', 'in', Eval('companies', []))]"
+                pyson="1"/>
+            <field name="rule_group" ref="rule_group_galatea_website_companies"/>
+        </record>
+
         <!-- Galatea User -->
         <menuitem name="Users" id="menu_galatea_users" parent="menu_galatea"/>
         <record model="ir.ui.menu-res.group" id="menu_group_galatea_users">
@@ -107,6 +119,18 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
 
         <menuitem name="Users" id="menu_galatea_user"
             action="action_galatea_user_view" parent="menu_galatea_users"/>
+
+        <record model="ir.rule.group" id="rule_group_galatea_user_companies">
+            <field name="name">User in companies</field>
+            <field name="model" search="[('model', '=', 'galatea.user')]"/>
+            <field name="global_p" eval="True"/>
+        </record>
+        <record model="ir.rule" id="rule_galatea_user_companies">
+            <field name="domain"
+                eval="[('company', 'in', Eval('companies', []))]"
+                pyson="1"/>
+            <field name="rule_group" ref="rule_group_galatea_user_companies"/>
+        </record>
 
         <!-- Galatea Send Password -->
         <record model="ir.ui.view" id="galatea_send_password_start">
