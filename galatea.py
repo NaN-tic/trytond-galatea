@@ -151,7 +151,10 @@ class GalateaUser(DeactivableMixin, ModelSQL, ModelView, UserMixin):
     _rec_name = 'display_name'
 
     party = fields.Many2One('party.party', 'Party', required=True,
-        ondelete='CASCADE')
+        ondelete='CASCADE', context={
+            'company': Eval('company'),
+            },
+        depends=['company'])
     display_name = fields.Char('Display Name', required=True)
     email = fields.Char("e-Mail", required=True)
     password = fields.Char('Password', required=True)
