@@ -6,8 +6,6 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
     <field name="party"/>
     <label name="display_name"/>
     <field name="display_name"/>
-    <label name="company"/>
-    <field name="company"/>
     <label name="email"/>
     <field name="email"/>
     <label name="password"/>
