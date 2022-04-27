@@ -151,16 +151,12 @@ class GalateaUser(DeactivableMixin, ModelSQL, ModelView, UserMixin):
     _rec_name = 'display_name'
 
     party = fields.Many2One('party.party', 'Party', required=True,
-        ondelete='CASCADE', context={
-            'company': Eval('company'),
-            },
-        depends=['company'])
+        ondelete='CASCADE')
     display_name = fields.Char('Display Name', required=True)
     email = fields.Char("e-Mail", required=True)
     password = fields.Char('Password', required=True)
     salt = fields.Char('Salt', size=8)
     activation_code = fields.Char('Unique Activation Code')
-    company = fields.Many2One('company.company', 'Company', required=True)
     timezone = fields.Selection(
         [(x, x) for x in pytz.common_timezones], 'Timezone', translate=False
         )
@@ -176,10 +172,6 @@ class GalateaUser(DeactivableMixin, ModelSQL, ModelView, UserMixin):
         return "UTC"
 
     @staticmethod
-    def default_company():
-        return Transaction().context.get('company')
-
-    @staticmethod
     def default_websites():
         Website = Pool().get('galatea.website')
         return [p.id for p in Website.search([('registration', '=', True)])]
@@ -189,8 +181,8 @@ class GalateaUser(DeactivableMixin, ModelSQL, ModelView, UserMixin):
         super(GalateaUser, cls).__setup__()
         t = cls.__table__()
         cls._sql_constraints += [
-            ('unique_email_company', Unique(t, t.email, t.company),
-                'Email must be unique in a company'),
+            ('unique_email_company', Unique(t, t.email),
+                'Email must be unique'),
             ]
         cls._buttons.update({
                 'activate': {
@@ -198,6 +190,17 @@ class GalateaUser(DeactivableMixin, ModelSQL, ModelView, UserMixin):
                     'depends': ['activation_code'],
                     },
                 })
+
+    @classmethod
+    def __register__(cls, module_name):
+        table = cls.__table_handler__(module_name)
+
+        # Migration from 5.4: drop company column
+        if table.column_exist('company'):
+            table.drop_constraint('unique_email_company')
+            table.drop_column('company')
+
+        super(GalateaUser, cls).__register__(module_name)
 
     @classmethod
     @ModelView.button
