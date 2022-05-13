@@ -359,6 +359,11 @@ class GalateaUserWebSite(ModelSQL):
         'galatea.website', 'Website',
         ondelete='RESTRICT', select=True, required=True)
 
+    @classmethod
+    def __setup__(cls):
+        super().__setup__()
+        cls.__access__.add('website')
+
 
 class GalateaRemoveCacheStart(ModelView):
     'Galatea Remove Cache Start'
