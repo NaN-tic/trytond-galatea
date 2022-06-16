@@ -18,6 +18,7 @@ def register():
         galatea.GalateaWebsiteCurrency,
         galatea.GalateaUser,
         galatea.GalateaUserWebSite,
+        galatea.GalateaUserOAuth,
         galatea.GalateaRemoveCacheStart,
         galatea.GalateaSendPasswordStart,
         galatea.GalateaSendPasswordResult,

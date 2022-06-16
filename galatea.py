@@ -29,6 +29,7 @@ logger = logging.getLogger(__name__)
 
 __all__ = ['GalateaWebSite', 'GalateaWebsiteCountry', 'GalateaWebsiteLang',
     'GalateaWebsiteCurrency', 'GalateaUser', 'GalateaUserWebSite',
+    'GalateaUserOAuth',
     'GalateaRemoveCacheStart', 'GalateaRemoveCache',
     'GalateaSendPasswordStart', 'GalateaSendPasswordResult',
     'GalateaSendPassword']
@@ -364,6 +365,17 @@ class GalateaUserWebSite(ModelSQL):
     website = fields.Many2One(
         'galatea.website', 'Website',
         ondelete='RESTRICT', select=True, required=True)
+
+
+class GalateaUserOAuth(ModelSQL, ModelView):
+    'Galatea OAuth'
+    __name__ = 'galatea.user.oauth'
+    user = fields.Many2One('galatea.user', "User", required=True)
+    provider = fields.Selection([
+            ('google', 'Google'),
+            ('facebook', 'Facebook'),
+            ], "Provider", required=True)
+    token = fields.Char('Token', readonly=True)
 
 
 class GalateaRemoveCacheStart(ModelView):
