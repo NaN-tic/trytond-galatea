@@ -83,9 +83,7 @@ class GalateaTemplateParameterModel(ModelSQL):
 class GalateaUri(tree(), DeactivableMixin, ModelSQL, ModelView):
     '''Galatea Uri'''
     __name__ = 'galatea.uri'
-    _rec_name = 'uri'
-    _order = [('parent', 'ASC'), ('sequence', 'ASC'), ('id', 'ASC')]
-
+    # _rec_name = 'uri'
     website = fields.Many2One('galatea.website', 'Website', required=True,
         select=True, ondelete='CASCADE')
     name = fields.Char('Name', translate=True, required=True)
@@ -156,9 +154,10 @@ class GalateaUri(tree(), DeactivableMixin, ModelSQL, ModelView):
     def __setup__(cls):
         super(GalateaUri, cls).__setup__()
         t = cls.__table__()
-
-        cls._order.insert(0, ('sequence', 'ASC'))
-        cls._order.insert(1, ('id', 'ASC'))
+        cls._order = [
+            ('sequence', 'ASC'),
+            ('id', 'ASC'),
+            ]
         cls._sql_constraints += [
             ('uri_uniq', Unique(t, t.parent, t.slug),
                 'The URI (Parent + SLUG) of the Galatea URI must be unique.'),
@@ -230,6 +229,11 @@ class GalateaUri(tree(), DeactivableMixin, ModelSQL, ModelView):
         # if self.website.uri and self.website.uri != '/':
         #     uri = '%s%s' % (self.website.uri, uri)
         return uri
+
+    def get_rec_name(self, name):
+        if self.uri:
+            return self.uri
+        return '(%s)' % self.id
 
     @classmethod
     def search_rec_name(cls, name, clause):
