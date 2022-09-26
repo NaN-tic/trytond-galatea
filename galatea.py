@@ -158,9 +158,9 @@ class GalateaUser(DeactivableMixin, GalateaUserMixin, ModelSQL, ModelView):
         ondelete='CASCADE')
     display_name = fields.Char('Display Name', required=True)
     email = fields.Char("e-Mail", required=True)
-    password = fields.Char('Password', required=True)
+    password = fields.Char('Password', required=True, strip=False)
     salt = fields.Char('Salt', size=8)
-    activation_code = fields.Char('Unique Activation Code')
+    activation_code = fields.Char('Unique Activation Code', strip=False)
     timezone = fields.Selection(
         [(x, x) for x in pytz.common_timezones], 'Timezone', translate=False
         )
