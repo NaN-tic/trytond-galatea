@@ -37,7 +37,7 @@ __all__ = ['GalateaWebSite', 'GalateaWebsiteCountry', 'GalateaWebsiteLang',
 class GalateaWebSite(DeactivableMixin, ModelSQL, ModelView):
     'Galatea Web Site'
     __name__ = "galatea.website"
-    name = fields.Char('Name', required=True, select=True)
+    name = fields.Char('Name', required=True)
     uri = fields.Char('Uri', required=True,
         help='Base Uri Site (with "/")')
     folder = fields.Char('Folder', required=True,
@@ -139,10 +139,10 @@ class GalateaWebsiteCurrency(ModelSQL):
     _table = 'website_currency_rel'
     website = fields.Many2One(
         'galatea.website', 'Website',
-        ondelete='CASCADE', select=1, required=True)
+        ondelete='CASCADE', required=True)
     currency = fields.Many2One(
         'currency.currency', 'Currency',
-        ondelete='CASCADE', select=1, required=True)
+        ondelete='CASCADE', required=True)
 
 
 class GalateaUserMixin(UserMixin):
@@ -354,10 +354,10 @@ class GalateaUserWebSite(ModelSQL):
     __name__ = 'galatea.user-galatea.website'
     _table = 'galatea_user_galatea_website'
     user = fields.Many2One('galatea.user', 'User', ondelete='CASCADE',
-            select=True, required=True)
+        required=True)
     website = fields.Many2One(
         'galatea.website', 'Website',
-        ondelete='RESTRICT', select=True, required=True)
+        ondelete='RESTRICT', required=True)
 
     @classmethod
     def __setup__(cls):

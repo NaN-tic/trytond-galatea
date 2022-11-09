@@ -65,19 +65,18 @@ class GalateaTemplateModel(ModelSQL):
     'Galatea Template - Model'
     __name__ = 'galatea.template-ir.model'
     template = fields.Many2One('galatea.template', 'Galatea Template',
-        ondelete='CASCADE', required=True, select=True)
+        ondelete='CASCADE', required=True)
     model = fields.Many2One('ir.model', 'Model', ondelete='CASCADE',
-        required=True, select=True)
+        required=True)
 
 
 class GalateaTemplateParameterModel(ModelSQL):
     'Galatea Template Parameter - Model'
     __name__ = 'galatea.template.parameter-ir.model'
     parameter = fields.Many2One('galatea.template.parameter',
-        'Galatea Template Parameter', ondelete='CASCADE', required=True,
-        select=True)
+        'Galatea Template Parameter', ondelete='CASCADE', required=True)
     model = fields.Many2One('ir.model', 'Model', ondelete='CASCADE',
-        required=True, select=True)
+        required=True)
 
 
 class GalateaUri(tree(), DeactivableMixin, ModelSQL, ModelView):
@@ -85,15 +84,15 @@ class GalateaUri(tree(), DeactivableMixin, ModelSQL, ModelView):
     __name__ = 'galatea.uri'
     # _rec_name = 'uri'
     website = fields.Many2One('galatea.website', 'Website', required=True,
-        select=True, ondelete='CASCADE')
+        ondelete='CASCADE')
     name = fields.Char('Name', translate=True, required=True)
-    slug = fields.Char('Slug', translate=True, required=True, select=True)
+    slug = fields.Char('Slug', translate=True, required=True)
     anchor = fields.Boolean('Is Anchor?')
-    parent = fields.Many2One('galatea.uri', 'Parent', select=True, domain=[
+    parent = fields.Many2One('galatea.uri', 'Parent', domain=[
             ('website', '=', Eval('website')),
             ], depends=['website'])
-    left = fields.Integer('Left', required=True, select=True)
-    right = fields.Integer('Right', required=True, select=True)
+    left = fields.Integer('Left', required=True)
+    right = fields.Integer('Right', required=True)
     childs = fields.One2Many('galatea.uri', 'parent', 'Children')
     sequence = fields.Integer('Sequence')
     uri = fields.Function(fields.Char('URI'),
@@ -117,10 +116,9 @@ class GalateaUri(tree(), DeactivableMixin, ModelSQL, ModelView):
             'invisible': Eval('type') != 'content',
             }, depends=['type'])
     content = fields.Reference('Content', selection='get_content_types',
-        select=True, states={
+        states={
             'invisible': Eval('type') != 'content',
-            },
-        depends=['website', 'type'])
+        }, depends=['website', 'type'])
     content_model = fields.Function(fields.Many2One('ir.model',
             'Content Model'),
         'on_change_with_content_model')
@@ -147,8 +145,8 @@ class GalateaUri(tree(), DeactivableMixin, ModelSQL, ModelView):
             'required': Eval('type').in_(['internal_redirection',
                     'external_redirection']),
             })
-    sitemap = fields.Boolean('Sitemap', select=True, help='Wether this URI '
-        'should be visible in the sitemap or not.')
+    sitemap = fields.Boolean('Sitemap',
+        help='Wether this URI should be visible in the sitemap or not.')
 
     @classmethod
     def __setup__(cls):
@@ -357,7 +355,7 @@ class GalateaUriValue(ModelSQL, ModelView):
             ('text', 'Text'),
             ], 'Type'),'get_type')
     content = fields.Reference('Content', selection='get_content_types',
-        select=True, states={
+        states={
             'invisible': Eval('type') != 'reference'
             }, depends=['type'])
     template = fields.Function(fields.Many2One('galatea.template', 'Template'),
@@ -403,7 +401,7 @@ class GalateaVisiblePage(ModelSQL, ModelView):
     name = fields.Char('Title', translate=True,
         required=True)
     canonical_uri = fields.Many2One('galatea.uri', 'Canonical URI',
-        required=True, select=True, domain=[
+        required=True, domain=[
             # TODO: fail with tag websites functional field
             # ('website', 'in', Eval('websites')),
             ('type', '=', 'content'),

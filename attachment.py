@@ -10,7 +10,7 @@ __all__ = ['Attachment']
 
 class Attachment(metaclass=PoolMeta):
     __name__ = 'ir.attachment'
-    allow_galatea = fields.Boolean('Allow Galatea', select=True)
+    allow_galatea = fields.Boolean('Allow Galatea')
 
     @fields.depends('allow_galatea', 'name')
     def on_change_name(self):

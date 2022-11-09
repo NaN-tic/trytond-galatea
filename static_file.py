@@ -23,7 +23,7 @@ class GalateaStaticFolder(ModelSQL, ModelView):
     __name__ = "galatea.static.folder"
     name = fields.Char('Name', required=True,
         help='Folder name contains az09 characters')
-    description = fields.Char('Description', select=1)
+    description = fields.Char('Description')
     files = fields.One2Many('galatea.static.file', 'folder', 'Files')
 
     @classmethod
@@ -87,7 +87,7 @@ class GalateaStaticFile(ModelSQL, ModelView):
             ('local', 'Local File'),
             ('remote', 'Remote File'),
             ], 'File Type')
-    remote_path = fields.Char('Remote File', select=True, translate=True,
+    remote_path = fields.Char('Remote File', translate=True,
         states={
             'required': Equal(Eval('type'), 'remote'),
             'invisible': Not(Equal(Eval('type'), 'remote'))
