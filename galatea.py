@@ -29,6 +29,7 @@ logger = logging.getLogger(__name__)
 
 __all__ = ['GalateaWebSite', 'GalateaWebsiteCountry', 'GalateaWebsiteLang',
     'GalateaWebsiteCurrency', 'GalateaUser', 'GalateaUserWebSite',
+    'GalateaUserOAuth',
     'GalateaRemoveCacheStart', 'GalateaRemoveCache',
     'GalateaSendPasswordStart', 'GalateaSendPasswordResult',
     'GalateaSendPassword']
@@ -270,17 +271,21 @@ class GalateaUser(ModelSQL, ModelView, UserMixin):
     @classmethod
     def signal_login(cls, user, session=None, website=None):
         "Flask signal to login"
+        GalateaUser = Pool().get('galatea.user')
+
         DatabaseOperationalError = backend.get('DatabaseOperationalError')
 
-        user_id = user.id
         try:
             with Transaction().new_transaction(autocommit=True):
-                User = Pool().get('galatea.user')
-                galatea_user = User(user_id)
-                if galatea_user.activation_code:
-                    galatea_user.activation_code = None
-                galatea_user.last_login = datetime.now()
-                galatea_user.save()
+                # registration SSO create user and do login_user. New transacton
+                # not found user ID because is pending to commit
+                galatea_users = GalateaUser.search([('id', '=', user.id)], limit=1)
+                if galatea_users:
+                    galatea_user, = galatea_users
+                    if galatea_user.activation_code:
+                        galatea_user.activation_code = None
+                    galatea_user.last_login = datetime.now()
+                    galatea_user.save()
         except DatabaseOperationalError:
             logger.debug('Galatea user last login failed', exc_info=True)
 
@@ -364,6 +369,17 @@ class GalateaUserWebSite(ModelSQL):
     website = fields.Many2One(
         'galatea.website', 'Website',
         ondelete='RESTRICT', select=True, required=True)
+
+
+class GalateaUserOAuth(ModelSQL, ModelView):
+    'Galatea OAuth'
+    __name__ = 'galatea.user.oauth'
+    user = fields.Many2One('galatea.user', "User", required=True)
+    provider = fields.Selection([
+            ('google', 'Google'),
+            ('facebook', 'Facebook'),
+            ], "Provider", required=True)
+    token = fields.Char('Token', readonly=True)
 
 
 class GalateaRemoveCacheStart(ModelView):
