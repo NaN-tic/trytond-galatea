@@ -6,7 +6,7 @@ from trytond.wizard import Wizard, StateTransition, StateView, Button
 from trytond.pool import Pool
 from trytond.pyson import Eval
 from trytond.transaction import Transaction
-from trytond.sendmail import SMTPDataManager, sendmail_transactional
+from trytond.sendmail import sendmail_transactional
 from trytond.i18n import gettext
 from trytond.exceptions import UserError
 from trytond import backend
@@ -103,9 +103,7 @@ class GalateaWebSite(DeactivableMixin, ModelSQL, ModelView):
         msg['Reply-to'] = server.smtp_email
         msg['Message-ID'] = make_msgid()
 
-        datamanager = SMTPDataManager()
-        datamanager._server = server.get_smtp_server()
-        sendmail_transactional(from_, recipients, msg, datamanager=datamanager)
+        sendmail_transactional(from_, recipients, msg)
 
     @classmethod
     def cache_directories(cls, website):
