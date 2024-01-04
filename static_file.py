@@ -211,6 +211,7 @@ class GalateaStaticFile(ModelSQL, ModelView):
 
     @classmethod
     def create(cls, vlist):
+        vlist = [x.copy() for x in vlist]
         for vals in vlist:
             vals['name'] = slugify_file(vals['name'])
         return super(GalateaStaticFile, cls).create(vlist)
