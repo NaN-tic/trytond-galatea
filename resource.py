@@ -54,7 +54,7 @@ class GalateaTemplateParameter(ModelSQL, ModelView):
     allowed_models = fields.Many2Many('galatea.template.parameter-ir.model',
         'parameter', 'model', 'Allowed Models', states={
             'invisible': Eval('type') != 'reference',
-            }, depends=['type'])
+            })
 
     @staticmethod
     def default_unique():
@@ -90,7 +90,7 @@ class GalateaUri(tree(), DeactivableMixin, ModelSQL, ModelView):
     anchor = fields.Boolean('Is Anchor?')
     parent = fields.Many2One('galatea.uri', 'Parent', domain=[
             ('website', '=', Eval('website')),
-            ], depends=['website'])
+            ])
     left = fields.Integer('Left', required=True)
     right = fields.Integer('Right', required=True)
     childs = fields.One2Many('galatea.uri', 'parent', 'Children')
@@ -110,15 +110,15 @@ class GalateaUri(tree(), DeactivableMixin, ModelSQL, ModelView):
         states={
             'invisible': Eval('type') != 'content',
             'required': Eval('type') == 'content',
-            }, depends=['content_model', 'type'])
+            })
     values = fields.One2Many('galatea.uri.value', 'uri', 'Values',
         states={
             'invisible': Eval('type') != 'content',
-            }, depends=['type'])
+            })
     content = fields.Reference('Content', selection='get_content_types',
         states={
             'invisible': Eval('type') != 'content',
-        }, depends=['website', 'type'])
+        })
     content_model = fields.Function(fields.Many2One('ir.model',
             'Content Model'),
         'on_change_with_content_model')
@@ -126,12 +126,12 @@ class GalateaUri(tree(), DeactivableMixin, ModelSQL, ModelView):
         'Internal Redirection', states={
             'invisible': Eval('type') != 'internal_redirection',
             'required': Eval('type') == 'internal_redirection',
-            }, depends=['type'])
+            })
     external_redirection = fields.Char('External Redirection', translate=True,
         states={
             'invisible': Eval('type') != 'external_redirection',
             'required': Eval('type') == 'external_redirection',
-            }, depends=['type'])
+            })
     redirection_code = fields.Selection([
             ('301', '301:'),
             ('302', '302:'),
@@ -347,7 +347,7 @@ class GalateaUriValue(ModelSQL, ModelView):
     parameter = fields.Many2One('galatea.template.parameter', 'Parameter',
         required=True, domain=[
             ('template', '=', Eval('template'))
-        ], depends=['template'])
+        ])
     type = fields.Function(fields.Selection([
             ('boolean', 'Boolean'),
             ('reference', 'Reference'),
@@ -357,18 +357,18 @@ class GalateaUriValue(ModelSQL, ModelView):
     content = fields.Reference('Content', selection='get_content_types',
         states={
             'invisible': Eval('type') != 'reference'
-            }, depends=['type'])
+            })
     template = fields.Function(fields.Many2One('galatea.template', 'Template'),
             'on_change_with_template')
     boolean = fields.Boolean('Boolean', states={
             'invisible': Eval('type') != 'boolean',
-            }, depends=['type'])
+            })
     integer = fields.Integer('Integer', states={
             'invisible': Eval('type') != 'integer',
-            }, depends=['type'])
+            })
     text = fields.Text('Text', states={
             'invisible': Eval('type') != 'text',
-            }, depends=['type'])
+            })
 
     @fields.depends('parameter')
     def get_content_types(self):
