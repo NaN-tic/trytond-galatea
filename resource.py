@@ -411,8 +411,7 @@ class GalateaVisiblePage(ModelSQL, ModelView):
         states={
             'required': Greater(Eval('id', -1), 0),
             'invisible': ~Greater(Eval('id', -1), 0),
-            },
-        depends=['id'])
+            })
     slug = fields.Function(fields.Char('Slug', translate=True, required=True),
         'on_change_with_slug', setter='set_canonical_uri_field',
         searcher='search_canonical_uri_field')
