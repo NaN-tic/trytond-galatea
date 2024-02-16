@@ -1,6 +1,7 @@
 # This file is part galatea module for Tryton.
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
+from trytond.config import config
 from trytond.model import ModelView, ModelSQL, DeactivableMixin, fields, Unique
 from trytond.wizard import Wizard, StateTransition, StateView, Button
 from trytond.pool import Pool
@@ -92,18 +93,16 @@ class GalateaWebSite(DeactivableMixin, ModelSQL, ModelView):
 
     @staticmethod
     def send_email(server, recipients, subject, body):
-        from_ = server.smtp_email
-        if server.smtp_use_email:
-            from_ = server.smtp_email
+        from_cfg = config.get('email', 'from')
 
         msg = MIMEText(body, _charset='utf-8')
         msg['Subject'] = Header(subject, 'utf-8')
-        msg['From'] = from_
+        msg['From'] = from_cfg
         msg['To'] = ', '.join(recipients)
         msg['Reply-to'] = server.smtp_email
         msg['Message-ID'] = make_msgid()
 
-        sendmail_transactional(from_, recipients, msg)
+        sendmail_transactional(from_cfg, recipients, msg)
 
     @classmethod
     def cache_directories(cls, website):
