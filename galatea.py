@@ -269,7 +269,12 @@ class GalateaUser(DeactivableMixin, GalateaUserMixin, ModelSQL, ModelView):
                 User = Pool().get('galatea.user')
                 galatea_user = User(user_id)
                 if galatea_user.activation_code:
-                    galatea_user.activation_code = None
+                    # keep activation_code in case user forget the password,
+                    # and not show current_password input in new-password form
+                    if len(galatea_user.activation_code) == 12:
+                        galatea_user.password = galatea_user.activation_code
+                    else:
+                        galatea_user.activation_code = None
                 galatea_user.last_login = datetime.now()
                 galatea_user.save()
         except DatabaseOperationalError:
