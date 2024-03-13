@@ -30,6 +30,7 @@ def register():
         static_file.GalateaStaticFolder,
         static_file.GalateaStaticFile,
         party.Party,
+        party.Address,
         module='galatea', type_='model')
     Pool.register(
         galatea.GalateaRemoveCache,
