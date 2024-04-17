@@ -32,7 +32,7 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
         </record>
 
         <record model="ir.model.access" id="access_galatea_template">
-            <field name="model" search="[('model', '=', 'galatea.template')]"/>
+            <field name="model">galatea.template</field>
             <field name="perm_read" eval="False"/>
             <field name="perm_write" eval="False"/>
             <field name="perm_create" eval="False"/>
@@ -40,7 +40,7 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
         </record>
 
         <record model="ir.model.access" id="access_galatea_template_admin">
-            <field name="model" search="[('model', '=', 'galatea.template')]"/>
+            <field name="model">galatea.template</field>
             <field name="group" ref="group_galatea_admin"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
@@ -49,7 +49,7 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
         </record>
 
         <record model="ir.model.access" id="access_galatea_template_galatea">
-            <field name="model" search="[('model', '=', 'galatea.template')]"/>
+            <field name="model">galatea.template</field>
             <field name="group" ref="group_galatea"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>
@@ -112,7 +112,7 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
         </record>
 
         <record model="ir.model.access" id="access_galatea_uri">
-            <field name="model" search="[('model', '=', 'galatea.uri')]"/>
+            <field name="model">galatea.uri</field>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>
             <field name="perm_create" eval="False"/>
@@ -120,7 +120,7 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
         </record>
 
         <record model="ir.model.access" id="access_galatea_uri_admin">
-            <field name="model" search="[('model', '=', 'galatea.uri')]"/>
+            <field name="model">galatea.uri</field>
             <field name="group" ref="group_galatea_admin"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
@@ -129,7 +129,7 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
         </record>
 
         <record model="ir.model.access" id="access_galatea_galatea_uri">
-            <field name="model" search="[('model', '=', 'galatea.uri')]"/>
+            <field name="model">galatea.uri</field>
             <field name="group" ref="group_galatea"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>
@@ -166,7 +166,7 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
         </record>
 
         <record model="ir.model.access" id="access_galatea_template_parameter">
-            <field name="model" search="[('model', '=', 'galatea.template.parameter')]"/>
+            <field name="model">galatea.template.parameter</field>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>
             <field name="perm_create" eval="False"/>
@@ -174,7 +174,7 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
         </record>
 
         <record model="ir.model.access" id="access_galatea_template_parameter_admin">
-            <field name="model" search="[('model', '=', 'galatea.template.parameter')]"/>
+            <field name="model">galatea.template.parameter</field>
             <field name="group" ref="group_galatea_admin"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
@@ -183,7 +183,7 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
         </record>
 
         <record model="ir.model.access" id="access_galatea_galatea_template_parameter">
-            <field name="model" search="[('model', '=', 'galatea.template.parameter')]"/>
+            <field name="model">galatea.template.parameter</field>
             <field name="group" ref="group_galatea"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>
@@ -220,7 +220,7 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
         </record>
 
         <record model="ir.model.access" id="access_galatea_uri_value">
-            <field name="model" search="[('model', '=', 'galatea.uri.value')]"/>
+            <field name="model">galatea.uri.value</field>
             <field name="perm_read" eval="False"/>
             <field name="perm_write" eval="False"/>
             <field name="perm_create" eval="False"/>
@@ -228,7 +228,7 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
         </record>
 
         <record model="ir.model.access" id="access_galatea_uri_value_admin">
-            <field name="model" search="[('model', '=', 'galatea.uri.value')]"/>
+            <field name="model">galatea.uri.value</field>
             <field name="group" ref="group_galatea_admin"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
@@ -237,7 +237,7 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
         </record>
 
         <record model="ir.model.access" id="access_galatea_galatea_uri_value">
-            <field name="model" search="[('model', '=', 'galatea.uri.value')]"/>
+            <field name="model">galatea.uri.value</field>
             <field name="group" ref="group_galatea"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>

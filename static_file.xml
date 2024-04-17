@@ -67,14 +67,14 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
 
     <!-- Access -->
     <record model="ir.model.access" id="access_galatea_static_folder">
-        <field name="model" search="[('model', '=', 'galatea.static.folder')]"/>
+            <field name="model">galatea.static.folder</field>
         <field name="perm_read" eval="False"/>
         <field name="perm_write" eval="False"/>
         <field name="perm_create" eval="False"/>
         <field name="perm_delete" eval="False"/>
     </record>
     <record model="ir.model.access" id="access_galatea_galatea_static_folder">
-        <field name="model" search="[('model', '=', 'galatea.static.folder')]"/>
+            <field name="model">galatea.static.folder</field>
         <field name="group" ref="group_galatea"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="False"/>
@@ -82,7 +82,7 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
         <field name="perm_delete" eval="False"/>
     </record>
     <record model="ir.model.access" id="access_admin_galatea_galatea_static_folder">
-        <field name="model" search="[('model', '=', 'galatea.static.folder')]"/>
+            <field name="model">galatea.static.folder</field>
         <field name="group" ref="group_galatea_admin"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="True"/>
@@ -91,14 +91,14 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
     </record>
 
     <record model="ir.model.access" id="access_galatea_static_file">
-        <field name="model" search="[('model', '=', 'galatea.static.file')]"/>
+            <field name="model">galatea.static.file</field>
         <field name="perm_read" eval="False"/>
         <field name="perm_write" eval="False"/>
         <field name="perm_create" eval="False"/>
         <field name="perm_delete" eval="False"/>
     </record>
     <record model="ir.model.access" id="access_galatea_galatea_static_file">
-        <field name="model" search="[('model', '=', 'galatea.static.file')]"/>
+            <field name="model">galatea.static.file</field>
         <field name="group" ref="group_galatea"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="False"/>
@@ -106,7 +106,7 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
         <field name="perm_delete" eval="False"/>
     </record>
     <record model="ir.model.access" id="access_admin_galatea_galatea_static_file">
-        <field name="model" search="[('model', '=', 'galatea.static.file')]"/>
+            <field name="model">galatea.static.file</field>
         <field name="group" ref="group_galatea_admin"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="True"/>

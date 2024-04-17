@@ -146,14 +146,14 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
 
         <!-- Access -->
         <record model="ir.model.access" id="access_galatea_website">
-            <field name="model" search="[('model', '=', 'galatea.website')]"/>
+            <field name="model">galatea.website</field>
             <field name="perm_read" eval="False"/>
             <field name="perm_write" eval="False"/>
             <field name="perm_create" eval="False"/>
             <field name="perm_delete" eval="False"/>
         </record>
         <record model="ir.model.access" id="access_galatea_admin_galatea_website">
-            <field name="model" search="[('model', '=', 'galatea.website')]"/>
+            <field name="model">galatea.website</field>
             <field name="group" ref="group_galatea_admin"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
@@ -161,7 +161,7 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
             <field name="perm_delete" eval="True"/>
         </record>
         <record model="ir.model.access" id="access_galatea_galatea_website">
-            <field name="model" search="[('model', '=', 'galatea.website')]"/>
+            <field name="model">galatea.website</field>
             <field name="group" ref="group_galatea"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>
@@ -170,14 +170,14 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
         </record>
 
         <record model="ir.model.access" id="access_galatea_user">
-            <field name="model" search="[('model', '=', 'galatea.user')]"/>
+            <field name="model">galatea.user</field>
             <field name="perm_read" eval="False"/>
             <field name="perm_write" eval="False"/>
             <field name="perm_create" eval="False"/>
             <field name="perm_delete" eval="False"/>
         </record>
         <record model="ir.model.access" id="access_galatea_galatea_user">
-            <field name="model" search="[('model', '=', 'galatea.user')]"/>
+            <field name="model">galatea.user</field>
             <field name="group" ref="group_galatea"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
@@ -186,7 +186,7 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
         </record>
 
         <record model="ir.model.access" id="access_galatea_party_party_default">
-            <field name="model" search="[('model', '=', 'party.party')]"/>
+            <field name="model">party.party</field>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
             <field name="perm_create" eval="True"/>
@@ -194,7 +194,7 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
         </record>
 
         <record model="ir.model.access" id="access_galatea_party_party">
-            <field name="model" search="[('model', '=', 'party.party')]"/>
+            <field name="model">party.party</field>
             <field name="group" ref="group_galatea"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="True"/>
@@ -206,7 +206,7 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
         <record model="ir.model.button" id="remove_cache_button">
             <field name="name">remove_cache</field>
             <field name="string">Remove Cache</field>
-            <field name="model" search="[('model', '=', 'galatea.website')]"/>
+            <field name="model">galatea.website</field>
         </record>
         <record model="ir.model.button-res.group" id="remove_cache_button_group_galatea_admin">
             <field name="button" ref="remove_cache_button"/>
@@ -216,7 +216,7 @@ The COPYRIGHT file at the top level of this repository contains the full copyrig
         <record model="ir.model.button" id="activate_button">
             <field name="name">activate</field>
             <field name="string">Activate</field>
-            <field name="model" search="[('model', '=', 'galatea.user')]"/>
+            <field name="model">galatea.user</field>
         </record>
         <record model="ir.model.button-res.group" id="activate_button_group_galatea_admin">
             <field name="button" ref="activate_button"/>
