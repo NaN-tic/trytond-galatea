@@ -283,7 +283,7 @@ class GalateaUri(tree(), DeactivableMixin, ModelSQL, ModelView):
     def get_content_types(self):
         result = [(None, '')]
         if self.template:
-            result += [(m.model, m.name) for m in self.template.allowed_models]
+            result += [(m.name, m.string) for m in self.template.allowed_models]
         return result
 
     @fields.depends('content')
@@ -374,7 +374,7 @@ class GalateaUriValue(ModelSQL, ModelView):
     def get_content_types(self):
         result = [(None, '')]
         if self.parameter:
-            result += [(m.model, m.name) for m in self.parameter.allowed_models]
+            result += [(m.name, m.string) for m in self.parameter.allowed_models]
         return result
 
     @fields.depends('_parent_uri.id', 'uri')
