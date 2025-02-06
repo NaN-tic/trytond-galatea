@@ -293,7 +293,7 @@ class GalateaUri(tree(), DeactivableMixin, ModelSQL, ModelView):
         if self.content:
             if isinstance(self.content, ModelSQL):
                 res = Model.search([
-                        ('model', '=', self.content.__class__.__name__),
+                        ('name', '=', self.content.__class__.__name__),
                         ])
                 if res:
                     return res[0].id
