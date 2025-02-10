@@ -406,7 +406,7 @@ class GalateaVisiblePage(ModelSQL, ModelView):
             # ('website', 'in', Eval('websites')),
             ('type', '=', 'content'),
             # This domain clause must to be added in setup() of each subclass
-            # ('template.allowed_models.model', 'in', ['galatea.blog.post']),
+            # ('template.allowed_models.name', 'in', ['galatea.blog.post']),
             ],
         states={
             'required': Greater(Eval('id', -1), 0),
@@ -448,7 +448,7 @@ class GalateaVisiblePage(ModelSQL, ModelView):
     def __setup__(cls):
         super(GalateaVisiblePage, cls).__setup__()
 
-        uri_domain_clause = ('template.allowed_models.model', 'in',
+        uri_domain_clause = ('template.allowed_models.name', 'in',
             [cls.__name__]),
         for clause in cls.canonical_uri.domain:
             if isinstance(clause, tuple) and clause == uri_domain_clause:

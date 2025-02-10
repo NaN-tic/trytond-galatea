@@ -73,6 +73,8 @@ class GalateaStaticFolder(ModelSQL, ModelView):
 
     @classmethod
     def copy(cls, files, default=None):
+        if not files:
+            return
         raise UserError(gettext('galatea.not_allow_copy'))
 
 
@@ -225,6 +227,8 @@ class GalateaStaticFile(ModelSQL, ModelView):
 
     @classmethod
     def copy(cls, files, default=None):
+        if not files:
+            return
         raise UserError(gettext('galatea.not_allow_copy'))
 
     @classmethod
