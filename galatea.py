@@ -26,13 +26,8 @@ import os
 import hashlib
 import secrets
 
+PRODUCTION_ENV = config.getboolean('nantic_connection', 'production', default=False)
 logger = logging.getLogger(__name__)
-
-__all__ = ['GalateaWebSite', 'GalateaWebsiteCountry', 'GalateaWebsiteLang',
-    'GalateaWebsiteCurrency', 'GalateaUser', 'GalateaUserWebSite',
-    'GalateaRemoveCacheStart', 'GalateaRemoveCache',
-    'GalateaSendPasswordStart', 'GalateaSendPasswordResult',
-    'GalateaSendPassword']
 
 
 class GalateaWebSite(DeactivableMixin, ModelSQL, ModelView):
@@ -206,6 +201,10 @@ class GalateaUser(DeactivableMixin, GalateaUserMixin, ModelSQL, ModelView):
     @classmethod
     @ModelView.button
     def activate(cls, users):
+        if not PRODUCTION_ENV:
+            logger.warning('Production mode is not enabled.')
+            return
+
         active_users = [user for user in users if user.activation_code]
         cls.write(active_users, {'activation_code': None})
 
