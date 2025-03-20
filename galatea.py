@@ -26,7 +26,7 @@ import os
 import hashlib
 import secrets
 
-PRODUCTION_ENV = config.getboolean('nantic_connection', 'production', default=False)
+PRODUCTION_ENV = config.getboolean('database', 'production', default=False)
 logger = logging.getLogger(__name__)
 
 
