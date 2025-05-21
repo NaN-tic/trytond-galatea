@@ -4,11 +4,7 @@ from trytond.model import ModelSQL, ModelView, DeactivableMixin, fields, Unique,
 from trytond.pool import Pool
 from trytond.pyson import Bool, If, Eval, Greater
 from trytond.transaction import Transaction
-
-from .tools import slugify
-
-__all__ = ['GalateaTemplate', 'GalateaTemplateModel',
-    'GalateaUri', 'GalateaVisiblePage']
+from trytond.modules.voyager import slugify
 
 
 class GalateaTemplate(ModelSQL, ModelView):
@@ -212,7 +208,7 @@ class GalateaUri(tree(), DeactivableMixin, ModelSQL, ModelView):
     @fields.depends('slug')
     def on_change_slug(self):
         if self.slug:
-            self.slug = slugify(self.slug),
+            self.slug = slugify(self.slug)
 
     def get_uri(self, name):
         def _get_uri_recursive(uri):

@@ -3,9 +3,7 @@
 # the full copyright notices and license terms.
 from trytond.pool import PoolMeta
 from trytond.model import fields
-from .tools import slugify
-
-__all__ = ['Attachment']
+from trytond.modules.voyager import slugify
 
 
 class Attachment(metaclass=PoolMeta):
