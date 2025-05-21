@@ -12,10 +12,8 @@ from trytond.transaction import Transaction
 from trytond.config import config
 from trytond.i18n import gettext
 from trytond.exceptions import UserError
-from .tools import slugify, slugify_file
-
-
-__all__ = ['GalateaStaticFolder', 'GalateaStaticFile']
+from trytond.modules.voyager import slugify
+from .tools import slugify_file
 
 
 class GalateaStaticFolder(ModelSQL, ModelView):
