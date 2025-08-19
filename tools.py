@@ -16,10 +16,11 @@ def slugify_file(value):
 
 
 def remove_special_chars(text):
-    """Remove some specials chars from text:
-        - Blanks (\s)
-        - New lines (\n or \r)
-        - Tab (\t)
+    """
+    Remove some specials chars from text:
+        - Blanks (\\s)
+        - New lines (\\n or \\r)
+        - Tab (\\t)
     """
     if text is None:
         return ''
