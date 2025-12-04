@@ -12,6 +12,7 @@ from trytond.transaction import Transaction
 from trytond.config import config
 from trytond.i18n import gettext
 from trytond.exceptions import UserError
+from trytond.model.exceptions import ValidationError
 from trytond.modules.voyager import slugify
 from .tools import slugify_file
 
@@ -54,7 +55,7 @@ class GalateaStaticFolder(ModelSQL, ModelView):
         eventually lead to previlege escalation
         '''
         if ('.' in self.name) or (self.name.startswith('/')):
-            raise UserError(gettext('galatea.invalid_name'))
+            raise ValidationError(gettext('galatea.invalid_name'))
 
     @classmethod
     def write(cls, folders, vals):
@@ -205,7 +206,7 @@ class GalateaStaticFile(ModelSQL, ModelView):
         eventually lead to previlege escalation
         '''
         if ('..' in self.name) or ('/' in self.name):
-            raise UserError(gettext('galatea.invalid_file_name'))
+            raise ValidationError(gettext('galatea.invalid_file_name'))
 
     @classmethod
     def create(cls, vlist):
