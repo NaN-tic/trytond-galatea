@@ -11,14 +11,15 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="64px"
-   height="64px"
+   width="24"
+   height="24"
    id="svg3471"
    sodipodi:version="0.32"
    inkscape:version="0.48.4 r9939"
    sodipodi:docname="tryton-galatea.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
-   version="1.1">
+   version="1.1" viewBox="0 0 24 24">
+  <g data-icon-normalized="1" transform="scale(0.375)">
   <defs
      id="defs3473">
     <linearGradient
@@ -350,5 +351,7 @@
        clip-path="none"
        sodipodi:nodetypes="ccccsccccccsccccccccccsccccc"
        mask="none" />
+  </g>
+
   </g>
 </svg>
