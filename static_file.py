@@ -58,17 +58,19 @@ class GalateaStaticFolder(ModelSQL, ModelView):
             raise ValidationError(gettext('galatea.invalid_name'))
 
     @classmethod
-    def write(cls, folders, vals):
+    def write(cls, records, values, *args):
         """
         Check if the folder name has been modified.
-        If yes, raise an error.
+        If yes, raise an error for any write batch.
 
-        :param vals: values of the current record
+        :param values: values of the current record batch
         """
-        if vals.get('name'):
-            # TODO: Support this feature in future versions
-            raise UserError(gettext('galatea.folder_cannot_change'))
-        return super(GalateaStaticFolder, cls).write(folders, vals)
+        actions = iter((records, values) + args)
+        for folders, values in zip(actions, actions):
+            if values.get('name'):
+                # TODO: Support this feature in future versions
+                raise UserError(gettext('galatea.folder_cannot_change'))
+        return super(GalateaStaticFolder, cls).write(records, values, *args)
 
     @classmethod
     def copy(cls, files, default=None):
@@ -218,11 +220,11 @@ class GalateaStaticFile(ModelSQL, ModelView):
         return super(GalateaStaticFile, cls).create(vlist)
 
     @classmethod
-    def write(cls, files, values):
+    def write(cls, records, values, *args):
         # TODO: Why? maybe a warning
         # if values.get('name'):
         #     raise UserError(gettext('galatea.change_file_name'))
-        return super(GalateaStaticFile, cls).write(files, values)
+        return super(GalateaStaticFile, cls).write(records, values, *args)
 
     @classmethod
     def copy(cls, files, default=None):

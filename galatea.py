@@ -235,10 +235,13 @@ class GalateaUser(DeactivableMixin, GalateaUserMixin, ModelSQL, ModelView):
         return super(GalateaUser, cls).create(vlist)
 
     @classmethod
-    def write(cls, users, values):
+    def write(cls, records, values, *args):
         "Update salt before saving"
-        values = cls._convert_values(values)
-        return super(GalateaUser, cls).write(users, values)
+        actions = iter((records, values) + args)
+        args = []
+        for users, values in zip(actions, actions):
+            args.extend((users, cls._convert_values(values)))
+        return super(GalateaUser, cls).write(*args)
 
     @classmethod
     def search_rec_name(cls, name, clause):

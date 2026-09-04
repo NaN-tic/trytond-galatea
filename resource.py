@@ -636,11 +636,11 @@ class GalateaVisiblePage(ModelSQL, ModelView):
         return new_records
 
     @classmethod
-    def write(cls, *args):
+    def write(cls, records, values, *args):
         pool = Pool()
         Uri = pool.get('galatea.uri')
 
-        actions = iter(args)
+        actions = iter((records, values) + args)
         uri_args = []
         for records, values in zip(actions, actions):
             if values.get('canonical_uri'):
@@ -662,7 +662,7 @@ class GalateaVisiblePage(ModelSQL, ModelView):
                             'name': values['name'],
                             })
 
-        super(GalateaVisiblePage, cls).write(*args)
+        super(GalateaVisiblePage, cls).write(records, values, *args)
         if uri_args:
             Uri.write(*uri_args)
 
